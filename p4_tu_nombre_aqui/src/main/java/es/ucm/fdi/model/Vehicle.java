@@ -1,6 +1,7 @@
 package es.ucm.fdi.model;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import es.ucm.fdi.ini.IniSection;
 
@@ -15,6 +16,7 @@ public class Vehicle extends SimObject{
 	private int tiempoAveria;
 	private int posEnIti;
 	private int km;
+	
 	
 	
 	public boolean estaAveridado(){
@@ -62,7 +64,7 @@ public class Vehicle extends SimObject{
 		else velActual = vel;
 	}
 	
-	public String generaInforme(){
+	/*public String generaInforme(){
 		String informe;
 		IniSection ini = new IniSection("vehicle_report");
 		ini.setValue("id", id);
@@ -77,6 +79,21 @@ public class Vehicle extends SimObject{
 		}
 		informe = ini.toString();
 		return informe;
+	}*/
+	
+	public String getReportHeader(){
+		return "[vehicle_report]";
+	}
+	
+	public void fillReportDetails(Map<String, String> out){
+		out.put("speed", Integer.toString(velActual));
+		out.put("kilometrage",Integer.toString(km));
+		out.put("faulty",Integer.toString(tiempoAveria));
+		if(haLlegado) {
+			out.put("location", "arrived");
+		} else {
+			out.put("location", "(" + road.getId() + ", " + pos + ")");
+		}
 	}
 	
 }
