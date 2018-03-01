@@ -17,9 +17,15 @@ public class Vehicle extends SimObject{
 	private int posEnIti;
 	private int km;
 	
+	public Road getRoad(){
+		return road;
+	}
 	
+	public void setVelMaxima(int v){
+		velMaxima = v;
+	}
 	
-	public boolean estaAveridado(){
+	public boolean estaAveriado(){
 		return tiempoAveria > 0;
 	}
 	
@@ -28,16 +34,28 @@ public class Vehicle extends SimObject{
 	public void avanza(){
 		if(tiempoAveria == 0){
 			
-			//Poner velocidad actual al valor que corresponda
+			//Poner velocidad actual al valor que corresponda (Hecho)
 			pos += velActual;
 			if(pos >= road.getLongitud()){
 				pos = road.getLongitud();
 				velActual = 0;
+				road.saleVehiculo(this);
 			// Insertar vehiculo en la cola del cruce
 			}
 			
 		}
-		else tiempoAveria--;
+		else {
+			tiempoAveria--;
+			velActual = 0;
+		}
+	}
+	
+	public void velActual(int v){
+		velActual = v;
+	}
+	
+	public int getPos(){
+		return pos;
 	}
 	
 	public void moverASiguienteCarretera(){
@@ -49,7 +67,7 @@ public class Vehicle extends SimObject{
 		road = itinerario.get(posEnIti).carreteraUneCruces(itinerario.get(posEnIti + 1));
 		posEnIti++;
 		pos = 0;
-		//Velocidad maxima es la de la carretera??
+		road.entraVehiculo(this); // ¿Se puede hacer esto por lo del this que esta feo?
 		}
 		
 	}

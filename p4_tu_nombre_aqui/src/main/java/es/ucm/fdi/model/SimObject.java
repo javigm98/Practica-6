@@ -6,7 +6,7 @@ public abstract class  SimObject {
 	protected String id;
 	protected int time;
 	public abstract void avanza();
-	public abstract String generaInforme();
+	//public abstract String generaInforme();
 	public abstract String getReportHeader();
 	public abstract void fillReportDetails(Map<String, String> out);
 
