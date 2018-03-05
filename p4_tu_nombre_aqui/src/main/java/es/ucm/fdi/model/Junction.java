@@ -1,6 +1,7 @@
 package es.ucm.fdi.model;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Junction extends SimObject{
@@ -11,7 +12,27 @@ private int semaforo = -1; //Significa que todos estan en rojo
 
 private class IncomingRoad{
 	Road road;///??????
+	boolean light;
 	ArrayDeque<Vehicle> cola;
+	public String toString(){
+		String s = "";
+		s = s + "(" + road.getId() + ", ";
+		if(incoming.get(semaforo).equals(this)){
+			s += "green";
+		}
+		else{
+			s+= "red";
+		}
+		s+=", [";
+		List<String> list = new ArrayList<String>();
+		for(Vehicle v: cola){
+			list.add(v.getId());
+		}
+		s += String.join(", ", list);
+		s += "])";
+		return s;
+		
+	}
 }
 
 public void entraVehiculo(Vehicle v){ //Excepcion vehiculo que no es de esa carretera
@@ -42,12 +63,12 @@ public String getReportHeader(){
 }
 @Override
 public void fillReportDetails(Map<String, String> out) {
+List<String> list = new ArrayList<String>();
 	for(IncomingRoad ir: incoming){
-		/*for (Vehicle v: ir.cola.iterator()){
-			
-		}*/
+		list.add(ir.toString());
 	}
-	
+	String colas = String.join(", ", list);
+	out.put("queues", colas);
 }
 
 

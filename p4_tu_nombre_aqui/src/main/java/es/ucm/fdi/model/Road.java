@@ -2,6 +2,7 @@ package es.ucm.fdi.model;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import es.ucm.fdi.util.*;
@@ -67,10 +68,11 @@ public String getReportHeader(){
 
 public void fillReportDetails(Map<String, String> out){
 	String s = "";
+	List <String> list = new ArrayList<String>();
 	for (Vehicle v: listaVehiculos.innerValues()){
-		s = s + "(" + v.getId() + ", " + v.getPos() + "), ";
+		list.add("(" + v.getId() + ", " + v.getPos() + ")");
 	}
-	s = s.substring(0, s.length() - 2); //>Esto es sucio??????
+	s = String.join(", ", list);
 	out.put("state", s);
 }
 } 
