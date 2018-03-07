@@ -1,6 +1,7 @@
 package es.ucm.fdi.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import es.ucm.fdi.ini.IniSection;
@@ -12,10 +13,25 @@ public class Vehicle extends SimObject{
 	private boolean haLlegado;
 	private Road road;
 	private int pos;
-	private ArrayList<Junction> itinerario; // por ahora lo hacemois asi, quizas sea mas facil haciendo un array de junction
+	private List<Junction> itinerario; // por ahora lo hacemois asi, quizas sea mas facil haciendo un array de junction
 	private int tiempoAveria;
-	private int posEnIti;
+	private int posEnIti; //posEnIti marca la posicion en el itinerario del proximo cruce al que vamos
 	private int km;
+	
+	public Vehicle(String id1, int maxSpeed1, List<Junction> route ){
+		id = id1;
+		velMaxima = maxSpeed1;
+		haLlegado = false;
+		velActual = 0;
+		//La carretera inicial es la que une el primer cruce con el segundo
+		//Empieza en un cruce o en una carretera????
+		road = route.get(0).carreteraUneCruces(route.get(1));
+		pos = 0;
+		itinerario = route;
+		tiempoAveria = 0;
+		posEnIti = 1;
+		km = 0;
+	}
 	
 	public Road getRoad(){
 		return road;
@@ -40,7 +56,7 @@ public class Vehicle extends SimObject{
 				pos = road.getLongitud();
 				velActual = 0;
 				road.saleVehiculo(this);
-			// Insertar vehiculo en la cola del cruce
+				itinerario.get(posEnIti).entraVehiculo(this);
 			}
 			
 		}

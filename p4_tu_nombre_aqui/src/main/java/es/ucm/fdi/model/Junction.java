@@ -1,6 +1,7 @@
 package es.ucm.fdi.model;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,12 +9,26 @@ public class Junction extends SimObject{
 private Map<Road, IncomingRoad> entradasCruce;
 private ArrayList<IncomingRoad> incoming; //?????
 private ArrayList<Road> salidasCruce;
-private int semaforo = -1; //Significa que todos estan en rojo
+private int semaforo; //Significa que todos estan en rojo
 
+public Junction(String id1){
+	semaforo = -1;
+	id = id1;
+	entradasCruce = new HashMap<Road, IncomingRoad>();
+	incoming = new ArrayList<>();
+	salidasCruce = new ArrayList<>();
+}
 private class IncomingRoad{
 	Road road;///??????
 	boolean light;
 	ArrayDeque<Vehicle> cola;
+	
+	public IncomingRoad(Road road1) {
+		road = road1;
+		light = false;
+		cola = new ArrayDeque<>();
+	}
+
 	public String toString(){
 		String s = "";
 		s = s + "(" + road.getId() + ", ";
@@ -69,6 +84,16 @@ List<String> list = new ArrayList<String>();
 	}
 	String colas = String.join(", ", list);
 	out.put("queues", colas);
+}
+
+public void addNewIncomingRoad(Road road){
+	IncomingRoad ir = new IncomingRoad(road);
+	entradasCruce.put(road,ir);
+	incoming.add(ir);
+}
+
+public void addNewOutgoingRoad(Road road){
+	salidasCruce.add(road);
 }
 
 

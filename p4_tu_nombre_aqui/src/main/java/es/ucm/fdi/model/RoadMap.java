@@ -40,4 +40,54 @@ public class RoadMap {
 		}
 		return null;
 	}
+	 public SimObject getSimulatedObject(String id){
+		 SimObject objeto = getVehicle(id);
+		 if(objeto == null){
+			 objeto = getRoad(id);
+			 if(objeto == null){
+				 objeto = getJunction(id);
+			 }
+		 }
+		 return objeto;
+	 }
+	 
+	 public void addJunction(Junction j){
+		 listaCruces.add(j);
+	 }
+	 public void addRoad(Road r){
+		 listaCarreteras.add(r);
+		 /*int i = 0;
+		 boolean encontradoIni = false, encontradoFin = false;;
+		 while((!encontradoIni || !encontradoFin) && i < listaCruces.size()){
+			 if(r.getcruceIni().equals(listaCruces.get(i).getId())){
+				 listaCruces.get(i).addNewIncomingRoad(r);
+				 encontradoIni = true;
+			 }
+			 if(r.getcruceFin().equals(listaCruces.get(i).getId())){
+				 listaCruces.get(i).addNewOutgoingRoad(r);
+				 encontradoFin = true;
+			 }
+			 ++i;
+		 } */
+	 }
+	 
+	 public void addVehicle(Vehicle v){
+		 listaVehiculos.add(v);
+		/* boolean encontrado = false;
+		int i = 0;
+		 while(!encontrado && i < listaCarreteras.size()){
+			 if(v.getRoad().getId().equals(listaCarreteras.get(i).getId())){
+				 
+			 }
+		 }*/
+	 }
+	 public void clear(){
+		 listaVehiculos.clear();
+		 listaCarreteras.clear();
+		 listaCruces.clear();
+	 }
+	 
+	 //public String generateReport(){
+		 
+	 //}
 }

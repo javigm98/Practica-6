@@ -14,6 +14,15 @@ private MultiTreeMap <Integer, Vehicle> listaVehiculos;
 //hay que inicializar la lista vehiculos con el comparador mayor (>)
 private Junction cruceIni, cruceFin;
 
+public Road(String id1, int longitud1, int maxVel1, Junction ini, Junction fin){
+	id = id1;
+	longitud = longitud1;
+	maxVel = maxVel1;
+	cruceIni = ini;
+	cruceFin = fin;
+	
+}
+
 public void avanza(){
 	long max;
 	int velBase;
@@ -63,6 +72,12 @@ public int getLongitud(){
 
 public String getReportHeader(){
 	return "[road_report]";
+}
+public void setCruceIni(Junction ini){
+	cruceIni = ini;
+}
+public void setCruceFin(Junction fin){
+	cruceFin = fin;
 }
 
 
