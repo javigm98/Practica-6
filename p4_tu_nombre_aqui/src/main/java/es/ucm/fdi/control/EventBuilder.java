@@ -4,19 +4,9 @@ import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
 
 public interface EventBuilder {
-	EventBuilder[] bs = {new NewVehicleEventBuilder(), new NewJunctionEventBuilder(), 
-			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder()};
+	
 	public Event parse(IniSection sec);
-	public default Event parseSection(IniSection sec){
-		Event e = null;
-		for(EventBuilder eb: bs){
-			if(eb.parse(sec) != null) {
-				e = eb.parse(sec);
-				break;
-			}
-		}
-		return e;
-	}
+	
 	public default boolean isValidId(String id){
 		for(int i = 0; i < id.length(); ++i){
 			char c = id.charAt(i);

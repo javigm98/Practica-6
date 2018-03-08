@@ -116,7 +116,7 @@ public class Vehicle extends SimObject{
 	}*/
 	
 	public String getReportHeader(){
-		return "[vehicle_report]";
+		return "vehicle_report";
 	}
 	
 	public void fillReportDetails(Map<String, String> out){
@@ -129,5 +129,7 @@ public class Vehicle extends SimObject{
 			out.put("location", "(" + road.getId() + ", " + pos + ")");
 		}
 	}
+	
+	public static int 
 	
 }

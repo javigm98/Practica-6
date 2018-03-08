@@ -1,6 +1,6 @@
 package es.ucm.fdi.model;
 
-public abstract class Event {
+public abstract class Event implements Comparable<Event>{
 	protected int time;
 	public abstract void execute (RoadMap rm, int timeExecution);
 	
@@ -21,6 +21,10 @@ public abstract class Event {
 	public SimObject checkSimObjectExists(RoadMap rm, String id){
 		return rm.getSimulatedObject(id);
 	}
+	public int CompareTo(Event e){
+		return time - e.getTime();
+	}
+	
 	
 	//public List<Junction> parseListOfJunctions(RoadMap rm, String ) Que es el string?? para que sirve?
 }

@@ -20,6 +20,9 @@ public Road(String id1, int longitud1, int maxVel1, Junction ini, Junction fin){
 	maxVel = maxVel1;
 	cruceIni = ini;
 	cruceFin = fin;
+	listaVehiculos = new MultiTreeMap<Integer, Vehicle>();
+	
+	//Comparador??????????????????
 	
 }
 
@@ -71,7 +74,7 @@ public int getLongitud(){
 }
 
 public String getReportHeader(){
-	return "[road_report]";
+	return "road_report";
 }
 public void setCruceIni(Junction ini){
 	cruceIni = ini;

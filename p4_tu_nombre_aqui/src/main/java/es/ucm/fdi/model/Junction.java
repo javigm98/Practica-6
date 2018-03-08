@@ -74,7 +74,7 @@ public Road carreteraUneCruces(Junction destino){
 }
 
 public String getReportHeader(){
-	return "[junction_report]";
+	return "junction_report";
 }
 @Override
 public void fillReportDetails(Map<String, String> out) {

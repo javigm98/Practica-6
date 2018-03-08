@@ -2,11 +2,17 @@ package es.ucm.fdi.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RoadMap {
-	private List<Vehicle> listaVehiculos = new ArrayList<>();
-	private List<Junction> listaCruces = new ArrayList<>();
-	private List<Road> listaCarreteras = new ArrayList<>();
+	private List<Vehicle> listaVehiculos;
+	private List<Junction> listaCruces;
+	private List<Road> listaCarreteras;
+	public RoadMap(){
+		listaVehiculos = new ArrayList<>();
+		listaCruces = new ArrayList<>();
+		listaCarreteras = new ArrayList<>();
+	}
 	public List<Vehicle> getListaVehiculos() {
 		return listaVehiculos;
 	}
@@ -90,4 +96,16 @@ public class RoadMap {
 	 //public String generateReport(){
 		 
 	 //}
+	 
+	 /*public void generateReport(int time, Map<String, String> out){
+		 for(Vehicle v: listaVehiculos){
+			 v.report(time, out);
+		 }
+		 for(Road r: listaCarreteras){
+			 r.report(time, out);
+		 }
+		 for(Junction j: listaCruces){
+			 j.report(time,  out);
+		 }
+	*/
 }

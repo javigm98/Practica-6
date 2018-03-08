@@ -15,7 +15,7 @@ String getId(){
 }
 
 public void report(int time, Map<String, String> out){
-	out.put("", getReportHeader());
+	//out.put("", getReportHeader()); creemos que no es necesario porque ya lo añadimos en simulator como tag
 	out.put ("id", id);
 	out.put ("time", Integer.toString(time));
 	fillReportDetails(out);
