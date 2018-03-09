@@ -32,4 +32,9 @@ public class NewVehicleEvent extends Event{
 		}
 		
 	}
+	@Override
+	public int compareTo(Event o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

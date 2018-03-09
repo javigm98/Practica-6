@@ -1,10 +1,16 @@
 package es.ucm.fdi.launcher;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Scanner;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -15,6 +21,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import es.ucm.fdi.ini.Ini;
+import es.ucm.fdi.model.TrafficSimulator;
+import es.ucm.fdi.control.Controller;
 
 public class ExampleMain {
 
@@ -146,7 +154,12 @@ public class ExampleMain {
 	 * @throws IOException
 	 */
 	private static void startBatchMode() throws IOException {
-		// TODO
+		InputStream in1 = new FileInputStream(_inFile); // Creo un inputStream
+		OutputStream out1 = new FileOutputStream(_outFile);
+		Controller controller = new Controller(new TrafficSimulator(out1), _timeLimit, in1, out1);
+		controller.loadEvents(in1);
+		controller.run();
+		
 		// Add your code here. Note that the input argument where parsed and stored into
 		// corresponding fields.
 	}
@@ -157,7 +170,7 @@ public class ExampleMain {
 	}
 
 	public static void main(String[] args) throws IOException, InvocationTargetException, InterruptedException {
-
+		
 		// example command lines:
 		//
 		// -i resources/examples/events/basic/ex1.ini
@@ -172,6 +185,8 @@ public class ExampleMain {
 	    //	test("resources/examples/events/basic");
 
 		// Call start to start the simulator from command line, etc.
+		
+		
 		start(args);
 
 	}

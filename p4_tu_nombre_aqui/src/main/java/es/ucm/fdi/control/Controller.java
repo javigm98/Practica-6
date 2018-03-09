@@ -8,12 +8,17 @@ import es.ucm.fdi.model.TrafficSimulator;
 
 public class Controller {
 	private TrafficSimulator simulator;
-	private int time;
+	private int pasos;
 	private InputStream in;
 	private OutputStream out;
+	private String s;
 	
 	private EventBuilder[] bs = {new NewVehicleEventBuilder(), new NewJunctionEventBuilder(), 
 			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder()};
+	
+	public void loadEvents(InputStream in1) throws IOException{ // Capturar aqui mejor las excepciones
+		
+	}
 	 
 	 public Event parseSection(IniSection sec){
 		Event e = null;
@@ -26,18 +31,15 @@ public class Controller {
 		return e;
 	}
 	 
-	 public void run(){ ///metodos run
-		 
+	 public void run() throws IOException{ //Mejor capturar aqui la expcepion
+		 simulator.run(pasos);
 	 }
 	
-	public Controller(TrafficSimulator ts, int time1, InputStream in1, OutputStream out1){
+	public Controller(TrafficSimulator ts, int pasos1, InputStream in1, OutputStream out1){
 		simulator = ts;
-		time = time1;
+		pasos = pasos1;
 		in = in1;
 		out = out1;
 	}
 	
-	public Controller(TrafficSimulator ts, OutputStream out1){
-		
-	}
 }

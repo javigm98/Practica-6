@@ -7,7 +7,7 @@ import java.util.Map;
 import es.ucm.fdi.ini.IniSection;
 
 
-public class Vehicle extends SimObject{
+public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	private int velMaxima;
 	private int velActual;
 	private boolean haLlegado;
@@ -129,7 +129,12 @@ public class Vehicle extends SimObject{
 			out.put("location", "(" + road.getId() + ", " + pos + ")");
 		}
 	}
+
+	@Override
+	public int compareTo(Vehicle o) {
+		return this.pos - o.pos;
+	}
 	
-	public static int 
+
 	
 }

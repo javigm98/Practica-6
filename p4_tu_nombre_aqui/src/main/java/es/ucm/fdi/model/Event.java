@@ -7,7 +7,6 @@ public abstract class Event implements Comparable<Event>{
 	public int getTime(){
 		return time;
 	}
-	//public int compareTo(Event e) return int
 	
 	public Junction checkJunctionExists(RoadMap rm, String id){
 		return rm.getJunction(id);

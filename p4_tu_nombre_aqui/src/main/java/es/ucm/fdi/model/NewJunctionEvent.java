@@ -14,4 +14,9 @@ public class NewJunctionEvent extends Event{
 			rm.addJunction(new Junction(id));
 		}	
 	}
+	@Override
+	public int compareTo(Event arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
