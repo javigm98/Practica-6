@@ -1,7 +1,9 @@
 package es.ucm.fdi.control;
 
 import java.io.*;
+import java.util.List;
 
+import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.TrafficSimulator;
@@ -17,6 +19,8 @@ public class Controller {
 			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder()};
 	
 	public void loadEvents(InputStream in1) throws IOException{ // Capturar aqui mejor las excepciones
+		Ini first = new Ini(in1);
+		List<IniSection> listaSecciones = first.getSections();
 		
 	}
 	 
