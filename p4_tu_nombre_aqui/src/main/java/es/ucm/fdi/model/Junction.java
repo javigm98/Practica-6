@@ -12,7 +12,7 @@ private ArrayList<Road> salidasCruce;
 private int semaforo; //Significa que todos estan en rojo
 
 public Junction(String id1){
-	semaforo = -1;
+	semaforo = 0;
 	id = id1;
 	entradasCruce = new HashMap<Road, IncomingRoad>();
 	incoming = new ArrayList<>();
@@ -56,11 +56,13 @@ public void entraVehiculo(Vehicle v){ //Excepcion vehiculo que no es de esa carr
 	//dos sitios.
 }
 public void avanza(){
+	if(!incoming.isEmpty()){
 	if(!incoming.get(semaforo).cola.isEmpty()){
 	incoming.get(semaforo).cola.getFirst().moverASiguienteCarretera();
 	incoming.get(semaforo).cola.pop();
 	}
 	semaforo = (semaforo++) % incoming.size();
+	}
 }
 
 
@@ -83,6 +85,7 @@ List<String> list = new ArrayList<String>();
 		list.add(ir.toString());
 	}
 	String colas = String.join(", ", list);
+	if(list.isEmpty()) colas = "empty";
 	out.put("queues", colas);
 }
 

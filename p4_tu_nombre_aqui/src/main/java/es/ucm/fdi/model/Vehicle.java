@@ -52,10 +52,14 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 			
 			//Poner velocidad actual al valor que corresponda (Hecho)
 			pos += velActual;
+			if(km + velActual > road.getLongitud()){
+				km += road.getLongitud() - pos;
+			}
+			else km += velActual;
 			if(pos >= road.getLongitud()){
-				pos = road.getLongitud();
 				velActual = 0;
 				road.saleVehiculo(this);
+				pos = road.getLongitud();
 				itinerario.get(posEnIti).entraVehiculo(this);
 			}
 			
@@ -74,8 +78,16 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		return pos;
 	}
 	
+	public boolean getHaLlegado() {
+		return haLlegado;
+	}
+
+	public void setHaLlegado(boolean haLlegado) {
+		this.haLlegado = haLlegado;
+	}
+
 	public void moverASiguienteCarretera(){
-		if (posEnIti == itinerario.size()){
+		if (posEnIti == itinerario.size() - 1){
 			haLlegado = true;
 			velActual = 0;
 		}

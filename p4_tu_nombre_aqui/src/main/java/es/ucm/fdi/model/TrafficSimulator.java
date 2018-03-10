@@ -8,16 +8,18 @@ import java.util.List;
 import java.util.Map;
 
 import es.ucm.fdi.ini.IniSection;
+import es.ucm.fdi.util.MultiTreeMap;
 
 public class TrafficSimulator {
 	
 private int time;
-private List<Event> listaEventos;
+private MultiTreeMap<Integer, Event> listaEventos;
+//private List<Event> listaEventos;
 private RoadMap rm;
 private OutputStream out;
 	public TrafficSimulator(OutputStream out1){
 		time = 0;
-		listaEventos = new ArrayList<>();
+		listaEventos = new MultiTreeMap<Integer, Event>();
 		rm = new RoadMap();
 		out = out1;
 	}
@@ -29,7 +31,7 @@ private OutputStream out;
 	}
 	
 	public void run() throws IOException{
-		for(Event e: listaEventos){
+		for(Event e: listaEventos.innerValues()){
 			e.execute(rm, time);
 		}
 		for(Road r: rm.getListaCarreteras()){
@@ -44,14 +46,12 @@ private OutputStream out;
 	
 	public void addEvent(Event e){
 		if(e.getTime() >= time){
-			listaEventos.add(e);
+			listaEventos.putValue(e.getTime(), e);
 		}
-		
-		//Luego la ordenamos!!!!!!!
 	}
 	void reset(){
 		time = 0;
-		listaEventos = new ArrayList<>();
+		listaEventos = new MultiTreeMap<Integer, Event>();
 		rm = new RoadMap();
 	}
 	
@@ -64,16 +64,19 @@ private OutputStream out;
 		 for(Vehicle v : rm.getListaVehiculos()){
 			 v.report(time,  aux);
 			 mapAIni(aux, v.getReportHeader()).store(out);
+			 out.write('\n');
 			 aux.clear();
 		 }
 		 for(Road r : rm.getListaCarreteras()){
 			 r.report(time,  aux);
 			 mapAIni(aux, r.getReportHeader()).store(out);
+			 out.write('\n');
 			 aux.clear();
 		 }
 		 for(Junction j : rm.getListaCruces()){
 			 j.report(time,  aux);
 			 mapAIni(aux, j.getReportHeader()).store(out);
+			 out.write('\n');
 			 aux.clear();
 		 } 
 	}

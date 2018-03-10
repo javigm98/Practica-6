@@ -21,10 +21,17 @@ public class Controller {
 	public void loadEvents(InputStream in1) throws IOException{ // Capturar aqui mejor las excepciones
 		Ini first = new Ini(in1);
 		List<IniSection> listaSecciones = first.getSections();
-		
+		for (IniSection sec: listaSecciones){
+			try{
+				simulator.addEvent(parseSection(sec));
+			}
+			catch(IllegalArgumentException e){
+				System.out.println(e);
+			}
+		}
 	}
 	 
-	 public Event parseSection(IniSection sec){
+	 public Event parseSection(IniSection sec)throws IllegalArgumentException{
 		Event e = null;
 		for(EventBuilder eb: bs){
 			if(eb.parse(sec) != null) {
@@ -32,6 +39,7 @@ public class Controller {
 				break;
 			}
 		}
+		if(e == null) throw new IllegalArgumentException("This is not a available event");
 		return e;
 	}
 	 

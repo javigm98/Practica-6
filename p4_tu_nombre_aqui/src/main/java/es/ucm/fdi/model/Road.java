@@ -37,6 +37,7 @@ public void avanza(){
 	if(secFact < maxVel) velBase = secFact;
 	else velBase = maxVel;
 	for (Vehicle v: listaVehiculos.innerValues()){
+		if(!v.getHaLlegado()){
 		if (v.estaAveriado()) {
 			hayAverias = true;
 			v.setVelocidadActual(0);
@@ -47,6 +48,7 @@ public void avanza(){
 		}
 		v.avanza();
 		nuevo.putValue(v.getPos(), v);
+		}
 	}
 	//Hacer clear del listaVehiculos anterior????
 	listaVehiculos = nuevo;
@@ -59,7 +61,7 @@ public void entraVehiculo(Vehicle v){
 }
 
 public void saleVehiculo(Vehicle v){
-	listaVehiculos.remove(longitud, v);
+	listaVehiculos.remove(v.getPos(), v);
 }
 public Junction getcruceIni(){
 	return cruceIni;
@@ -91,6 +93,7 @@ public void fillReportDetails(Map<String, String> out){
 		list.add("(" + v.getId() + ", " + v.getPos() + ")");
 	}
 	s = String.join(", ", list);
+	if(list.isEmpty()) s = "empty";
 	out.put("state", s);
 }
 } 

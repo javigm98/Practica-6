@@ -1,0 +1,1540 @@
+[vehicle_report]
+kilometrage = 21
+location = (r1, 21)
+id = v1
+time = 1
+faulty = 0
+speed = 21
+
+[vehicle_report]
+kilometrage = 21
+location = (r3, 21)
+id = v2
+time = 1
+faulty = 0
+speed = 21
+
+[vehicle_report]
+kilometrage = 21
+location = (r1, 21)
+id = v3
+time = 1
+faulty = 0
+speed = 21
+
+[vehicle_report]
+kilometrage = 21
+location = (r3, 21)
+id = v4
+time = 1
+faulty = 0
+speed = 21
+
+[road_report]
+id = r1
+time = 1
+state = (v1, 21), (v3, 21)
+
+[road_report]
+id = r2
+time = 1
+state = empty
+
+[road_report]
+id = r3
+time = 1
+state = (v2, 21), (v4, 21)
+
+[road_report]
+id = r4
+time = 1
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 1
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [])
+id = j2
+time = 1
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 1
+
+[junction_report]
+queues = empty
+id = j4
+time = 1
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 1
+
+[vehicle_report]
+kilometrage = 42
+location = (r1, 42)
+id = v1
+time = 2
+faulty = 0
+speed = 21
+
+[vehicle_report]
+kilometrage = 42
+location = (r3, 42)
+id = v2
+time = 2
+faulty = 0
+speed = 21
+
+[vehicle_report]
+kilometrage = 42
+location = (r1, 42)
+id = v3
+time = 2
+faulty = 0
+speed = 21
+
+[vehicle_report]
+kilometrage = 42
+location = (r3, 42)
+id = v4
+time = 2
+faulty = 0
+speed = 21
+
+[road_report]
+id = r1
+time = 2
+state = (v1, 42), (v3, 42)
+
+[road_report]
+id = r2
+time = 2
+state = empty
+
+[road_report]
+id = r3
+time = 2
+state = (v2, 42), (v4, 42)
+
+[road_report]
+id = r4
+time = 2
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 2
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [])
+id = j2
+time = 2
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 2
+
+[junction_report]
+queues = empty
+id = j4
+time = 2
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 2
+
+[vehicle_report]
+kilometrage = 29
+location = (r2, 0)
+id = v1
+time = 3
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 3
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r1, 50)
+id = v3
+time = 3
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 3
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 3
+state = (v1, 0), (v3, 50)
+
+[road_report]
+id = r2
+time = 3
+state = (v1, 0)
+
+[road_report]
+id = r3
+time = 3
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 3
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 3
+
+[junction_report]
+queues = (r1, green, [v3]), (r3, red, [v2, v4])
+id = j2
+time = 3
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 3
+
+[junction_report]
+queues = empty
+id = j4
+time = 3
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 3
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 4
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 4
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r2, 0)
+id = v3
+time = 4
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 4
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 4
+state = (v1, 50), (v3, 0)
+
+[road_report]
+id = r2
+time = 4
+state = (v3, 0), (v1, 50)
+
+[road_report]
+id = r3
+time = 4
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 4
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 4
+
+[junction_report]
+queues = (r1, green, [v3]), (r3, red, [v2, v4, v2, v4])
+id = j2
+time = 4
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 4
+
+[junction_report]
+queues = empty
+id = j4
+time = 4
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 4
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 5
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 5
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 5
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 5
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 5
+state = (v3, 42)
+
+[road_report]
+id = r2
+time = 5
+state = (v3, 42)
+
+[road_report]
+id = r3
+time = 5
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 5
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 5
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4])
+id = j2
+time = 5
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 5
+
+[junction_report]
+queues = empty
+id = j4
+time = 5
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 5
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 6
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 6
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 6
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 6
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 6
+state = empty
+
+[road_report]
+id = r2
+time = 6
+state = empty
+
+[road_report]
+id = r3
+time = 6
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 6
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 6
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 6
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 6
+
+[junction_report]
+queues = empty
+id = j4
+time = 6
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 6
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 7
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 7
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 7
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 7
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 7
+state = empty
+
+[road_report]
+id = r2
+time = 7
+state = empty
+
+[road_report]
+id = r3
+time = 7
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 7
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 7
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 7
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 7
+
+[junction_report]
+queues = empty
+id = j4
+time = 7
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 7
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 8
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 8
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 8
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 8
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 8
+state = empty
+
+[road_report]
+id = r2
+time = 8
+state = empty
+
+[road_report]
+id = r3
+time = 8
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 8
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 8
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 8
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 8
+
+[junction_report]
+queues = empty
+id = j4
+time = 8
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 8
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 9
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 9
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 9
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 9
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 9
+state = empty
+
+[road_report]
+id = r2
+time = 9
+state = empty
+
+[road_report]
+id = r3
+time = 9
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 9
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 9
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 9
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 9
+
+[junction_report]
+queues = empty
+id = j4
+time = 9
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 9
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 10
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 10
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 10
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 10
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 10
+state = empty
+
+[road_report]
+id = r2
+time = 10
+state = empty
+
+[road_report]
+id = r3
+time = 10
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 10
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 10
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 10
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 10
+
+[junction_report]
+queues = empty
+id = j4
+time = 10
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 10
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 11
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 11
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 11
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 11
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 11
+state = empty
+
+[road_report]
+id = r2
+time = 11
+state = empty
+
+[road_report]
+id = r3
+time = 11
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 11
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 11
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 11
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 11
+
+[junction_report]
+queues = empty
+id = j4
+time = 11
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 11
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 12
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 12
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 12
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 12
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 12
+state = empty
+
+[road_report]
+id = r2
+time = 12
+state = empty
+
+[road_report]
+id = r3
+time = 12
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 12
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 12
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 12
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 12
+
+[junction_report]
+queues = empty
+id = j4
+time = 12
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 12
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 13
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 13
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 13
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 13
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 13
+state = empty
+
+[road_report]
+id = r2
+time = 13
+state = empty
+
+[road_report]
+id = r3
+time = 13
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 13
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 13
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 13
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 13
+
+[junction_report]
+queues = empty
+id = j4
+time = 13
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 13
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 14
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 14
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 14
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 14
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 14
+state = empty
+
+[road_report]
+id = r2
+time = 14
+state = empty
+
+[road_report]
+id = r3
+time = 14
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 14
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 14
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 14
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 14
+
+[junction_report]
+queues = empty
+id = j4
+time = 14
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 14
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 15
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 15
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 15
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 15
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 15
+state = empty
+
+[road_report]
+id = r2
+time = 15
+state = empty
+
+[road_report]
+id = r3
+time = 15
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 15
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 15
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 15
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 15
+
+[junction_report]
+queues = empty
+id = j4
+time = 15
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 15
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 16
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 16
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 16
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 16
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 16
+state = empty
+
+[road_report]
+id = r2
+time = 16
+state = empty
+
+[road_report]
+id = r3
+time = 16
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 16
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 16
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 16
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 16
+
+[junction_report]
+queues = empty
+id = j4
+time = 16
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 16
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 17
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 17
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 17
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 17
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 17
+state = empty
+
+[road_report]
+id = r2
+time = 17
+state = empty
+
+[road_report]
+id = r3
+time = 17
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 17
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 17
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 17
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 17
+
+[junction_report]
+queues = empty
+id = j4
+time = 17
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 17
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 18
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 18
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 18
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 18
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 18
+state = empty
+
+[road_report]
+id = r2
+time = 18
+state = empty
+
+[road_report]
+id = r3
+time = 18
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 18
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 18
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 18
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 18
+
+[junction_report]
+queues = empty
+id = j4
+time = 18
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 18
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 19
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v2
+time = 19
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 19
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 29
+location = (r3, 50)
+id = v4
+time = 19
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 19
+state = empty
+
+[road_report]
+id = r2
+time = 19
+state = empty
+
+[road_report]
+id = r3
+time = 19
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 19
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 19
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 19
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 19
+
+[junction_report]
+queues = empty
+id = j4
+time = 19
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 19
+
+[vehicle_report]
+kilometrage = 39
+location = arrived
+id = v1
+time = 20
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v2
+time = 20
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 87
+location = arrived
+id = v3
+time = 20
+faulty = 0
+speed = 0
+
+[vehicle_report]
+kilometrage = 50
+location = (r3, 50)
+id = v4
+time = 20
+faulty = 0
+speed = 0
+
+[road_report]
+id = r1
+time = 20
+state = empty
+
+[road_report]
+id = r2
+time = 20
+state = empty
+
+[road_report]
+id = r3
+time = 20
+state = (v2, 50), (v4, 50)
+
+[road_report]
+id = r4
+time = 20
+state = empty
+
+[junction_report]
+queues = empty
+id = j1
+time = 20
+
+[junction_report]
+queues = (r1, green, []), (r3, red, [v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4, v2, v4])
+id = j2
+time = 20
+
+[junction_report]
+queues = (r2, green, [])
+id = j3
+time = 20
+
+[junction_report]
+queues = empty
+id = j4
+time = 20
+
+[junction_report]
+queues = (r4, green, [])
+id = j5
+time = 20
+
