@@ -58,10 +58,12 @@ public void entraVehiculo(Vehicle v){ //Excepcion vehiculo que no es de esa carr
 public void avanza(){
 	if(!incoming.isEmpty()){
 	if(!incoming.get(semaforo).cola.isEmpty()){
-	incoming.get(semaforo).cola.getFirst().moverASiguienteCarretera();
-	incoming.get(semaforo).cola.pop();
+	//incoming.get(semaforo).cola.getFirst.moverASiguienteCarretera();
+	incoming.get(semaforo).cola.removeFirst().moverASiguienteCarretera();
 	}
-	semaforo = (semaforo++) % incoming.size();
+	incoming.get(semaforo).light = false;
+	semaforo = (semaforo + 1) % incoming.size();
+	incoming.get(semaforo).light = true;
 	}
 }
 

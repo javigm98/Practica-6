@@ -20,7 +20,7 @@ public Road(String id1, int longitud1, int maxVel1, Junction ini, Junction fin){
 	maxVel = maxVel1;
 	cruceIni = ini;
 	cruceFin = fin;
-	listaVehiculos = new MultiTreeMap<Integer, Vehicle>();
+	listaVehiculos = new MultiTreeMap<Integer, Vehicle>((a, b)-> b - a);
 	
 	//Comparador??????????????????
 	
@@ -30,13 +30,14 @@ public void avanza(){
 	long max;
 	int velBase;
 	boolean hayAverias = false;
-	MultiTreeMap<Integer, Vehicle> nuevo = new MultiTreeMap<>();
+	MultiTreeMap<Integer, Vehicle> nuevo = new MultiTreeMap<>((a, b) -> b - a);
 	if(listaVehiculos.sizeOfValues() > 1) max = listaVehiculos.sizeOfValues();
 	else max = 1;
 	int secFact = (maxVel / (int) max) + 1;
 	if(secFact < maxVel) velBase = secFact;
 	else velBase = maxVel;
 	for (Vehicle v: listaVehiculos.innerValues()){
+		//if(v!= null){
 		if(!v.getHaLlegado()){
 		if (v.estaAveriado()) {
 			hayAverias = true;
@@ -44,24 +45,33 @@ public void avanza(){
 		}
 		else{
 			if(hayAverias) velBase /= 2;
-			v.setVelocidadActual(velBase);
+			if(v.getPos() < longitud){ //Si esta esperando en un cruce su velocidad es 0
+				v.setVelocidadActual(velBase);
+			}
 		}
+		if(v.getPos()< longitud){ //Si esta al final de la carretera ya esta esperando la cola del cruce.
 		v.avanza();
+		}
 		nuevo.putValue(v.getPos(), v);
 		}
-	}
+		//}
+	} 
+	//listaVehiculos.clear();
 	//Hacer clear del listaVehiculos anterior????
 	listaVehiculos = nuevo;
 }
 
 
 public void entraVehiculo(Vehicle v){
-	v.setVelMaxima(maxVel);
+	//v.setVelMaxima(maxVel);//????
 	listaVehiculos.putValue(0, v); // Devuelve un booleano pero no lo necesitamos
 }
 
 public void saleVehiculo(Vehicle v){
-	listaVehiculos.remove(v.getPos(), v);
+	listaVehiculos.removeValue(v.getPos(), v);
+	if(listaVehiculos.get(v.getPos()).isEmpty()){
+		listaVehiculos.remove(v.getPos());
+	}
 }
 public Junction getcruceIni(){
 	return cruceIni;
@@ -90,7 +100,9 @@ public void fillReportDetails(Map<String, String> out){
 	String s = "";
 	List <String> list = new ArrayList<String>();
 	for (Vehicle v: listaVehiculos.innerValues()){
+		//if(v!= null){
 		list.add("(" + v.getId() + ", " + v.getPos() + ")");
+		//}
 	}
 	s = String.join(", ", list);
 	if(list.isEmpty()) s = "empty";

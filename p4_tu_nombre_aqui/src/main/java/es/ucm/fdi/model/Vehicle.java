@@ -51,14 +51,14 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		if(tiempoAveria == 0){
 			
 			//Poner velocidad actual al valor que corresponda (Hecho)
-			pos += velActual;
-			if(km + velActual > road.getLongitud()){
-				km += road.getLongitud() - pos;
+			if(pos + velActual > road.getLongitud()){
+				km += (road.getLongitud() - pos);
 			}
 			else km += velActual;
+			pos += velActual;
 			if(pos >= road.getLongitud()){
 				velActual = 0;
-				road.saleVehiculo(this);
+				//road.saleVehiculo(this);
 				pos = road.getLongitud();
 				itinerario.get(posEnIti).entraVehiculo(this);
 			}
@@ -87,6 +87,7 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	}
 
 	public void moverASiguienteCarretera(){
+		road.saleVehiculo(this);
 		if (posEnIti == itinerario.size() - 1){
 			haLlegado = true;
 			velActual = 0;
@@ -110,22 +111,6 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		else velActual = vel;
 	}
 	
-	/*public String generaInforme(){
-		String informe;
-		IniSection ini = new IniSection("vehicle_report");
-		ini.setValue("id", id);
-		ini.setValue("time", time);
-		ini.setValue("speed", velActual);
-		ini.setValue("kilometrage", km);
-		ini.setValue("faulty", tiempoAveria);
-		if(haLlegado) {
-			ini.setValue("location", "arrived");
-		} else {
-			ini.setValue("location", "(" + road.getId() + ", " + pos + ")");
-		}
-		informe = ini.toString();
-		return informe;
-	}*/
 	
 	public String getReportHeader(){
 		return "vehicle_report";
@@ -145,6 +130,12 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	@Override
 	public int compareTo(Vehicle o) {
 		return this.pos - o.pos;
+	}
+	public String toString(){
+		String s = "";
+		s += "id=" + id + " pos=" + pos;
+		return s;
+		
 	}
 	
 

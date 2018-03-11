@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +61,7 @@ private OutputStream out;
 	}
 	
 	public void writeReport() throws IOException{
-		Map <String,String> aux = new HashMap<>();
+		Map <String,String> aux = new LinkedHashMap<>();
 		 for(Vehicle v : rm.getListaVehiculos()){
 			 v.report(time,  aux);
 			 mapAIni(aux, v.getReportHeader()).store(out);
