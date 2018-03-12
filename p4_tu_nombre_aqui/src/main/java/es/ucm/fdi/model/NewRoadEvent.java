@@ -13,11 +13,13 @@ public class NewRoadEvent extends Event{
 		longitud = longitud1;
 		//road = new Road(id, longitud, maxVel, iniId ,finId);
 	}
+	
+	
 	@Override
-	public void execute(RoadMap rm, int timeExecution) {
+	public void execute(RoadMap rm, int timeExecution) throws IllegalArgumentException{
 		if(time == timeExecution){
-			Junction ini = rm.getJunction(iniId), fin = rm.getJunction(finId);
-			Road r =new Road(id, longitud, maxVel, ini, fin);
+			Junction ini = checkJunctionExists(rm, iniId), fin = checkJunctionExists(rm, finId);
+			Road r = new Road(id, longitud, maxVel, ini, fin);
 			rm.addRoad(r);
 			ini.addNewOutgoingRoad(r);
 			fin.addNewIncomingRoad(r);

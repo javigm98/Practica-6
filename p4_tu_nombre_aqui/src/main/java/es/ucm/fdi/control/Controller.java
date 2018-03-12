@@ -43,8 +43,13 @@ public class Controller {
 		return e;
 	}
 	 
-	 public void run() throws IOException{ //Mejor capturar aqui la expcepion
+	 public void run() throws IOException{
+		 try{
 		 simulator.run(pasos);
+		 }
+		 catch (IllegalArgumentException iae){
+			 System.out.println(iae);
+		 }
 	 }
 	
 	public Controller(TrafficSimulator ts, int pasos1, InputStream in1, OutputStream out1){

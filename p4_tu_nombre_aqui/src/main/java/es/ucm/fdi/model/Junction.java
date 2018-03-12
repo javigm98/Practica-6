@@ -6,17 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Junction extends SimObject{
-private Map<Road, IncomingRoad> entradasCruce;
-private ArrayList<IncomingRoad> incoming; //?????
-private ArrayList<Road> salidasCruce;
+private Map<Road, IncomingRoad> entradasCruce = new HashMap<Road, IncomingRoad>();
+private ArrayList<IncomingRoad> incoming = new ArrayList<>();
+private Map<Junction, Road> salidasCruce = new HashMap<>();
 private int semaforo; //Significa que todos estan en rojo
 
-public Junction(String id1){
-	semaforo = 0;
-	id = id1;
-	entradasCruce = new HashMap<Road, IncomingRoad>();
-	incoming = new ArrayList<>();
-	salidasCruce = new ArrayList<>();
+public Junction(String id){
+	//super(id);
+	this.id = id;
 }
 private class IncomingRoad{
 	Road road;///??????
@@ -71,10 +68,7 @@ public void avanza(){
 
 
 public Road carreteraUneCruces(Junction destino){
-	for (Road r: salidasCruce){
-		if (r.getcruceFin().equals(destino)) return r;
-	}
-	return null;
+	return salidasCruce.get(destino);
 }
 
 public String getReportHeader(){
@@ -95,10 +89,11 @@ public void addNewIncomingRoad(Road road){
 	IncomingRoad ir = new IncomingRoad(road);
 	entradasCruce.put(road,ir);
 	incoming.add(ir);
+	semaforo = incoming.size()-1;
 }
 
 public void addNewOutgoingRoad(Road road){
-	salidasCruce.add(road);
+	salidasCruce.put(road.getcruceFin(), road);
 }
 
 

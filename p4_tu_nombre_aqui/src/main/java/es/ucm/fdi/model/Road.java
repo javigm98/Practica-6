@@ -2,6 +2,7 @@ package es.ucm.fdi.model;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public Road(String id1, int longitud1, int maxVel1, Junction ini, Junction fin){
 	maxVel = maxVel1;
 	cruceIni = ini;
 	cruceFin = fin;
-	listaVehiculos = new MultiTreeMap<Integer, Vehicle>((a, b)-> b - a);
+	listaVehiculos = new MultiTreeMap<Integer, Vehicle>(Collections.reverseOrder());
 	
 	//Comparador??????????????????
 	
@@ -30,7 +31,7 @@ public void avanza(){
 	long max;
 	int velBase;
 	boolean hayAverias = false;
-	MultiTreeMap<Integer, Vehicle> nuevo = new MultiTreeMap<>((a, b) -> b - a);
+	MultiTreeMap<Integer, Vehicle> nuevo = new MultiTreeMap<>(Collections.reverseOrder());
 	if(listaVehiculos.sizeOfValues() > 1) max = listaVehiculos.sizeOfValues();
 	else max = 1;
 	int secFact = (maxVel / (int) max) + 1;

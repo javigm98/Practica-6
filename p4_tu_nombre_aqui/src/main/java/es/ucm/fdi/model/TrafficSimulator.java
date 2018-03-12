@@ -24,14 +24,14 @@ private OutputStream out;
 		rm = new RoadMap();
 		out = out1;
 	}
-	public void run(int numPasos) throws IOException{
+	public void run(int numPasos) throws IOException, IllegalArgumentException{
 		int limiteTiempo = time + numPasos -1;
 		while(time <= limiteTiempo){
 			run();
 		}
 	}
 	
-	public void run() throws IOException{
+	public void run() throws IOException, IllegalArgumentException{
 		for(Event e: listaEventos.innerValues()){
 			e.execute(rm, time);
 		}

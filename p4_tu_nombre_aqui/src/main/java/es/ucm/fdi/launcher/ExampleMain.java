@@ -27,6 +27,7 @@ import es.ucm.fdi.control.Controller;
 public class ExampleMain {
 
 	private final static Integer _timeLimitDefaultValue = 10;
+	private final static String _defaultOutFile = "ex1.out";
 	private static Integer _timeLimit = null;
 	private static String _inFile = null;
 	private static String _outFile = null;
@@ -166,10 +167,13 @@ public class ExampleMain {
 
 	private static void start(String[] args) throws IOException {
 		parseArgs(args);
+		if(_timeLimit == null) _timeLimit = _timeLimitDefaultValue;
+		if(_outFile == null) _outFile = _defaultOutFile;
+		if(_inFile == null) throw new IOException("Missing input filename");
 		startBatchMode();
 	}
 
-	public static void main(String[] args) throws IOException, InvocationTargetException, InterruptedException {
+	public static void main(String[] args) throws Exception {
 		
 		// example command lines:
 		//
@@ -186,9 +190,6 @@ public class ExampleMain {
 
 		// Call start to start the simulator from command line, etc.
 		
-		
 		start(args);
-
 	}
-
 }

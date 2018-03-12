@@ -9,8 +9,7 @@ public class NewVehicleEventBuilder implements EventBuilder{
 	 public Event parse(IniSection sec) throws IllegalArgumentException{
 		 if(sec.getTag().equals(TAG)){
 			 int time1 = parseInt(sec, "time", 0);
-			 String id1 = sec.getValue("id");
-			 if(!isValidId(id1)) throw new IllegalArgumentException("El ID " + id1 + " no es valido");
+			 String id1 = parseValidId(sec, "id");
 			 int maxVel = Integer.parseInt(sec.getValue("max_speed"));
 			 String[] ruta = parseIdList(sec, "itinerary");//No sabemos si lo partira bien???????? 
 			 return new NewVehicleEvent(time1, id1, maxVel, ruta);

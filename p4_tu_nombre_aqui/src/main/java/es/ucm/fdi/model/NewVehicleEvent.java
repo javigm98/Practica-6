@@ -24,7 +24,7 @@ public class NewVehicleEvent extends Event{
 		if(time == timeExecution){
 			List<Junction> itinerario = new ArrayList<>();
 			for(String s: ruta){
-				itinerario.add(rm.getJunction(s));
+				itinerario.add(checkJunctionExists(rm, s));
 			}
 			Vehicle v = new Vehicle(id, maxSpeed, itinerario);
 			rm.addVehicle(v);

@@ -10,8 +10,7 @@ public class NewJunctionEventBuilder implements EventBuilder{
 		 if(sec.getTag().equals(TAG)) {
 			 //try{ excepcion si no existen las claves time e id, si time no es entero...
 			 int time1 = parseInt(sec, "time", 0);
-			 String id1 = sec.getValue("id");
-			 if(!isValidId(id1)) throw new IllegalArgumentException("El ID " + id1 + " no es valido");
+			 String id1 = parseValidId(sec, "id");
 			 return new NewJunctionEvent(time1, id1);
 			 //}
 			 //catch (Inval)

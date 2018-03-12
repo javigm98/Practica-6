@@ -7,17 +7,24 @@ public interface EventBuilder {
 	
 	public Event parse(IniSection sec);
 	
-	public default boolean isValidId(String id){
-		for(int i = 0; i < id.length(); ++i){
-			char c = id.charAt(i);
-			if(!Character.isDigit(c) && !Character.isLetter(c) && c != '_') return false;
+	public default boolean isValidId(String id) throws IllegalArgumentException{
+		return id.matches("[a-zA-Z0-9_]+");
+	} 
+	
+	public default String parseValidId(IniSection sec, String key) throws IllegalArgumentException{
+		String s = sec.getValue(key);
+		if(!isValidId(s)) {
+			throw new IllegalArgumentException("La lista de IDs " + key + " no es valida, en seccion " + sec);
 		}
-		return true;
+		return s;
 	}
+	
 	public default String[] parseIdList(IniSection sec, String key) throws IllegalArgumentException{
-		String[] resultado = sec.getValue(key).split(",");
+		String[] resultado = sec.getValue(key).split("[, ]+");
 		for(String s: resultado){
-			if(!isValidId(s)) throw new IllegalArgumentException("El ID " + s + " no es valido");
+			if(!isValidId(s)) {
+				throw new IllegalArgumentException("La lista de IDs " + key + " no es valida, en seccion " + sec);
+			}
 		}
 		return resultado;
 	}

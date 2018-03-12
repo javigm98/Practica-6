@@ -8,8 +8,11 @@ public abstract class Event implements Comparable<Event>{
 		return time;
 	}
 	
-	public Junction checkJunctionExists(RoadMap rm, String id){
-		return rm.getJunction(id);
+	public Junction checkJunctionExists(RoadMap rm, String id) throws IllegalArgumentException{
+		Junction j = rm.getJunction(id);
+		if(j == null) throw new IllegalArgumentException("Could not find start or end juncitions. Expected ids: " + rm.getListaCruces());
+		return j;
+		
 	}
 	public Road checkRoadExists(RoadMap rm, String id){
 		return rm.getRoad(id);
