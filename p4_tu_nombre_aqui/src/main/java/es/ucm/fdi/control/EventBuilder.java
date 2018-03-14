@@ -33,4 +33,10 @@ public interface EventBuilder {
 		if (s == null) return porDefecto;
 		else return Integer.parseInt(s);
 	}
+	public default long parseLong(IniSection sec, String key, long porDefecto){
+		String s = sec.getValue(key);
+		if(s == null) return porDefecto;
+		else return Long.parseLong(s);
+		
+	}
 }

@@ -16,7 +16,8 @@ public class Controller {
 	private String s;
 	
 	private EventBuilder[] bs = {new NewVehicleEventBuilder(), new NewJunctionEventBuilder(), 
-			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder()};
+			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder(), 
+			new NewCarEventBuilder(), new NewBikeEventBuilder()};
 	
 	public void loadEvents(InputStream in1) throws IOException{ // Capturar aqui mejor las excepciones
 		Ini first = new Ini(in1);

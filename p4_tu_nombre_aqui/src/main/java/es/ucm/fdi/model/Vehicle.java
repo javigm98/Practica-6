@@ -8,17 +8,18 @@ import es.ucm.fdi.ini.IniSection;
 
 
 public class Vehicle extends SimObject implements Comparable<Vehicle>{
-	private int velMaxima;
-	private int velActual;
+	protected int velMaxima;
+	//private String type;
+	protected int velActual;
 	private boolean haLlegado;
 	private Road road;
 	private int pos;
 	private List<Junction> itinerario; // por ahora lo hacemois asi, quizas sea mas facil haciendo un array de junction
 	private int tiempoAveria;
 	private int posEnIti; //posEnIti marca la posicion en el itinerario del proximo cruce al que vamos
-	private int km;
+	protected int km;
 	
-	public Vehicle(String id1, int maxSpeed1, List<Junction> route ){
+	public Vehicle(String id1, int maxSpeed1, List<Junction> route){
 		id = id1;
 		velMaxima = maxSpeed1;
 		haLlegado = false;
@@ -31,6 +32,7 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		tiempoAveria = 0;
 		posEnIti = 1;
 		km = 0;
+		//this.type = type;
 	}
 	
 	public Road getRoad(){
@@ -117,6 +119,7 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	}
 	
 	public void fillReportDetails(Map<String, String> out){
+		//out.put("type", type);
 		out.put("speed", Integer.toString(velActual));
 		out.put("kilometrage",Integer.toString(km));
 		out.put("faulty",Integer.toString(tiempoAveria));
