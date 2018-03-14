@@ -70,9 +70,9 @@ public void entraVehiculo(Vehicle v){
 
 public void saleVehiculo(Vehicle v){
 	listaVehiculos.removeValue(v.getPos(), v);
-	if(listaVehiculos.get(v.getPos()).isEmpty()){
+	/*if(listaVehiculos.get(v.getPos()).isEmpty()){
 		listaVehiculos.remove(v.getPos());
-	}
+	}*/
 }
 public Junction getcruceIni(){
 	return cruceIni;
@@ -102,11 +102,22 @@ public void fillReportDetails(Map<String, String> out){
 	List <String> list = new ArrayList<String>();
 	for (Vehicle v: listaVehiculos.innerValues()){
 		//if(v!= null){
-		list.add("(" + v.getId() + ", " + v.getPos() + ")");
+		list.add("(" + v.getId() + "," + v.getPos() + ")");
 		//}
 	}
-	s = String.join(", ", list);
-	if(list.isEmpty()) s = "empty";
+	s = String.join(",", list);
+	//if(list.isEmpty()) s = "empty";
 	out.put("state", s);
+}
+
+public String toString(){
+	String s ="";
+	for (Vehicle v : listaVehiculos.innerValues()){
+		s += v.toString();
+		s += " ";
+		}
+	
+	return s;
+	
 }
 } 

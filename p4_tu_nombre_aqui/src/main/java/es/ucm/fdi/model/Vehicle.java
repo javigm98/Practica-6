@@ -123,7 +123,7 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		if(haLlegado) {
 			out.put("location", "arrived");
 		} else {
-			out.put("location", "(" + road.getId() + ", " + pos + ")");
+			out.put("location", "(" + road.getId() + "," + pos + ")");
 		}
 	}
 
@@ -133,7 +133,8 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	}
 	public String toString(){
 		String s = "";
-		s += "id=" + id + " pos=" + pos;
+		s += "id = " + id + ", pos = " + pos + ", velActual = " + 
+		velActual + ", km = " + km;
 		return s;
 		
 	}

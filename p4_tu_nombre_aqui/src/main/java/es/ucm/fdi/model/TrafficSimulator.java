@@ -62,9 +62,9 @@ private OutputStream out;
 	
 	public void writeReport() throws IOException{
 		Map <String,String> aux = new LinkedHashMap<>();
-		 for(Vehicle v : rm.getListaVehiculos()){
-			 v.report(time,  aux);
-			 mapAIni(aux, v.getReportHeader()).store(out);
+		for(Junction j : rm.getListaCruces()){
+			 j.report(time,  aux);
+			 mapAIni(aux, j.getReportHeader()).store(out);
 			 out.write('\n');
 			 aux.clear();
 		 }
@@ -74,12 +74,12 @@ private OutputStream out;
 			 out.write('\n');
 			 aux.clear();
 		 }
-		 for(Junction j : rm.getListaCruces()){
-			 j.report(time,  aux);
-			 mapAIni(aux, j.getReportHeader()).store(out);
+		 for(Vehicle v : rm.getListaVehiculos()){
+			 v.report(time,  aux);
+			 mapAIni(aux, v.getReportHeader()).store(out);
 			 out.write('\n');
 			 aux.clear();
-		 } 
+		 }
 	}
 	
 	private IniSection mapAIni(Map<String, String> mapa, String tag){

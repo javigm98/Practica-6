@@ -28,19 +28,19 @@ private class IncomingRoad{
 
 	public String toString(){
 		String s = "";
-		s = s + "(" + road.getId() + ", ";
+		s = s + "(" + road.getId() + ",";
 		if(incoming.get(semaforo).equals(this)){
 			s += "green";
 		}
 		else{
 			s+= "red";
 		}
-		s+=", [";
+		s+=",[";
 		List<String> list = new ArrayList<String>();
 		for(Vehicle v: cola){
 			list.add(v.getId());
 		}
-		s += String.join(", ", list);
+		s += String.join(",", list);
 		s += "])";
 		return s;
 		
@@ -80,8 +80,8 @@ List<String> list = new ArrayList<String>();
 	for(IncomingRoad ir: incoming){
 		list.add(ir.toString());
 	}
-	String colas = String.join(", ", list);
-	if(list.isEmpty()) colas = "empty";
+	String colas = String.join(",", list);
+	//if(list.isEmpty()) colas = "empty";
 	out.put("queues", colas);
 }
 
@@ -96,6 +96,12 @@ public void addNewOutgoingRoad(Road road){
 	salidasCruce.put(road.getcruceFin(), road);
 }
 
-
+public String toString(){
+	String s = "";
+	for (IncomingRoad ir: incoming){
+		s+= (ir.toString() + " ");
+	}
+	return s;
+}
 
 }

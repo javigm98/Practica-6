@@ -186,10 +186,10 @@ public class ExampleMain {
 
 		// Call test in order to test the simulator on all examples in a directory.
 		//
-	    //	test("resources/examples/events/basic");
+	    test("C:/hlocal/git/Practica4/p4_tu_nombre_aqui/src/main/resources/examples/basic");
 
 		// Call start to start the simulator from command line, etc.
 		
-		start(args);
+		//start(args);
 	}
 }
