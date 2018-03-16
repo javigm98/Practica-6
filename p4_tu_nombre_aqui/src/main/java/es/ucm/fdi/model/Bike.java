@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Bike extends Vehicle{
 
-	public Bike(String id1, int maxSpeed1, List<Junction> route) {
+	public Bike(String id1, int maxSpeed1, List<Junction> route) throws SimulatorException{
 		super(id1, maxSpeed1, route);
 	}
 	@Override

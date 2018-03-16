@@ -9,8 +9,9 @@ import java.util.Map;
 import es.ucm.fdi.util.*;
 
 public class Road extends SimObject{
-private int longitud, maxVel;
-private MultiTreeMap <Integer, Vehicle> listaVehiculos;
+protected int longitud;
+protected int maxVel;
+protected MultiTreeMap <Integer, Vehicle> listaVehiculos;
 
 //hay que inicializar la lista vehiculos con el comparador mayor (>)
 private Junction cruceIni, cruceFin;

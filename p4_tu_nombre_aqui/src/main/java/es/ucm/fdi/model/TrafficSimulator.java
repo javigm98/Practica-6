@@ -24,14 +24,14 @@ private OutputStream out;
 		rm = new RoadMap();
 		out = out1;
 	}
-	public void run(int numPasos) throws IOException, IllegalArgumentException{
+	public void run(int numPasos) throws IOException, SimulatorException{
 		int limiteTiempo = time + numPasos -1;
 		while(time <= limiteTiempo){
 			run();
 		}
 	}
 	
-	public void run() throws IOException, IllegalArgumentException{
+	public void run() throws IOException, SimulatorException{
 		for(Event e: listaEventos.innerValues()){
 			e.execute(rm, time);
 		}
@@ -39,7 +39,7 @@ private OutputStream out;
 			r.avanza();
 		}
 		for(Junction j: rm.getListaCruces()){
-			j.avanza();
+				j.avanza();
 		}
 		++time;
 		if(out != null) writeReport();

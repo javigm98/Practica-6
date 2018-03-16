@@ -24,7 +24,7 @@ import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.model.TrafficSimulator;
 import es.ucm.fdi.control.Controller;
 
-public class ExampleMain {
+public class Main {
 
 	private final static Integer _timeLimitDefaultValue = 10;
 	private final static String _defaultOutFile = "ex1.out";
@@ -84,7 +84,7 @@ public class ExampleMain {
 	private static void parseHelpOption(CommandLine line, Options cmdLineOptions) {
 		if (line.hasOption("h")) {
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp(ExampleMain.class.getCanonicalName(), cmdLineOptions, true);
+			formatter.printHelp(Main.class.getCanonicalName(), cmdLineOptions, true);
 			System.exit(0);
 		}
 	}
@@ -118,7 +118,7 @@ public class ExampleMain {
 	 * 
 	 * @throws IOException
 	 */
-	private static void test(String path) throws IOException {
+	public static void test(String path) throws IOException {
 
 		File dir = new File(path);
 
@@ -134,7 +134,7 @@ public class ExampleMain {
 		});
 
 		for (File file : files) {
-			test(file.getAbsolutePath(), file.getAbsolutePath() + ".out", file.getAbsolutePath() + ".eout",100);
+			test(file.getAbsolutePath(), file.getAbsolutePath() + ".out", file.getAbsolutePath() + ".eout",10);
 		}
 
 	}
@@ -186,7 +186,7 @@ public class ExampleMain {
 
 		// Call test in order to test the simulator on all examples in a directory.
 		//
-	    //test("C:/hlocal/git/Practica4/p4_tu_nombre_aqui/src/main/resources/examples/basic");
+	   // test("C:/Users/Jorge/git/Practica42/p4_tu_nombre_aqui/src/main/resources/examples/advanced");
 
 		// Call start to start the simulator from command line, etc.
 		

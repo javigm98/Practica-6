@@ -4,12 +4,13 @@ import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.NewJunctionEvent;
 import es.ucm.fdi.model.NewRoadEvent;
+import es.ucm.fdi.model.SimulatorException;
 
 
 public class NewRoadEventBuilder implements EventBuilder{
 	private final static String TAG = "new_road";
-	 public Event parse(IniSection sec) throws IllegalArgumentException{
-		 if(sec.getTag().equals(TAG)) {
+	 public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
+		 if(sec.getTag().equals(TAG) && (sec.getValue("type") == null)) {
 			 int time1 = parseInt(sec, "time", 0);
 			 String id1 = parseValidId(sec, "id");
 			 String iniId = sec.getValue("src");

@@ -17,7 +17,7 @@ public class NewCarEvent extends NewVehicleEvent{
 		this.type = "car";
 	}
 	@Override
-	public void execute(RoadMap rm, int timeExecution){
+	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
 		if(time == timeExecution){
 			super.execute(rm, timeExecution);
 			Car c = new Car(id, maxSpeed, itinerario, resistencia, tMaxAveria, probAveria, semilla);

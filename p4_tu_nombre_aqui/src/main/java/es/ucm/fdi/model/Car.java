@@ -9,8 +9,8 @@ private int resistencia, tMaxAveria, kmUltimaAveria = 0;
 private Random numAleatorio;
 private double probAveria;
 public Car(String id, int maxSpeed, List<Junction> route, int resistencia,
-		int tMaxAveria, double probAveria, long semilla) {
-	super(id, maxSpeed, route);
+		int tMaxAveria, double probAveria, long semilla) throws SimulatorException{
+	super(id, maxSpeed, route) ;
 	this.resistencia = resistencia;
 	this.tMaxAveria = tMaxAveria;
 	this.probAveria = probAveria;
@@ -19,7 +19,7 @@ public Car(String id, int maxSpeed, List<Junction> route, int resistencia,
 @Override
 public void avanza(){
 	if(!estaAveriado()){
-		if(km - kmUltimaAveria >= resistencia){
+		if(km - kmUltimaAveria > resistencia){
 			 if(numAleatorio.nextDouble() < probAveria){
 				 setTiempoAveria(numAleatorio.nextInt(tMaxAveria) + 1);
 				 kmUltimaAveria = km;

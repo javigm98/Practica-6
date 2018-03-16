@@ -6,6 +6,7 @@ import java.util.List;
 import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
+import es.ucm.fdi.model.SimulatorException;
 import es.ucm.fdi.model.TrafficSimulator;
 
 public class Controller {
@@ -17,7 +18,8 @@ public class Controller {
 	
 	private EventBuilder[] bs = {new NewVehicleEventBuilder(), new NewJunctionEventBuilder(), 
 			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder(), 
-			new NewCarEventBuilder(), new NewBikeEventBuilder()};
+			new NewCarEventBuilder(), new NewBikeEventBuilder(),
+			new NewLanesRoadEventBuilder(), new NewDirtRoadEventBuilder()};
 	
 	public void loadEvents(InputStream in1) throws IOException{ // Capturar aqui mejor las excepciones
 		Ini first = new Ini(in1);
@@ -29,10 +31,13 @@ public class Controller {
 			catch(IllegalArgumentException e){
 				System.out.println(e);
 			}
+			catch(SimulatorException se){
+				System.out.println("" + se + se.getCause());
+			}
 		}
 	}
 	 
-	 public Event parseSection(IniSection sec)throws IllegalArgumentException{
+	 public Event parseSection(IniSection sec)throws IllegalArgumentException, SimulatorException{
 		Event e = null;
 		for(EventBuilder eb: bs){
 			if(eb.parse(sec) != null) {
@@ -48,8 +53,8 @@ public class Controller {
 		 try{
 		 simulator.run(pasos);
 		 }
-		 catch (IllegalArgumentException iae){
-			 System.out.println(iae);
+		 catch (SimulatorException se){
+			 System.out.println("" + se + se.getCause());
 		 }
 	 }
 	

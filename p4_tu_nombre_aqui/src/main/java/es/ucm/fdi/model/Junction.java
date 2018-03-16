@@ -52,7 +52,7 @@ public void entraVehiculo(Vehicle v){ //Excepcion vehiculo que no es de esa carr
 	//Como apuntan al mismo incoming road se puede modificar desde cualquiera de los
 	//dos sitios.
 }
-public void avanza(){
+public void avanza() throws SimulatorException{
 	if(!incoming.isEmpty()){
 	if(!incoming.get(semaforo).cola.isEmpty()){
 	//incoming.get(semaforo).cola.getFirst.moverASiguienteCarretera();
@@ -67,7 +67,9 @@ public void avanza(){
 
 
 
-public Road carreteraUneCruces(Junction destino){
+public Road carreteraUneCruces(Junction destino)throws SimulatorException{
+	Road r = salidasCruce.get(destino);
+	if(r == null) throw new SimulatorException("Unexisting road from " + id + " to " + destino.getId());
 	return salidasCruce.get(destino);
 }
 
@@ -96,12 +98,16 @@ public void addNewOutgoingRoad(Road road){
 	salidasCruce.put(road.getcruceFin(), road);
 }
 
-public String toString(){
+public String toStringTest(){
 	String s = "";
 	for (IncomingRoad ir: incoming){
 		s+= (ir.toString() + " ");
 	}
 	return s;
 }
+public String toString(){
+	return id;
+}
+
 
 }

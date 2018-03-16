@@ -2,8 +2,11 @@ package es.ucm.fdi.model;
 
 public class NewRoadEvent extends Event{
 	//private Road road;
-	private String id, iniId, finId;
-	private int longitud, maxVel;
+	protected String id;
+	protected String iniId;
+	protected String finId;
+	protected int longitud;
+	protected int maxVel;
 	public NewRoadEvent(int time1, String id1, String iniId1, String finId1, int maxVel1, int longitud1){
 		time = time1;
 		id = id1;
@@ -16,13 +19,18 @@ public class NewRoadEvent extends Event{
 	
 	
 	@Override
-	public void execute(RoadMap rm, int timeExecution) throws IllegalArgumentException{
+	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
 		if(time == timeExecution){
-			Junction ini = checkJunctionExists(rm, iniId), fin = checkJunctionExists(rm, finId);
-			Road r = new Road(id, longitud, maxVel, ini, fin);
-			rm.addRoad(r);
-			ini.addNewOutgoingRoad(r);
-			fin.addNewIncomingRoad(r);
+			try{
+				Junction ini = checkJunctionExists(rm, iniId), fin = checkJunctionExists(rm, finId);
+				Road r = new Road(id, longitud, maxVel, ini, fin);
+				rm.addRoad(r);
+				ini.addNewOutgoingRoad(r);
+				fin.addNewIncomingRoad(r);
+			}
+			catch(SimulatorException se){
+				throw new SimulatorException("Ini or end Junction of the road " + id + " doesn't exist ", se);
+			}
 		}
 		
 	}

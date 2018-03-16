@@ -22,11 +22,16 @@ public class NewVehicleEvent extends Event{
 		Vehicle v = new Vehicle(id, maxSpeed, ruta, "");*/
 	}
 	@Override
-	public void execute(RoadMap rm, int timeExecution) {
+	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
 		if(time == timeExecution){
 			//List<Junction> itinerario = new ArrayList<>();
 			for(String s: ruta){
-				itinerario.add(checkJunctionExists(rm, s));
+				try{
+					itinerario.add(checkJunctionExists(rm, s));
+				}
+				catch(SimulatorException se){
+					throw new SimulatorException("Unknown junction in the " + id+ " itinerary ", se);
+				}
 			}
 			//Si el tipo es coche o bici, no hacemos nada mas aqui, ya lo hara el metodo
 			//de cada subclase tras llamar a este super para que cree el itinerario.

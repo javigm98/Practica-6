@@ -3,16 +3,22 @@ package es.ucm.fdi.control;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.NewBikeEvent;
+import es.ucm.fdi.model.SimulatorException;
 
 public class NewBikeEventBuilder implements EventBuilder{
 	private final static String TAG = "new_vehicle";
-	 public Event parse(IniSection sec) throws IllegalArgumentException{
+	 public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
 		 if(sec.getTag().equals(TAG) && sec.getValue("type").equals("bike")){
+			try{ 
 			 int time1 = parseInt(sec, "time", 0);
 			 String id1 = parseValidId(sec, "id");
-			 int maxVel = Integer.parseInt(sec.getValue("max_speed"));
+			 int maxVel = parseIntGeneral(sec, "max_speed");
 			 String[] ruta = parseIdList(sec, "itinerary");
 			 return new NewBikeEvent(time1, id1, maxVel, ruta);
+			}
+			catch(NullPointerException npe){
+				throw new SimulatorException("Missing fields in the bike event section ", npe);
+			}
 		 }
 		 else return null;
 	 }

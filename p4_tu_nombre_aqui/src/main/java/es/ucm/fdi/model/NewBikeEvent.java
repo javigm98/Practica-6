@@ -10,7 +10,7 @@ public class NewBikeEvent extends NewVehicleEvent{
 	}
 	
 	@Override
-	public void execute(RoadMap rm, int timeExecution){
+	public void execute(RoadMap rm, int timeExecution)throws SimulatorException{
 		if(time == timeExecution){
 			super.execute(rm, timeExecution); //Aqui creo el itinerario ya que type == "bike"
 			Bike b = new Bike(id, maxSpeed, itinerario); //creo un objeto bike que añado al roadMap

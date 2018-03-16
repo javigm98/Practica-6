@@ -11,16 +11,32 @@ public interface EventBuilder {
 		return id.matches("[a-zA-Z0-9_]+");
 	} 
 	
-	public default String parseValidId(IniSection sec, String key) throws IllegalArgumentException{
+	public default String parseString(IniSection sec, String key)throws NullPointerException{
 		String s = sec.getValue(key);
+		if (s == null) throw new NullPointerException("The key " + key + " doesn't exist ");
+		return s;
+	}
+	public default int parseIntGeneral(IniSection sec, String key)throws NullPointerException{
+		String s = sec.getValue(key);
+		if (s == null) throw new NullPointerException("The key " + key + " doesn't exist ");
+		return Integer.parseInt(s);
+	}
+	public default double parseDoubleGeneral(IniSection sec, String key)throws NullPointerException{
+		String s = sec.getValue(key);
+		if (s == null) throw new NullPointerException("The key " + key + " doesn't exist ");
+		return Double.parseDouble(s);
+	}
+	
+	public default String parseValidId(IniSection sec, String key) throws IllegalArgumentException, NullPointerException{
+		String s = parseString(sec, key);
 		if(!isValidId(s)) {
 			throw new IllegalArgumentException("La lista de IDs " + key + " no es valida, en seccion " + sec);
 		}
 		return s;
 	}
 	
-	public default String[] parseIdList(IniSection sec, String key) throws IllegalArgumentException{
-		String[] resultado = sec.getValue(key).split("[, ]+");
+	public default String[] parseIdList(IniSection sec, String key) throws IllegalArgumentException, NullPointerException{
+		String[] resultado = parseString(sec, key).split("[, ]+");
 		for(String s: resultado){
 			if(!isValidId(s)) {
 				throw new IllegalArgumentException("La lista de IDs " + key + " no es valida, en seccion " + sec);

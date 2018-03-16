@@ -19,14 +19,19 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	private int posEnIti; //posEnIti marca la posicion en el itinerario del proximo cruce al que vamos
 	protected int km;
 	
-	public Vehicle(String id1, int maxSpeed1, List<Junction> route){
+	public Vehicle(String id1, int maxSpeed1, List<Junction> route)throws SimulatorException{
 		id = id1;
 		velMaxima = maxSpeed1;
 		haLlegado = false;
 		velActual = 0;
 		//La carretera inicial es la que une el primer cruce con el segundo
 		//Empieza en un cruce o en una carretera????
-		road = route.get(0).carreteraUneCruces(route.get(1));
+		try{
+			road = route.get(0).carreteraUneCruces(route.get(1));
+		}
+		catch(SimulatorException se){
+			throw new SimulatorException("The initial road for the vehicle " + id + " doesn't exist ", se);
+		}
 		pos = 0;
 		itinerario = route;
 		tiempoAveria = 0;
@@ -95,7 +100,13 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 			velActual = 0;
 		}
 		else{
-		road = itinerario.get(posEnIti).carreteraUneCruces(itinerario.get(posEnIti + 1));
+			try{
+				road = itinerario.get(posEnIti).carreteraUneCruces(itinerario.get(posEnIti + 1));
+			}
+			catch (SimulatorException se){
+				throw new SimulatorException("Unkown road in the itinerary of the vehicle " + id + " ", se);
+			}
+		
 		posEnIti++;
 		pos = 0;
 		road.entraVehiculo(this); // ¿Se puede hacer esto por lo del this que esta feo?

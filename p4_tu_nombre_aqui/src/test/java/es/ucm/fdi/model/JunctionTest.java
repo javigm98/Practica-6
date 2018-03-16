@@ -45,16 +45,16 @@ public class JunctionTest {
 		j2.avanza();
 		r1.avanza();
 		r2.avanza();
-		assertEquals(j2.toString(), "(r1, green, [v1, v2]) (r2, red, [v3, v4]) ");
+		assertEquals(j2.toStringTest(), "(r1, green, [v1, v2]) (r2, red, [v3, v4]) ");
 		j2.avanza();
-		assertEquals(j2.toString(), "(r1, red, [v2]) (r2, green, [v3, v4]) ");
+		assertEquals(j2.toStringTest(), "(r1, red, [v2]) (r2, green, [v3, v4]) ");
 		assertEquals(v1.toString(), "id = v1, pos = 0, velActual = 0, km = 20");
 		j2.avanza();
-		assertEquals(j2.toString(), "(r1, green, [v2]) (r2, red, [v4]) ");
+		assertEquals(j2.toStringTest(), "(r1, green, [v2]) (r2, red, [v4]) ");
 		j2.avanza();
-		assertEquals(j2.toString(), "(r1, red, []) (r2, green, [v4]) ");
+		assertEquals(j2.toStringTest(), "(r1, red, []) (r2, green, [v4]) ");
 		j2.avanza();
-		assertEquals(j2.toString(), "(r1, green, []) (r2, red, []) ");
+		assertEquals(j2.toStringTest(), "(r1, green, []) (r2, red, []) ");
 	}
 
 }
