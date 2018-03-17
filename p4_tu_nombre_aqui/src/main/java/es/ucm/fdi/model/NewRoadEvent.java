@@ -1,5 +1,11 @@
 package es.ucm.fdi.model;
 
+/**
+ * Evento que representa un objeto de la clase Road que se añadirá al simulador.
+ * @author Javier Guzmán y Jorge Villarrubia
+ *
+ */
+
 public class NewRoadEvent extends Event{
 	//private Road road;
 	protected String id;
@@ -7,16 +13,18 @@ public class NewRoadEvent extends Event{
 	protected String finId;
 	protected int longitud;
 	protected int maxVel;
-	public NewRoadEvent(int time1, String id1, String iniId1, String finId1, int maxVel1, int longitud1){
-		time = time1;
-		id = id1;
-		iniId = iniId1;
-		finId = finId1;
-		maxVel = maxVel1;
-		longitud = longitud1;
-		//road = new Road(id, longitud, maxVel, iniId ,finId);
+	public NewRoadEvent(int time, String id, String iniId, String finId, int maxVel, int longitud){
+		this.time = time;
+		this.id = id;
+		this.iniId = iniId;
+		this.finId = finId;
+		this.maxVel = maxVel;
+		this.longitud = longitud;
 	}
-	
+	/**
+	 * Metodo que añade una nueva carretera al simulador con los datos que tenemos si es el momento de añadirla.
+	 * Lanza una excepción si no existen los cruces inicial o final.
+	 */
 	
 	@Override
 	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{

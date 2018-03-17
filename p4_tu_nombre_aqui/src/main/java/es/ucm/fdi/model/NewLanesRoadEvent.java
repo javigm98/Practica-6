@@ -1,5 +1,11 @@
 package es.ucm.fdi.model;
 
+/**
+ * Evento que representa un objeto de la clase LanesRoad que se añadirá al simulador.
+ * @author Javier Guzmán y Jorge Villarrubia
+ *
+ */
+
 public class NewLanesRoadEvent extends NewRoadEvent{
 private int numCarriles;
 	public NewLanesRoadEvent(int time, String id, String iniId,
@@ -8,6 +14,10 @@ private int numCarriles;
 		this.numCarriles = numCarriles;
 	}
 	
+	/**
+	 * Metodo que añade una nueva autopista al simulador con los datos que tenemos si es el momento de añadirla.
+	 * Lanza una excepción si no existen los cruces inicial o final.
+	 */
 	@Override
 	public void execute(RoadMap rm, int timeExecution) throws IllegalArgumentException{
 		if(time == timeExecution){

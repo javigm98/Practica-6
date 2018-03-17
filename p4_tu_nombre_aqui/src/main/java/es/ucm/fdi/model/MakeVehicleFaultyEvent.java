@@ -1,17 +1,25 @@
 package es.ucm.fdi.model;
 
 import java.util.List;
-
+/**
+ * Clase que representa un evento por el cual se averían uno o más vehículos cuyos ids están alamcenados en
+ * listaVehiculos con un tiempo duracion.
+ * @author Javier Guzmán y Jorge Villarrubia.
+ *
+ */
 public class MakeVehicleFaultyEvent extends Event{
 	private String[] listaVehiculos;
 	private int duracion;
 	
-	public MakeVehicleFaultyEvent(int time1, int dur, String[] lista){
-		time = time1;
-		duracion = dur;
-		listaVehiculos = lista;
+	public MakeVehicleFaultyEvent(int time, int duracion, String[] listaVehiculos){
+		this.time = time;
+		this.duracion = duracion;
+		this.listaVehiculos = listaVehiculos;
 	}
-	//Execute ya los averia
+	/**
+	 * El metodo execute aquí lo unico que hace es poner el tiempo de avería de los vehículos de listaVehiculos
+	 * a duracion. 
+	 */
 	public void execute(RoadMap rm, int timeExecution){
 		if(time == timeExecution){
 			for(String s : listaVehiculos){
