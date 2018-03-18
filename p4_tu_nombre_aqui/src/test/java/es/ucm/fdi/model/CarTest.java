@@ -19,7 +19,7 @@ public class CarTest {
 		List <Junction> l = new ArrayList<>();
 		l.add(j1);
 		l.add(j2);
-		Car v1 = new Car ("v1", 28, l, 20, 2, 0.8, 134); // Aguanta solo 20 km, 2 ciclos averiado, 0.98 e probabilidade averiarse
+		Car v1 = new Car ("v1", 28, l, 20, 2, 0.8, 134); // Aguanta solo 20 km, 2 ciclos averiado, 0.98d e probabilidad de averiarse
 		r.entraVehiculo(v1);
 		r.avanza();
 		r.avanza();

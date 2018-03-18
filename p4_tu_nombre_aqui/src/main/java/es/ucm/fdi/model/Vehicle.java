@@ -3,63 +3,76 @@ package es.ucm.fdi.model;
 import java.util.List;
 import java.util.Map;
 
-
-
+/**
+ * Clase que representa un vehículo de la simulación. Alamcena su velocidad máxima, su velocidad actual,
+ * si ha llegado a su destino o no, la carretera en la que se encuentra, la posción que ocupa en dicha carretera,
+ * un alista de cruces con el itinerario a seguir, el tiempo que le queda estando averiado, la posicón dentro del itinerario,
+ * y los kilómetros recorridos.
+ * @author Javier Guzmán y Jorge Villarrubia.
+ */
 public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	protected int velMaxima;
-	protected int velActual;
-	private boolean haLlegado;
+	protected int velActual = 0;
+	private boolean haLlegado = false;
 	private Road road;
-	private int pos;
+	private int pos = 0;
 	private List<Junction> itinerario; 
-	private int tiempoAveria;
-	private int posEnIti; //posEnIti marca la posicion en el itinerario del proximo cruce al que vamos
-	protected int km;
+	private int tiempoAveria = 0;
+	private int posEnIti = 1; //posEnIti marca la posicion en el itinerario del proximo cruce al que vamos
+	protected int km = 0;
 	
 
-	public Vehicle(String id1, int maxSpeed1, List<Junction> route)throws SimulatorException{
-		id = id1;
-		velMaxima = maxSpeed1;
-		haLlegado = false;
-		velActual = 0;
+	public Vehicle(String id, int velMaxima, List<Junction> route)throws SimulatorException{
+		this.id = id;
+		this.velMaxima = velMaxima;
 		try{
 			road = route.get(0).carreteraUneCruces(route.get(1));
 		}
 		catch(SimulatorException se){
 			throw new SimulatorException("The initial road for the vehicle " + id + " doesn't exist ", se);
 		}
-		pos = 0;
 		itinerario = route;
-		tiempoAveria = 0;
-		posEnIti = 1;
-		km = 0;
 	}
 	
+	/**
+	 * 
+	 * @return la velocidad actual de un vehículo.
+	 */
 	public int getVelActual() {
 		return velActual;
 	}
 	
-	
+	/**
+	 * 
+	 * @return la carretera por la que se mueve un vehículo.
+	 */
 	public Road getRoad(){
 		return road;
 	}
 	
-	public void setVelMaxima(int v){
-		velMaxima = v;
-	}
-	
+	/**
+	 * 
+	 * @return true si el vehículo está averiado, false si no.
+	 */
 	public boolean estaAveriado(){
 		return tiempoAveria > 0;
 	}
 	
 	
-	
+	/**
+	 * Avanza un vehículo en la carretera, disminuyendo su tiempo de avería si está averiado o avanzando su posición e
+	 * incrementando sus kilómetros si no lo está, y añadiéndolo a la cola del cruce correspondiente si ha llegado al 
+	 * final de la carretera.
+	 */
+	@Override
 	public void avanza(){
 		if(tiempoAveria == 0){
 			if(pos + velActual > road.getLongitud()){
 				km += (road.getLongitud() - pos);
 			}
-			else km += velActual;
+			else {
+				km += velActual;
+			}
 			pos += velActual;
 			if(pos >= road.getLongitud()){
 				velActual = 0;
@@ -74,23 +87,36 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		}
 	}
 	
-	public void velActual(int v){
-		velActual = v;
-	}
-	
+	/**
+	 * 
+	 * @return la posición del vehículo en la carretera.
+	 */
 	public int getPos(){
 		return pos;
 	}
 	
+	/**
+	 * 
+	 * @return true si el vehículo ha llegado a su destino, false si no.
+	 */
 	public boolean getHaLlegado() {
 		return haLlegado;
 	}
+	/**
+	 * 
+	 * @param haLlegado true si el vehículo ha llegado a su destino, false si no.
+	 */
 
 	public void setHaLlegado(boolean haLlegado) {
 		this.haLlegado = haLlegado;
 	}
+	
+	/**
+	 * Mueve el vehículo a la siguiente carretera de su itinerario, actualizando si ha llegado a su destino en caso
+	 * de ser así.
+	 */
 
-	public void moverASiguienteCarretera(){
+	public void moverASiguienteCarretera() throws SimulatorException{
 		road.saleVehiculo(this);
 		if (posEnIti == itinerario.size() - 1){
 			haLlegado = true;
@@ -110,22 +136,30 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @param n pasos de la simulación que debe estra averiado el vehículo.
+	 */
 	public void setTiempoAveria(int n){
 		tiempoAveria += n;
 		if(tiempoAveria > 0) velActual = 0;
 	}
 	
+	/**
+	 * 
+	 * @param vel nueva velocidad actual del vehículo.
+	 */
 	public void setVelocidadActual(int vel){
 		if(vel > velMaxima) velActual = velMaxima;
 		else velActual = vel;
 	}
 	
-	
+	@Override
 	public String getReportHeader(){
 		return "vehicle_report";
 	}
 	
+	@Override
 	public void fillReportDetails(Map<String, String> out){
 		out.put("speed", Integer.toString(velActual));
 		out.put("kilometrage",Integer.toString(km));
@@ -141,6 +175,8 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	public int compareTo(Vehicle o) {
 		return this.pos - o.pos;
 	}
+	
+	@Override
 	public String toString(){
 		String s = "";
 		s += "id = " + id + ", pos = " + pos + ", velActual = " + 

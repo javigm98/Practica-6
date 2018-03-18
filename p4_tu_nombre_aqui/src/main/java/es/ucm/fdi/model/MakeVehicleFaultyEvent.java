@@ -15,10 +15,12 @@ public class MakeVehicleFaultyEvent extends Event{
 		this.duracion = duracion;
 		this.listaVehiculos = listaVehiculos;
 	}
+	
 	/**
 	 * El metodo execute aquí lo unico que hace es poner el tiempo de avería de los vehículos de listaVehiculos
 	 * a duracion. 
 	 */
+	@Override
 	public void execute(RoadMap rm, int timeExecution){
 		if(time == timeExecution){
 			for(String s : listaVehiculos){

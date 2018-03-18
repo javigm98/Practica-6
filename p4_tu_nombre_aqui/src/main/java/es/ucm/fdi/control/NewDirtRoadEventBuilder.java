@@ -5,6 +5,11 @@ import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.NewDirtRoadEvent;
 import es.ucm.fdi.model.SimulatorException;
 
+/**
+ * Credaor del evento nuevo camino
+ * @author Javier Guzmán y Jorge Villarrubia
+ *
+ */
 public class NewDirtRoadEventBuilder implements EventBuilder{
 	private final static String TAG = "new_road";
 	@Override

@@ -7,7 +7,6 @@ package es.ucm.fdi.model;
  */
 
 public class NewRoadEvent extends Event{
-	//private Road road;
 	protected String id;
 	protected String iniId;
 	protected String finId;

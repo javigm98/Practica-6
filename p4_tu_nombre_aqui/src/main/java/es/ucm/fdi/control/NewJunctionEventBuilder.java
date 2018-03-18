@@ -5,8 +5,14 @@ import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.NewJunctionEvent;
 import es.ucm.fdi.model.SimulatorException;
 
+/**
+ * Credaor del evento de nuevo cruce
+ * @author Javier Guzmán y Jorge Villarrubia
+ *
+ */
 public class NewJunctionEventBuilder implements EventBuilder{
 	private final static String TAG = "new_junction";
+	@Override
 	 public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
 		 if(sec.getTag().equals(TAG)) {
 			try{

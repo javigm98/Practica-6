@@ -5,8 +5,14 @@ import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.MakeVehicleFaultyEvent;
 import es.ucm.fdi.model.SimulatorException;
 
+/**
+ * Credaor del evento de avería de vehículos
+ * @author Javier Guzmán y Jorge Villarrubia
+ *
+ */
 public class MakeVehicleFaultyEventBuilder implements EventBuilder {
 	private final static String TAG = "make_vehicle_faulty";
+	@Override
 	public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
 		 if(sec.getTag().equals(TAG)) {
 			try{ 

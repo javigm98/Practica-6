@@ -59,9 +59,9 @@ public void avanza(){
 /**
  * Añade al informe de la carretera el tipo correspondiente (dirt).
  */
-@Override
-public void fillReportDetails(Map<String, String> out){
-out.put("type", "dirt");
-super.fillReportDetails(out);
-}
-}
+	@Override
+	public void fillReportDetails(Map<String, String> out){
+		out.put("type", "dirt");
+		super.fillReportDetails(out);
+	}
+	}

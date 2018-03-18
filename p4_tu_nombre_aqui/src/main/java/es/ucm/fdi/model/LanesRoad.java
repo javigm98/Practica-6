@@ -71,10 +71,7 @@ private int numCarriles;
 		} 
 		listaVehiculos = nuevo;
 	}
-@Override
-	/**
-	 * Añade al informe de una auopista el tipo correspondiente (lanes).
-	 */
+	@Override
 	public void fillReportDetails(Map<String, String> out){
 	out.put("type", "lanes");
 	super.fillReportDetails(out);

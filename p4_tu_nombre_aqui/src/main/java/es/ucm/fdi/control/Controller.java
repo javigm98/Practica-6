@@ -9,6 +9,11 @@ import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.SimulatorException;
 import es.ucm.fdi.model.TrafficSimulator;
 
+/**
+ * Controlador del simulador de tráfico, se encaraga de ejecutar los pasos de la ejecución.
+ * @author Javier Guzmán y Jorge Villarrubia.
+ *
+ */
 public class Controller {
 	private TrafficSimulator simulator;
 	private int pasos;
@@ -19,6 +24,16 @@ public class Controller {
 			new NewCarEventBuilder(), new NewBikeEventBuilder(),
 			new NewLanesRoadEventBuilder(), new NewDirtRoadEventBuilder()};
 	
+	public Controller(TrafficSimulator simulator, int pasos){
+		this.simulator = simulator;
+		this.pasos = pasos;
+	}
+	
+	/**
+	 * Carga en la lista de eventos del simulador los eventos de un flujo de entrada dado.
+	 * @param in1 flujo del que se leerán los datos.
+	 * @throws IOException si no se puede acceder al fichero inicial.
+	 */
 	public void loadEvents(InputStream in1) throws IOException{
 		Ini first = new Ini(in1);
 		List<IniSection> listaSecciones = first.getSections();
@@ -35,6 +50,13 @@ public class Controller {
 		}
 	}
 	 
+	/**
+	 * Dado una sección Ini decide a que evento corresponde.
+	 * @param sec sección Ini a parsear.
+	 * @return el evento correspondiente a la sección.
+	 * @throws IllegalArgumentException si no se encuentra el evento al que corresponde la sección.
+	 * @throws SimulatorException si el evento no respeta la lógica que se requiere para implementar el simulador.
+	 */
 	 public Event parseSection(IniSection sec)throws IllegalArgumentException, SimulatorException{
 		Event e = null;
 		for(EventBuilder eb: bs){
@@ -47,18 +69,22 @@ public class Controller {
 		return e;
 	}
 	 
-	 public void run() throws IOException{
+	 /**
+	  * Ejecuta la simulación durante una serie de pasos
+	  * @throws IOException
+	  */
+	 public void run(){
 		 try{
 		 simulator.run(pasos);
 		 }
 		 catch (SimulatorException se){
 			 System.out.println("" + se + se.getCause());
 		 }
+		 catch (IOException ioe){
+			 System.out.println(ioe);
+		 }
 	 }
 	
-	public Controller(TrafficSimulator ts, int pasos1){
-		simulator = ts;
-		pasos = pasos1;
-	}
+	
 	
 }

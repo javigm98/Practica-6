@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**Clase que representa un cruvce en el simulador.
+/**Clase que representa un cruce en el simulador.
  * Sus atributos representan las carreteras entrantes al cruce(entradas cruce y incoming), las carreteras salientes
  * (salidasCruces) y la posición de las listas de carreteras entrantes en la que está verde el semáforo.
  * 
@@ -84,6 +84,7 @@ public void entraVehiculo(Vehicle v){
  * Metodo que avanza la simulacion en el cruce, rotando el semáforo entre las diferentes carreteras entrantes
  * y avanzando al primer vehículo de la cola de la carretera que tiene el semáforo en verde de acuerdo con su itinerario.
  */
+@Override
 public void avanza() throws SimulatorException{
 	if(!incoming.isEmpty()){
 		if(!incoming.get(semaforo).cola.isEmpty()){
@@ -111,15 +112,11 @@ public Road carreteraUneCruces(Junction destino)throws SimulatorException{
 	return r;
 }
 
-/**
- * Devuelve la cabecera de los informes de los objetos de tipo Junction.
- */
+@Override
 public String getReportHeader(){
 	return "junction_report";
 }
-/**
- * Devuelve un mapa clave valor con los elementos que debe mostrar el informe específico de un Junction.
- */
+@Override
 public void fillReportDetails(Map<String, String> out) {
 List<String> list = new ArrayList<String>();
 	for(IncomingRoad ir: incoming){
@@ -155,6 +152,7 @@ public String toStringTest(){
 	}
 	return s;
 }
+@Override
 public String toString(){
 	return id;
 }

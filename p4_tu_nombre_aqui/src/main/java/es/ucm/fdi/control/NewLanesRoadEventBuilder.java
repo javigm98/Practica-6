@@ -5,6 +5,11 @@ import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.NewLanesRoadEvent;
 import es.ucm.fdi.model.SimulatorException;
 
+/**
+ * Credaor del evento de nueva autopista
+ * @author Javier Guzmán y Jorge Villarrubia
+ *
+ */
 public class NewLanesRoadEventBuilder implements EventBuilder{
 	private final static String TAG = "new_road";
 	@Override
