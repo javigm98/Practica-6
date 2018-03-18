@@ -8,8 +8,7 @@ import es.ucm.fdi.model.SimulatorException;
 public class NewCarEventBuilder implements EventBuilder{
 	private final static String TAG = "new_vehicle";
 	 public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
-		 if(sec.getTag().equals(TAG) && sec.getValue("type").equals("car")){
-			 
+		 if(sec.getTag().equals(TAG) && sec.getValue("type").equals("car")){ 
 			 try{
 			 int time = parseInt(sec, "time", 0);
 			 String id = parseValidId(sec, "id");

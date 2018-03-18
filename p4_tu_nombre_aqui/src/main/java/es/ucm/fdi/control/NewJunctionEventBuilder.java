@@ -9,7 +9,6 @@ public class NewJunctionEventBuilder implements EventBuilder{
 	private final static String TAG = "new_junction";
 	 public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
 		 if(sec.getTag().equals(TAG)) {
-			 //try{ excepcion si no existen las claves time e id, si time no es entero...
 			try{
 			int time1 = parseInt(sec, "time", 0);
 			 String id1 = parseValidId(sec, "id");
@@ -21,8 +20,6 @@ public class NewJunctionEventBuilder implements EventBuilder{
 			catch(NumberFormatException nfe){
 				 throw new SimulatorException("Missing number fields in the road event section ", nfe);
 			 }
-			 //}
-			 //catch (Inval)
 		 }
 		 else return null;
 	 }

@@ -12,16 +12,14 @@ import es.ucm.fdi.model.TrafficSimulator;
 public class Controller {
 	private TrafficSimulator simulator;
 	private int pasos;
-	private InputStream in;
-	private OutputStream out;
-	private String s;
+
 	
 	private EventBuilder[] bs = {new NewVehicleEventBuilder(), new NewJunctionEventBuilder(), 
 			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder(), 
 			new NewCarEventBuilder(), new NewBikeEventBuilder(),
 			new NewLanesRoadEventBuilder(), new NewDirtRoadEventBuilder()};
 	
-	public void loadEvents(InputStream in1) throws IOException{ // Capturar aqui mejor las excepciones
+	public void loadEvents(InputStream in1) throws IOException{
 		Ini first = new Ini(in1);
 		List<IniSection> listaSecciones = first.getSections();
 		for (IniSection sec: listaSecciones){
@@ -58,11 +56,9 @@ public class Controller {
 		 }
 	 }
 	
-	public Controller(TrafficSimulator ts, int pasos1, InputStream in1, OutputStream out1){
+	public Controller(TrafficSimulator ts, int pasos1){
 		simulator = ts;
 		pasos = pasos1;
-		in = in1;
-		out = out1;
 	}
 	
 }

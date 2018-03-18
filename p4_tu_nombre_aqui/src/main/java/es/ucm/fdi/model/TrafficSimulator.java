@@ -12,7 +12,6 @@ public class TrafficSimulator {
 	
 private int time;
 private MultiTreeMap<Integer, Event> listaEventos;
-//private List<Event> listaEventos;
 private RoadMap rm;
 private OutputStream out;
 	public TrafficSimulator(OutputStream out1){

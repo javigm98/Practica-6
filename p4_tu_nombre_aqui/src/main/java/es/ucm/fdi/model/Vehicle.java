@@ -7,12 +7,11 @@ import java.util.Map;
 
 public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	protected int velMaxima;
-	//private String type;
 	protected int velActual;
 	private boolean haLlegado;
 	private Road road;
 	private int pos;
-	private List<Junction> itinerario; // por ahora lo hacemois asi, quizas sea mas facil haciendo un array de junction
+	private List<Junction> itinerario; 
 	private int tiempoAveria;
 	private int posEnIti; //posEnIti marca la posicion en el itinerario del proximo cruce al que vamos
 	protected int km;
@@ -23,8 +22,6 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		velMaxima = maxSpeed1;
 		haLlegado = false;
 		velActual = 0;
-		//La carretera inicial es la que une el primer cruce con el segundo
-		//Empieza en un cruce o en una carretera????
 		try{
 			road = route.get(0).carreteraUneCruces(route.get(1));
 		}
@@ -36,7 +33,6 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		tiempoAveria = 0;
 		posEnIti = 1;
 		km = 0;
-		//this.type = type;
 	}
 	
 	public int getVelActual() {
@@ -60,8 +56,6 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	
 	public void avanza(){
 		if(tiempoAveria == 0){
-			
-			//Poner velocidad actual al valor que corresponda (Hecho)
 			if(pos + velActual > road.getLongitud()){
 				km += (road.getLongitud() - pos);
 			}
@@ -69,7 +63,6 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 			pos += velActual;
 			if(pos >= road.getLongitud()){
 				velActual = 0;
-				//road.saleVehiculo(this);
 				pos = road.getLongitud();
 				itinerario.get(posEnIti).entraVehiculo(this);
 			}
@@ -113,7 +106,7 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		
 		posEnIti++;
 		pos = 0;
-		road.entraVehiculo(this); // ¿Se puede hacer esto por lo del this que esta feo?
+		road.entraVehiculo(this);
 		}
 		
 	}
@@ -134,7 +127,6 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	}
 	
 	public void fillReportDetails(Map<String, String> out){
-		//out.put("type", type);
 		out.put("speed", Integer.toString(velActual));
 		out.put("kilometrage",Integer.toString(km));
 		out.put("faulty",Integer.toString(tiempoAveria));

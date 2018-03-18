@@ -5,12 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import es.ucm.fdi.control.EventBuilder;
+import es.ucm.fdi.control.NewCarEventBuilder;
 import es.ucm.fdi.control.NewRoadEventBuilder;
 import es.ucm.fdi.ini.IniSection;
 
 public class BuildersTestFails {
 
-	@Test (expected = SimulatorException.class)
+	@Test (expected = SimulatorException.class) // Aunque en origen fuese una NumberFormatException
 	public void RoadBuilderWithoutMaxSpeedest() {
 		EventBuilder eb = new NewRoadEventBuilder();
 		IniSection sec = new IniSection("new_road");
@@ -19,7 +20,17 @@ public class BuildersTestFails {
 		sec.setValue("src", "j1");
 		sec.setValue("dest", "j2");
 		sec.setValue("length", 100);
-		Event e = eb.parse(sec);	
+		eb.parse(sec);	// No necesito la referencia, solo llamarla para que se produzca la excepcion
 	}
+	
+	@Test (expected = SimulatorException.class) // Faltan mas campos. Pero el primero que comprueba y da error es en el ID
+	public void CarBuilderWithoutId() {
+		EventBuilder eb = new NewCarEventBuilder();
+		IniSection sec = new IniSection("new_vehicle");
+		sec.setValue("time", 0);
+		sec.setValue("type", "car");
+		eb.parse(sec);
+	}
+
 
 }

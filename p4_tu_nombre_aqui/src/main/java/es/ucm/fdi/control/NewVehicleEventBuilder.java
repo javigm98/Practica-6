@@ -13,7 +13,7 @@ public class NewVehicleEventBuilder implements EventBuilder{
 			 int time1 = parseInt(sec, "time", 0);
 			 String id1 = parseValidId(sec, "id");
 			 int maxVel = parseIntGeneral(sec, "max_speed");
-			 String[] ruta = parseIdList(sec, "itinerary");//No sabemos si lo partira bien???????? 
+			 String[] ruta = parseIdList(sec, "itinerary");
 			 return new NewVehicleEvent(time1, id1, maxVel, ruta);
 			 }
 			 catch(NullPointerException npe){

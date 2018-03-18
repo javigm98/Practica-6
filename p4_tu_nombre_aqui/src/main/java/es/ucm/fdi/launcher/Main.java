@@ -152,14 +152,12 @@ public class Main {
 	 * @throws IOException
 	 */
 	private static void startBatchMode() throws IOException {
-		InputStream in1 = new FileInputStream(_inFile); // Creo un inputStream
+		InputStream in1 = new FileInputStream(_inFile); 
 		OutputStream out1 = new FileOutputStream(_outFile);
-		Controller controller = new Controller(new TrafficSimulator(out1), _timeLimit, in1, out1);
+		Controller controller = new Controller(new TrafficSimulator(out1), _timeLimit);
 		controller.loadEvents(in1);
 		controller.run();
-		
-		// Add your code here. Note that the input argument where parsed and stored into
-		// corresponding fields.
+
 	}
 
 	private static void start(String[] args) throws IOException {
@@ -183,7 +181,7 @@ public class Main {
 
 		// Call test in order to test the simulator on all examples in a directory.
 		//
-	   test("C:/examples/err");
+	   test("C:/examples/advanced");
 
 		// Call start to start the simulator from command line, etc.
 		
