@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Scanner;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -186,10 +183,10 @@ public class Main {
 
 		// Call test in order to test the simulator on all examples in a directory.
 		//
-	   // test("C:/Users/Jorge/git/Practica42/p4_tu_nombre_aqui/src/main/resources/examples/advanced");
+	   test("C:/examples/err");
 
 		// Call start to start the simulator from command line, etc.
 		
-		start(args);
+		//start(args);
 	}
 }

@@ -1,6 +1,5 @@
 package es.ucm.fdi.model;
 
-import java.util.List;
 /**
  * Evento que representa un objeto de la clase Bike que se añadirá al simulador.
  * @author Javier Guzmán y Jorge Villarrubia

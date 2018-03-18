@@ -1,6 +1,5 @@
 package es.ucm.fdi.model;
 
-import java.util.List;
 /**
  * Clase que representa un evento por el cual se averían uno o más vehículos cuyos ids están alamcenados en
  * listaVehiculos con un tiempo duracion.

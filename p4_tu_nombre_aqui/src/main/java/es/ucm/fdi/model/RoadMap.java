@@ -2,7 +2,6 @@ package es.ucm.fdi.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class RoadMap {
 	private List<Vehicle> listaVehiculos;

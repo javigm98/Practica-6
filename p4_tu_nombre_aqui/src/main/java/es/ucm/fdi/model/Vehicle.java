@@ -1,10 +1,8 @@
 package es.ucm.fdi.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import es.ucm.fdi.ini.IniSection;
 
 
 public class Vehicle extends SimObject implements Comparable<Vehicle>{
@@ -19,6 +17,7 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 	private int posEnIti; //posEnIti marca la posicion en el itinerario del proximo cruce al que vamos
 	protected int km;
 	
+
 	public Vehicle(String id1, int maxSpeed1, List<Junction> route)throws SimulatorException{
 		id = id1;
 		velMaxima = maxSpeed1;
@@ -39,6 +38,11 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		km = 0;
 		//this.type = type;
 	}
+	
+	public int getVelActual() {
+		return velActual;
+	}
+	
 	
 	public Road getRoad(){
 		return road;

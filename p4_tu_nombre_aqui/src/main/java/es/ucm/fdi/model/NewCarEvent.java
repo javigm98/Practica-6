@@ -1,7 +1,6 @@
 package es.ucm.fdi.model;
 
-import java.util.List;
-import java.util.Random;
+
 
 /**
  * Evento que representa un objeto de la clase Car que se añadirá al simulador.

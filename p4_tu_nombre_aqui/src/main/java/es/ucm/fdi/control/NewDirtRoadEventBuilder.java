@@ -3,7 +3,6 @@ package es.ucm.fdi.control;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.NewDirtRoadEvent;
-import es.ucm.fdi.model.NewLanesRoadEvent;
 import es.ucm.fdi.model.SimulatorException;
 
 public class NewDirtRoadEventBuilder implements EventBuilder{
@@ -23,6 +22,9 @@ public class NewDirtRoadEventBuilder implements EventBuilder{
 			 catch(NullPointerException npe){
 					throw new SimulatorException("Missing fields in the dirt road event section ", npe);
 			}
+			 catch(NumberFormatException nfe){
+				 throw new SimulatorException("Missing number fields in the road event section ", nfe);
+			 }
 			 
 		 }
 		 else return null;

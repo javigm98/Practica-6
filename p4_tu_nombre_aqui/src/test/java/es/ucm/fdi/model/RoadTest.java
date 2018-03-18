@@ -31,7 +31,6 @@ public class RoadTest {
 		r1.avanza();
 		r1.avanza();
 		assertEquals(r1.toString(), "id = v2, pos = 72, velActual = 21, km = 72 id = v1, pos = 49, velActual = 21, km = 49 ");
-
 	}
 
 }

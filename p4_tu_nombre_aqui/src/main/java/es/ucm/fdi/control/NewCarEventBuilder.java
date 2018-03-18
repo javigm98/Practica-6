@@ -3,7 +3,6 @@ package es.ucm.fdi.control;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.NewCarEvent;
-import es.ucm.fdi.model.NewVehicleEvent;
 import es.ucm.fdi.model.SimulatorException;
 
 public class NewCarEventBuilder implements EventBuilder{
@@ -25,6 +24,9 @@ public class NewCarEventBuilder implements EventBuilder{
 			 catch(NullPointerException npe){
 					throw new SimulatorException("Missing fields in the car event section ", npe);
 			}
+			 catch(NumberFormatException nfe){
+				 throw new SimulatorException("Missing number fields in the road event section ", nfe);
+			 }
 			 
 		 }
 		 else return null;
