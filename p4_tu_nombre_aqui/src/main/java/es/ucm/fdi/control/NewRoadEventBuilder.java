@@ -20,16 +20,13 @@ public class NewRoadEventBuilder implements EventBuilder{
 			 String id1 = parseValidId(sec, "id");
 			 String iniId = sec.getValue("src");
 			 String finId = sec.getValue("dest");
-			 int maxVel = Integer.parseInt(sec.getValue("max_speed"));
-			 int longitud = Integer.parseInt(sec.getValue("length"));
+			 int maxVel = parseIntGeneral(sec, "max_speed");
+			 int longitud = parseIntGeneral(sec, "length");
 			 return new NewRoadEvent(time1, id1, iniId, finId, maxVel, longitud);
 			 }
 			 catch(NullPointerException npe){
 					throw new SimulatorException("Missing fields in the road event section ", npe);
 			}
-			 catch(NumberFormatException nfe){
-				 throw new SimulatorException("Missing number fields in the road event section ", nfe);
-			 }
 		 }
 		 else return null;
 	 }

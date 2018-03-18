@@ -28,9 +28,6 @@ public class NewLanesRoadEventBuilder implements EventBuilder{
 			 catch(NullPointerException npe){
 					throw new SimulatorException("Missing fields in the lane road event section ", npe);
 			}
-			 catch(NumberFormatException nfe){
-				 throw new SimulatorException("Missing number fields in the road event section ", nfe);
-			 }
 		 }
 		 else return null;
 	 }

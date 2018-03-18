@@ -28,11 +28,7 @@ public class NewCarEventBuilder implements EventBuilder{
 			 }
 			 catch(NullPointerException npe){
 					throw new SimulatorException("Missing fields in the car event section ", npe);
-			}
-			 catch(NumberFormatException nfe){
-				 throw new SimulatorException("Missing number fields in the road event section ", nfe);
-			 }
-			 
+			}	 
 		 }
 		 else return null;
 	 }
