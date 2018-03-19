@@ -32,7 +32,7 @@ public Junction(String id){
  * @author Javier Guzmán y Jorge Villarrubia.
  *
  */
-private class IncomingRoad{
+protected class IncomingRoad{
 	Road road;
 	boolean light;
 	ArrayDeque<Vehicle> cola = new ArrayDeque<>();
