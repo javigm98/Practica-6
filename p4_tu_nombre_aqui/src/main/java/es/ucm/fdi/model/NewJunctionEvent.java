@@ -6,7 +6,7 @@ public class NewJunctionEvent extends Event{
 	 * @author Javier Guzmán y Jorge Villarrubia
 	 *
 	 */
-	String id;
+	protected String id;
 	public NewJunctionEvent(int time, String id){
 		this.time = time;
 		this.id = id;

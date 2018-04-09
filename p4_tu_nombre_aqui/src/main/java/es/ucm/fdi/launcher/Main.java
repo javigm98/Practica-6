@@ -181,10 +181,10 @@ public class Main {
 
 		// Call test in order to test the simulator on all examples in a directory.
 		//
-	   //test("C:/examples/advanced");
+	   test("examples/advanced");
 
 		// Call start to start the simulator from command line, etc.
 		
-		start(args);
+		//start(args);
 	}
 }

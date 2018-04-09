@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class Junction extends SimObject{
 private Map<Road, IncomingRoad> entradasCruce = new HashMap<Road, IncomingRoad>();
-private ArrayList<IncomingRoad> incoming = new ArrayList<>();
+protected ArrayList<IncomingRoad> incoming = new ArrayList<>();
 private Map<Junction, Road> salidasCruce = new HashMap<>();
-private int semaforo;
+protected int semaforo;
 
 /**
  * Constructor de la clase Junction con parámetros (sólo el id).
@@ -44,6 +44,12 @@ protected class IncomingRoad{
 	public IncomingRoad(Road road) {
 		this.road = road;
 		light = false;
+	}
+	
+	public void advanceFirstVehicle(){
+		if(!cola.isEmpty()){
+			cola.removeFirst().moverASiguienteCarretera();
+		}
 	}
 	@Override
 	/**
@@ -87,13 +93,15 @@ public void entraVehiculo(Vehicle v){
 @Override
 public void avanza() throws SimulatorException{
 	if(!incoming.isEmpty()){
-		if(!incoming.get(semaforo).cola.isEmpty()){
-			incoming.get(semaforo).cola.removeFirst().moverASiguienteCarretera();
-		}
+		incoming.get(semaforo).advanceFirstVehicle();
+	}
+	switchLights();
+}
+
+public void switchLights(){
 	incoming.get(semaforo).light = false;
 	semaforo = (semaforo + 1) % incoming.size();
 	incoming.get(semaforo).light = true;
-	}
 }
 
 

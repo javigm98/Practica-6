@@ -22,7 +22,8 @@ public class Controller {
 	private EventBuilder[] bs = {new NewVehicleEventBuilder(), new NewJunctionEventBuilder(), 
 			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder(), 
 			new NewCarEventBuilder(), new NewBikeEventBuilder(),
-			new NewLanesRoadEventBuilder(), new NewDirtRoadEventBuilder()};
+			new NewLanesRoadEventBuilder(), new NewDirtRoadEventBuilder(),
+			new NewRoundRobinJunctionEventBuilder()};
 	
 	public Controller(TrafficSimulator simulator, int pasos){
 		this.simulator = simulator;
