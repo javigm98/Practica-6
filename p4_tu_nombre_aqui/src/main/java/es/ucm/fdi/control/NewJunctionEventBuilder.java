@@ -14,7 +14,7 @@ public class NewJunctionEventBuilder implements EventBuilder{
 	private final static String TAG = "new_junction";
 	@Override
 	 public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
-		 if(sec.getTag().equals(TAG)) {
+		 if(sec.getTag().equals(TAG) && (sec.getValue("type") == null)) {
 			try{
 			int time1 = parseInt(sec, "time", 0);
 			 String id1 = parseValidId(sec, "id");

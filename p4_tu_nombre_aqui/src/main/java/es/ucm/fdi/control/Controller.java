@@ -23,7 +23,7 @@ public class Controller {
 			new NewRoadEventBuilder(), new MakeVehicleFaultyEventBuilder(), 
 			new NewCarEventBuilder(), new NewBikeEventBuilder(),
 			new NewLanesRoadEventBuilder(), new NewDirtRoadEventBuilder(),
-			new NewRoundRobinJunctionEventBuilder()};
+			new NewRoundRobinJunctionEventBuilder(), new NewMostCrowdedJunctionEventBuilder()};
 	
 	public Controller(TrafficSimulator simulator, int pasos){
 		this.simulator = simulator;

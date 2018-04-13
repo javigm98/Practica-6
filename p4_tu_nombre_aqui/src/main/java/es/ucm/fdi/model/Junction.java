@@ -13,7 +13,7 @@ import java.util.Map;
  *
  */
 public class Junction extends SimObject{
-private Map<Road, IncomingRoad> entradasCruce = new HashMap<Road, IncomingRoad>();
+protected Map<Road, IncomingRoad> entradasCruce = new HashMap<Road, IncomingRoad>();
 protected ArrayList<IncomingRoad> incoming = new ArrayList<>();
 private Map<Junction, Road> salidasCruce = new HashMap<>();
 protected int semaforo;
@@ -94,8 +94,9 @@ public void entraVehiculo(Vehicle v){
 public void avanza() throws SimulatorException{
 	if(!incoming.isEmpty()){
 		incoming.get(semaforo).advanceFirstVehicle();
+		switchLights();
 	}
-	switchLights();
+	
 }
 
 public void switchLights(){

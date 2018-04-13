@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JunctionWithTimeSlice extends Junction{
-	protected int minValorIntervalo;
-	protected int maxValorIntervalo;
+	
 	public JunctionWithTimeSlice(String id) {
 		super(id);
 	}
 	protected class IncomingRoadWithTimeSlice extends IncomingRoad{
-		private int timeSlice = maxValorIntervalo, usedTimeUnits = 0;
+		private int timeSlice, usedTimeUnits = 0;
 		private boolean used = false, fullyUsed = true;
 
-		public IncomingRoadWithTimeSlice(Road road ) {
+		public IncomingRoadWithTimeSlice(Road road, int timeSlice ) {
 			super(road);
+			this.timeSlice = timeSlice;
 		}
 		
 		public void advanceFirstVehicle(){
