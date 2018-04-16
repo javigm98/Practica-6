@@ -22,7 +22,7 @@ queues =
 [junction_report]
 id = j5
 time = 1
-queues = (r4,green:2,[])
+queues = (r4,green:3,[])
 type = rr
 
 [road_report]
@@ -97,7 +97,7 @@ queues =
 [junction_report]
 id = j5
 time = 2
-queues = (r4,green:1,[])
+queues = (r4,green:2,[])
 type = rr
 
 [road_report]
@@ -172,7 +172,7 @@ queues =
 [junction_report]
 id = j5
 time = 3
-queues = (r4,green:2,[])
+queues = (r4,green:1,[])
 type = rr
 
 [road_report]
@@ -247,7 +247,7 @@ queues =
 [junction_report]
 id = j5
 time = 4
-queues = (r4,green:1,[])
+queues = (r4,green:2,[])
 type = rr
 
 [road_report]

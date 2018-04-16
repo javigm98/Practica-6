@@ -9,7 +9,7 @@ public class JunctionWithTimeSlice extends Junction{
 		super(id);
 	}
 	protected class IncomingRoadWithTimeSlice extends IncomingRoad{
-		private int timeSlice, usedTimeUnits = 0;
+		private int timeSlice, usedTimeUnits = -1; //Esto lo hago para arreglar aquel error que daba
 		private boolean used = false, fullyUsed = true;
 
 		public IncomingRoadWithTimeSlice(Road road, int timeSlice ) {

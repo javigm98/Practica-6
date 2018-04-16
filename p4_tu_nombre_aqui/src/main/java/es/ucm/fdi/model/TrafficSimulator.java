@@ -2,7 +2,9 @@ package es.ucm.fdi.model;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import es.ucm.fdi.ini.IniSection;
@@ -23,6 +25,22 @@ private int time = 0;
 private MultiTreeMap<Integer, Event> listaEventos = new MultiTreeMap<Integer, Event>();
 private RoadMap rm = new RoadMap();
 private OutputStream out;
+
+private List<Listener> listeners = new ArrayList<>();
+public void addSimulatorListener(Listener l) {
+	listeners.add(l);
+}
+public void removeListener(Listener l) {
+	listeners.remove(l);
+}
+
+// uso interno, evita tener que escribir el mismo bucle muchas veces
+private void fireUpdateEvent(EventType type, String error) {
+	for(Listener l: listeners){
+		
+	}
+}
+
 
 	public TrafficSimulator(OutputStream out){	
 		this.out = out;
@@ -116,6 +134,42 @@ private OutputStream out;
 			sec.setValue(entry.getKey(), entry.getValue());
 		}
 		return sec;
+	}
+	
+	public interface Listener {
+		void update(UpdateEvent ue, String error);
+		public void reset();
+		public void registered();
+		public void advanced();
+
+		public void error();
+
+		public void newEvent();
+		
+	}
+	public enum EventType {
+		REGISTERED, RESET, NEW_EVENT, ADVANCED, ERROR;
+	}
+		// clase interna en el simulador
+	public class UpdateEvent {
+		private EventType tipo;
+		
+		public UpdateEvent(EventType tipo){
+			this.tipo = tipo;
+		}
+		public EventType getEvent() {
+			return tipo;
+		}
+		public RoadMap getRoadMap() {
+			return rm;
+		}
+		public MultiTreeMap<Integer, Event> getEvenQueue() {
+			return listaEventos;
+		}
+		public int getCurrentTime() {
+			return time;
+		}
+		
 	}
 	
 	

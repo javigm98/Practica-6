@@ -181,7 +181,7 @@ public class Main {
 
 		// Call test in order to test the simulator on all examples in a directory.
 		//
-	   test("C:/Users/javig/git/Practica-5/p4_tu_nombre_aqui/src/test/resources/examples/basic");
+	   //test("examples/advanced");
 
 		// Call start to start the simulator from command line, etc.
 		
