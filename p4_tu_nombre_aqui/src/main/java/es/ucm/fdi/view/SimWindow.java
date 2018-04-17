@@ -27,6 +27,12 @@ import es.ucm.fdi.model.TrafficSimulator.SimulatorListener;
  */
 
 public class SimWindow extends JFrame implements SimulatorListener{
+	
+	private Controller ctr;
+	private RoadMap map;
+	private int time;
+	private MultiTreeMap <Integer, Event> listaEventos;
+	private OutputStream out;
 	public SimWindow() {
 		super("Traffic Simulator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
