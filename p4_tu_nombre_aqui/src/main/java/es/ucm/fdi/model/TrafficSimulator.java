@@ -26,20 +26,45 @@ private MultiTreeMap<Integer, Event> listaEventos = new MultiTreeMap<Integer, Ev
 private RoadMap rm = new RoadMap();
 private OutputStream out;
 
-private List<Listener> listeners = new ArrayList<>();
-public void addSimulatorListener(Listener l) {
+private List<SimulatorListener> listeners;
+public void addSimulatorListener(SimulatorListener l) {
 	listeners.add(l);
+	notifyRegistered(l);
 }
-public void removeListener(Listener l) {
+public void removeListener(SimulatorListener l) {
 	listeners.remove(l);
 }
 
+private void notifyRegistered(SimulatorListener l){
+	l.registered(time, rm, listaEventos);
+}
+private void notifyReset(){ //las excepciones se deben cazar aqui para que se puedan notificar
+	for (SimulatorListener sl: listeners){
+		sl.reset(time, rm, listaEventos);
+	}
+}
+private void notifyEventAdded(){
+	for (SimulatorListener sl: listeners){
+		sl.eventAdded(time, rm, listaEventos);
+	}
+}
+private void notifyAdvanced(){
+	for (SimulatorListener sl: listeners){
+		sl.advanced(time, rm, listaEventos);
+	}
+}
+private void notifyError(SimulatorException e){
+	for (SimulatorListener sl: listeners){
+		sl.simulatorError(time, rm, listaEventos, e);
+	}
+}
+
 // uso interno, evita tener que escribir el mismo bucle muchas veces
-private void fireUpdateEvent(EventType type, String error) {
+/*private void fireUpdateEvent(EventType type, String error) {
 	for(Listener l: listeners){
 		
 	}
-}
+}*/
 
 
 	public TrafficSimulator(OutputStream out){	
@@ -57,6 +82,7 @@ private void fireUpdateEvent(EventType type, String error) {
 		int limiteTiempo = time + numPasos -1;
 		while(time <= limiteTiempo){
 			run();
+			notifyAdvanced();
 		}
 	}
 	
@@ -88,6 +114,7 @@ private void fireUpdateEvent(EventType type, String error) {
 	public void addEvent(Event e){
 		if(e.getTime() >= time){
 			listaEventos.putValue(e.getTime(), e);
+			notifyEventAdded();
 		}
 	}
 	
@@ -136,24 +163,20 @@ private void fireUpdateEvent(EventType type, String error) {
 		return sec;
 	}
 	
-	public interface Listener {
-		void update(UpdateEvent ue, String error);
-		public void reset();
-		public void registered();
-		public void advanced();
-
-		public void error();
-
-		public void newEvent();
+	public interface SimulatorListener {
+		public void registered(int time, RoadMap map, MultiTreeMap <Integer, Event> events);
+		public void reset(int time, RoadMap map, MultiTreeMap <Integer, Event> events);
+		public void eventAdded(int time, RoadMap map, MultiTreeMap <Integer, Event> events);
+		public void advanced(int time, RoadMap map, MultiTreeMap <Integer, Event> events);
+		public void simulatorError(int time, RoadMap map, MultiTreeMap <Integer, Event> events,
+		SimulatorException e);
 		
 	}
 	public enum EventType {
 		REGISTERED, RESET, NEW_EVENT, ADVANCED, ERROR;
 	}
 		// clase interna en el simulador
-	public class UpdateEvent {
-		private EventType tipo;
-		
+	/*		
 		public UpdateEvent(EventType tipo){
 			this.tipo = tipo;
 		}
@@ -171,6 +194,12 @@ private void fireUpdateEvent(EventType type, String error) {
 		}
 		
 	}
-	
+	*/
+	public void reset() {
+		time = 0;
+		listaEventos.clear();
+		rm.clear();
+		notifyReset();
+	}
 	
 }

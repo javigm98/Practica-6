@@ -1,4 +1,4 @@
-package es.ucm.fdi.control;
+package es.ucm.fdi.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
@@ -15,6 +15,8 @@ import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
+import es.ucm.fdi.model.TrafficSimulator.SimulatorListener;
+
 /**
  * Esto es sólo para empezar a jugar con las interfaces
  * de la P5. 
@@ -24,7 +26,7 @@ import javax.swing.SwingUtilities;
  * de vista de mantenibilidad.
  */
 
-public class SimWindow extends JFrame {
+public class SimWindow extends JFrame implements SimulatorListener{
 	public SimWindow() {
 		super("Traffic Simulator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

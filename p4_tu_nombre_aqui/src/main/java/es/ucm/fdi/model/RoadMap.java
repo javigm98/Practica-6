@@ -87,4 +87,10 @@ public class RoadMap {
 	 public void addVehicle(Vehicle v){
 		 listaVehiculos.add(v);
 	 }
+	 
+	 public void clear(){
+		 listaVehiculos.clear();
+		 listaCruces.clear();
+		 listaCarreteras.clear();
+	 }
 }
