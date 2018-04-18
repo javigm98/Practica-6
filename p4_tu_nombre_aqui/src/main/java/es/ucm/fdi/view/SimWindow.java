@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -204,18 +205,14 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		bar.add(play);
 		bar.add(reset);
 		
-		steps = new JSpinner(new SpinnerNumberModel(0, 0, 100000, 1));
-		steps.setVisible(true);
-		//steps.setMaximumSize(new Dimension(100, bar.getHeight()));
-		//steps.setMinimumSize(new Dimension(100, bar.getHeight()));
-		steps.setName("Steps: ");
 		
-		
+		bar.add(new JLabel(" Steps: ")); 
+		steps = new JSpinner(new SpinnerNumberModel(5, 1, 1000, 1));
 		bar.add(steps);
 		
-		currentTime = new JTextField("" + time);
+		bar.add(new JLabel(" Time: ")); 
+		currentTime = new JTextField("0", 5);
 		currentTime.setEditable(false);
-		
 		bar.add(currentTime);
 		
 		

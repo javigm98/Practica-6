@@ -3,12 +3,16 @@ package es.ucm.fdi.extra.texteditor;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +31,7 @@ public class TextEditorExample extends JFrame implements ActionListener {
 	private JTextArea textArea;
 
 	public TextEditorExample() {
-		super("[=] Text Editor [=]");
+		super();
 		initGUI();
 	}
 
@@ -43,11 +47,32 @@ public class TextEditorExample extends JFrame implements ActionListener {
 		textArea.setWrapStyleWord(true);
 		JScrollPane area = new JScrollPane(textArea);
 		area.setPreferredSize(new Dimension(500, 500));
-		mainPanel.add(area);
+		
 
 		// tool bar
-		mainPanel.add(createJTolBar(), BorderLayout.PAGE_START);
-
+		JPopupMenu menu = createPopUpMenu();
+		Container contain = this.getContentPane();
+		contain.addMouseListener(new MouseAdapter() {
+ 
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showPopup(e);
+            }
+ 
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                showPopup(e);
+            }
+ 
+            private void showPopup(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                  menu.show(e.getComponent(),
+                            e.getX(), e.getY());
+                }
+            }
+        });
+		
+		mainPanel.add(area);
 		// menu bar
 		this.setJMenuBar(createMenuBar());
 
@@ -107,7 +132,7 @@ public class TextEditorExample extends JFrame implements ActionListener {
 		return menuBar;
 	}
 
-	public JToolBar createJTolBar() {
+	/*public JToolBar createJTolBar() {
 		JToolBar toolBar = new JToolBar();
 
 		JButton load = new JButton();
@@ -132,7 +157,57 @@ public class TextEditorExample extends JFrame implements ActionListener {
 		toolBar.add(clear);
 
 		return toolBar;
+	}*/
+	public JPopupMenu createPopUpMenu(){
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem load = new JMenuItem();
+		load.setActionCommand(LOAD);
+		load.setToolTipText("Load a file");
+		load.addActionListener(this);
+		menu.add(load);
+		
+		JMenuItem save = new JMenuItem();
+		save.setActionCommand(SAVE);
+		save.setToolTipText("Save a file");
+		save.addActionListener(this);
+		menu.add(save);
+
+		JMenuItem clear = new JMenuItem();
+		clear.setActionCommand(CLEAR);
+		clear.setToolTipText("Clear Text");
+		clear.addActionListener(this);
+		menu.add(clear);
+		
+		/*menu.addMouseListener(new MouseAdapter() {
+ 
+            @Override
+            public void mousePressed(MouseEvent e) {
+                showPopup(e);
+            }
+ 
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                showPopup(e);
+            }
+ 
+            private void showPopup(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    menu.show(e.getComponent(),
+                            e.getX(), e.getY());
+                }
+            }
+            
+        });
+		menu.ad*/
+
+		return menu;
+		
+		
+		
+		
 	}
+	
+	
 
 	public void actionPerformed(ActionEvent e) {
 		if (LOAD.equals(e.getActionCommand()))
