@@ -51,8 +51,8 @@ public class TextEditorExample extends JFrame implements ActionListener {
 
 		// tool bar
 		JPopupMenu menu = createPopUpMenu();
-		Container contain = this.getContentPane();
-		contain.addMouseListener(new MouseAdapter() {
+		//Container contain = this.getContentPane();
+		textArea.addMouseListener(new MouseAdapter() {
  
             @Override
             public void mousePressed(MouseEvent e) {
@@ -68,6 +68,7 @@ public class TextEditorExample extends JFrame implements ActionListener {
                 if (e.isPopupTrigger()) {
                   menu.show(e.getComponent(),
                             e.getX(), e.getY());
+                  //menu.setVisible(true);
                 }
             }
         });
@@ -160,19 +161,19 @@ public class TextEditorExample extends JFrame implements ActionListener {
 	}*/
 	public JPopupMenu createPopUpMenu(){
 		JPopupMenu menu = new JPopupMenu();
-		JMenuItem load = new JMenuItem();
+		JMenuItem load = new JMenuItem("Load");
 		load.setActionCommand(LOAD);
 		load.setToolTipText("Load a file");
 		load.addActionListener(this);
 		menu.add(load);
 		
-		JMenuItem save = new JMenuItem();
+		JMenuItem save = new JMenuItem("Save");
 		save.setActionCommand(SAVE);
 		save.setToolTipText("Save a file");
 		save.addActionListener(this);
 		menu.add(save);
 
-		JMenuItem clear = new JMenuItem();
+		JMenuItem clear = new JMenuItem("Clear");
 		clear.setActionCommand(CLEAR);
 		clear.setToolTipText("Clear Text");
 		clear.addActionListener(this);
@@ -262,12 +263,12 @@ public class TextEditorExample extends JFrame implements ActionListener {
 		return Toolkit.getDefaultToolkit().createImage(path);
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new TextEditorExample();
 			}
 		});
-	}
+	}*/
 
 }

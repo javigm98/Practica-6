@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 
 import es.ucm.fdi.control.Controller;
 import es.ucm.fdi.extra.graphlayout.Graph;
+import es.ucm.fdi.extra.texteditor.TextEditorExample;
 import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.RoadMap;
 import es.ucm.fdi.model.SimulatorException;
@@ -71,7 +72,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private JSpinner steps;
 	private JTextField currentTime;
 	
-	private JTextArea eventsEditor;
+	private TextEditorExample eventsEditor;
 	private JTable eventsQueue;
 	private JTextArea reportsArea;
 	
@@ -104,7 +105,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	public void inicializaComponentes(){
-		eventsEditor = new JTextArea();
+		eventsEditor = new TextEditorExample();
 		eventsQueue = new JTable();
 		reportsArea = new JTextArea();
 		vehiclesTable = new JTable();
