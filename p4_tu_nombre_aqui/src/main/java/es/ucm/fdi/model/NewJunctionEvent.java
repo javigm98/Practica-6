@@ -26,4 +26,8 @@ public class NewJunctionEvent extends Event{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public String infoParaTabla(){
+		return "New Junction " + id;
+	}
 }

@@ -48,4 +48,8 @@ public class NewVehicleEvent extends Event{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public String infoParaTabla(){
+		return "New Vehicle " + id;
+	}
 }

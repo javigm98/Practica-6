@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
@@ -27,6 +28,8 @@ import es.ucm.fdi.control.Controller;
 import es.ucm.fdi.extra.graphlayout.Graph;
 import es.ucm.fdi.extra.texteditor.TextEditorExample;
 import es.ucm.fdi.model.Event;
+import es.ucm.fdi.model.NewJunctionEvent;
+import es.ucm.fdi.model.NewVehicleEvent;
 import es.ucm.fdi.model.RoadMap;
 import es.ucm.fdi.model.SimulatorException;
 import es.ucm.fdi.model.TrafficSimulator.SimulatorListener;
@@ -72,7 +75,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private JSpinner steps;
 	private JTextField currentTime;
 	
-	private TextEditorExample eventsEditor;
+	private JTextArea eventsEditor;
 	private JTable eventsQueue;
 	private JTextArea reportsArea;
 	
@@ -105,8 +108,11 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	public void inicializaComponentes(){
-		eventsEditor = new TextEditorExample();
-		eventsQueue = new JTable();
+		eventsEditor = new JTextArea();
+		/*listaEventos = new MultiTreeMap(); //Para probar la tabla
+		listaEventos.putValue(3, new NewJunctionEvent(3, "j1"));
+		*/
+		eventsQueue = new JTable(new EventsTableModel(listaEventos));
 		reportsArea = new JTextArea();
 		vehiclesTable = new JTable();
 		roadsTable = new JTable();

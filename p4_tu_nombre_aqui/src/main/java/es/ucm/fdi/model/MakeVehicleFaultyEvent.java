@@ -33,4 +33,12 @@ public class MakeVehicleFaultyEvent extends Event{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public String infoParaTabla(){
+		String listaAveriados = "[";
+		listaAveriados += String.join(",", listaVehiculos);
+		listaAveriados +="]";
+		return "Break Vehicles " + listaAveriados;
+	}
 }

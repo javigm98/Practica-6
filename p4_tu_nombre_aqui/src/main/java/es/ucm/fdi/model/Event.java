@@ -20,6 +20,7 @@ public abstract class Event implements Comparable<Event>{
 	/**
 	 * Devuelve el atributo time de la clase.
 	 */
+	
 	public int getTime(){
 		return time;
 	}
@@ -45,4 +46,5 @@ public abstract class Event implements Comparable<Event>{
 	public int CompareTo(Event e){
 		return time - e.getTime();
 	}
+	public abstract String infoParaTabla();
 }
