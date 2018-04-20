@@ -110,8 +110,8 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	public void inicializaComponentes(){
 		eventsEditor = new JTextArea();
 		/*listaEventos = new MultiTreeMap(); //Para probar la tabla
-		listaEventos.putValue(3, new NewJunctionEvent(3, "j1"));
-		*/
+		listaEventos.putValue(3, new NewJunctionEvent(3, "j1"));*/
+	
 		eventsQueue = new JTable(new EventsTableModel(listaEventos));
 		reportsArea = new JTextArea();
 		vehiclesTable = new JTable();
@@ -122,24 +122,19 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	private void dividePantalla(){
 		JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
-		split1.setVisible(true);
-		split1.setResizeWeight(0.5);
 		JSplitPane split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split1, reportsArea);
-		split2.setVisible(true);
-		split2.setResizeWeight(0.66);
 		JSplitPane split3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, vehiclesTable, roadsTable);
-		split3.setVisible(true);
-		split3.setResizeWeight(0.5);
 		JSplitPane split4 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split3, junctionsTable);
-		split4.setVisible(true);
-		split4.setResizeWeight(0.66);
 		JSplitPane split5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split4, roadMap);
-		split5.setVisible(true);
-		split5.setResizeWeight(0.5);
 		JSplitPane split6 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split2, split5);
-		split6.setVisible(true);
-		split6.setResizeWeight(0.3);
 		add(split6);
+		setVisible(true);
+		split1.setResizeWeight(0.5);
+		split2.setResizeWeight(0.66);
+		split3.setResizeWeight(0.5);
+		split4.setResizeWeight(0.66);
+		split5.setResizeWeight(0.5);
+		split6.setResizeWeight(0.3);
 	}
 	
 	private void instantiateActions(){
