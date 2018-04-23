@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
@@ -109,8 +110,6 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//addBars();
 		initGUI();
-		
-		
 		setSize(1000, 1000);		
 		setVisible(true);
 	}
@@ -123,7 +122,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		
 	}
 	
-	public void inicializaComponentes(){
+	private void inicializaComponentes(){
 		eventsEditor = new TextEditor();
 	
 		eventsQueue = new SimulatorTable(colsEvents, listaEventos.valuesList());
@@ -182,9 +181,9 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		
 		JPanel arriba = new JPanel();
 		arriba.setLayout(new BoxLayout(arriba, BoxLayout.X_AXIS));
-		arriba.add(eventsEditor);
+		arriba.add(new JScrollPane(eventsEditor));
 		arriba.add(eventsQueue);
-		arriba.add(reportsArea);
+		arriba.add(new JScrollPane(reportsArea));
 		
 		JPanel abajoIzq = new JPanel();
 		
@@ -200,16 +199,9 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		setVisible(true);
 		abajo.setDividerLocation(.5);
 		todo.setDividerLocation(.33);
-		
-		
-		
-		
-		
-		
+
 		add(todo);
-		
-		
-		
+			
 		
 		/*JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
 		split1.setVisible(true);
