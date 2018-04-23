@@ -3,8 +3,12 @@ package es.ucm.fdi.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +40,7 @@ import es.ucm.fdi.model.NewVehicleEvent;
 import es.ucm.fdi.model.Road;
 import es.ucm.fdi.model.RoadMap;
 import es.ucm.fdi.model.SimulatorException;
+import es.ucm.fdi.model.TrafficSimulator;
 import es.ucm.fdi.model.TrafficSimulator.SimulatorListener;
 import es.ucm.fdi.model.Vehicle;
 import es.ucm.fdi.util.MultiTreeMap;
@@ -55,11 +60,12 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private final String[] colsRoads = {"ID", "Source", "Target", "Lenght", "Max Speed", "Vehicles"};
 	private final String[] colsJunctions = {"ID", "Green", "Red"};
 	
-	private Controller ctr;
+	
 	private RoadMap map = new RoadMap();
 	private int time;
 	private MultiTreeMap <Integer, Event> listaEventos = new MultiTreeMap<>();
-	private OutputStream out;
+	private ByteArrayOutputStream out = new ByteArrayOutputStream();
+	private Controller ctr = new Controller(new TrafficSimulator(out), 3);
 	
 	private JMenu fileMenu;
 	private JMenu simulatorMenu;
@@ -99,6 +105,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	public SimWindow() {
 		super("Traffic Simulator");
+		ctr.getSimulator().addSimulatorListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//addBars();
 		initGUI();
@@ -122,7 +129,9 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		eventsQueue = new SimulatorTable(colsEvents, listaEventos.valuesList());
 		
 		reportsArea = new JTextArea();
-		reportsArea.setText();
+		reportsArea.append("");
+		reportsArea.setEditable(false);
+		reportsArea.setBorder(BorderFactory.createTitledBorder("Reports"));
 		/*List<Vehicle> listaVeh = new ArrayList<>();
 		List<Junction> listaJunc = new ArrayList<>();
 		Junction j1 = new Junction ("j1"), j2 = new Junction("j2");
@@ -274,12 +283,12 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		events = new SimulatorAction(
 				"Eventos", "events.png", "Mostrar eventos",
 				KeyEvent.VK_E, "control E", 
-				()-> System.err.println("cargando eventos..."));
+				()-> cargarEventos());
 		
 		play = new SimulatorAction(
 				"Ejecutar", "play.png", "Ejecutar eventos",
 				KeyEvent.VK_J, "control J", 
-				()-> System.err.println("ejecutando eventos..."));
+				()-> ejecutaSimulacion());
 		
 		reset = new SimulatorAction(
 				"Reiniciar", "reset.png", "Reiniciar el simulador",
@@ -289,7 +298,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		report = new SimulatorAction(
 				"Escribir informes", "report.png", "Mostrar informes",
 				KeyEvent.VK_I, "control I", 
-				()-> System.err.println("reseteando..."));
+				()-> generateReports());
 		
 		reset = new SimulatorAction(
 				"Reiniciar", "reset.png", "Reiniciar el simulador",
@@ -401,8 +410,9 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	@Override
 	public void eventAdded(int time, RoadMap map,
 			MultiTreeMap<Integer, Event> events) {
-		// TODO Auto-generated method stub
-		
+		listaEventos = events;
+		eventsQueue.setElements(listaEventos.valuesList());
+		eventsQueue.update();
 	}
 
 	@Override
@@ -419,7 +429,25 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		
 	}
 	
-	public String generateReports(){
+	public void generateReports(){
+		out = (ByteArrayOutputStream) ctr.getSimulator().getOut();
+		String s = new String(out.toByteArray());
+		reportsArea.setText(s);	
+	}
+	
+	public void cargarEventos(){
+		ByteArrayInputStream bytes = new ByteArrayInputStream(eventsEditor.getText().getBytes(StandardCharsets.UTF_8));
+		try {
+			ctr.loadEvents(bytes);
+			listaEventos = ctr.getSimulator().getEventsList();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
+	}
+	
+	public void ejecutaSimulacion(){
+		ctr.setPasos((int) steps.getValue());
+		ctr.run();
 	}
 }

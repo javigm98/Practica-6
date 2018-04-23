@@ -26,7 +26,7 @@ private MultiTreeMap<Integer, Event> listaEventos = new MultiTreeMap<Integer, Ev
 private RoadMap rm = new RoadMap();
 private OutputStream out;
 
-private List<SimulatorListener> listeners;
+private List<SimulatorListener> listeners = new ArrayList<>();
 public void addSimulatorListener(SimulatorListener l) {
 	listeners.add(l);
 	notifyRegistered(l);
@@ -200,6 +200,14 @@ private void notifyError(SimulatorException e){
 		listaEventos.clear();
 		rm.clear();
 		notifyReset();
+	}
+	
+	public MultiTreeMap<Integer, Event> getEventsList(){
+		return listaEventos;
+	}
+	
+	public OutputStream getOut(){
+		return out;
 	}
 	
 }

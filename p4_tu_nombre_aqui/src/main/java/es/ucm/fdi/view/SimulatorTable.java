@@ -30,6 +30,10 @@ public class SimulatorTable extends JPanel{
 	public void update(){
 		modelo.update();
 	}
+	
+	public void setElements(List<? extends Describable> elements){
+		this.elements = elements;
+	}
 
 
 

@@ -86,6 +86,14 @@ public class Controller {
 		 }
 	 }
 	 
+	 public TrafficSimulator getSimulator(){
+		 return simulator;
+	 }
+	 
+	 public void setPasos(int pasos){
+		 this.pasos = pasos;
+	 }
+	 
 	
 	
 }

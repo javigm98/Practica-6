@@ -74,4 +74,8 @@ public class TextEditor extends JPanel{
 	public void clearFile(){
 		textArea.setText("");
 	}
+	
+	public String getText(){
+		return textArea.getText();
+	}
 }
