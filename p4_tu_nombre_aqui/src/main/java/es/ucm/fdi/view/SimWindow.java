@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -49,11 +50,15 @@ import es.ucm.fdi.util.MultiTreeMap;
  */
 
 public class SimWindow extends JFrame implements SimulatorListener{
+	private final String[] colsEvents = {"#", "Time", "Type"};
+	private final String[] colsVehicles = {"ID", "Road", "Location", "Speed", "Km", "Faulty Units", "Itinerary"};
+	private final String[] colsRoads = {"ID", "Source", "Target", "Lenght", "Max Speed", "Vehicles"};
+	private final String[] colsJunctions = {"ID", "Green", "Red"};
 	
 	private Controller ctr;
-	private RoadMap map;
+	private RoadMap map = new RoadMap();
 	private int time;
-	private MultiTreeMap <Integer, Event> listaEventos;
+	private MultiTreeMap <Integer, Event> listaEventos = new MultiTreeMap<>();
 	private OutputStream out;
 	
 	private JMenu fileMenu;
@@ -79,13 +84,13 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private JSpinner steps;
 	private JTextField currentTime;
 	
-	private JTextArea eventsEditor;
-	private JTable eventsQueue;
+	private TextEditor eventsEditor;
+	private SimulatorTable eventsQueue;
 	private JTextArea reportsArea;
 	
 	private SimulatorTable vehiclesTable;
-	private JTable roadsTable;
-	private JTable junctionsTable;
+	private SimulatorTable roadsTable;
+	private SimulatorTable junctionsTable;
 	
 	private JPanel roadMap;
 	
@@ -112,12 +117,13 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	public void inicializaComponentes(){
-		eventsEditor = new JTextArea();
+		eventsEditor = new TextEditor();
 	
-		eventsQueue = new JTable();
+		eventsQueue = new SimulatorTable(colsEvents, listaEventos.valuesList());
 		
 		reportsArea = new JTextArea();
-		List<Vehicle> listaVeh = new ArrayList<>();
+		reportsArea.setText();
+		/*List<Vehicle> listaVeh = new ArrayList<>();
 		List<Junction> listaJunc = new ArrayList<>();
 		Junction j1 = new Junction ("j1"), j2 = new Junction("j2");
 		
@@ -127,28 +133,126 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		listaJunc.add(j1);
 		listaJunc.add(j2);
 		listaVeh.add(new Vehicle("v1", 200, listaJunc));
-		String[] nombresCols = {"ID", "Road", "Location", "Speed", "Km", "Faulty Units", "Itinerary"};
-		vehiclesTable = new SimulatorTable(nombresCols, listaVeh);
-		roadsTable = new JTable();
-		junctionsTable = new JTable();
+		;*/
+		vehiclesTable = new SimulatorTable(colsVehicles, map.getListaVehiculos());
+		vehiclesTable.setBorder(BorderFactory.createTitledBorder("Vehicles"));
+		
+		roadsTable = new SimulatorTable(colsRoads, map.getListaCarreteras());
+		roadsTable.setBorder(BorderFactory.createTitledBorder("Roads"));
+		
+		junctionsTable = new SimulatorTable(colsJunctions, map.getListaCruces());
+		junctionsTable.setBorder(BorderFactory.createTitledBorder("Junctions"));
+		
 		roadMap = new JPanel();
+		
 	}
 	
 	private void dividePantalla(){
-		JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
-		JSplitPane split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split1, reportsArea);
-		JSplitPane split3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, vehiclesTable, roadsTable);
-		JSplitPane split4 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split3, junctionsTable);
-		JSplitPane split5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split4, roadMap);
-		JSplitPane split6 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split2, split5);
-		add(split6);
+		/*JPanel mainPanel = new JPanel(new BorderLayout());
+		this.setContentPane(mainPanel);
+		JPanel panel1 = new JPanel();
+		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+		mainPanel.add(panel1, BorderLayout.CENTER);
+		
+		JPanel panel2 = new JPanel(); 
+		panel1.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+		
+		JPanel panel3 = new JPanel();
+		panel1.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
+		
+		JPanel panel4 = new JPanel();
+		panel1.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
+		
+		JPanel panel5 = new JPanel(new BorderLayout());
+		
+        panel1.add(panel2);                                              
+		panel1.add(panel3);
+		panel3.add(panel4);
+		panel3.add(panel5);*/
+		
+		
+		JPanel arriba = new JPanel();
+		arriba.setLayout(new BoxLayout(arriba, BoxLayout.X_AXIS));
+		arriba.add(eventsEditor);
+		arriba.add(eventsQueue);
+		arriba.add(reportsArea);
+		
+		JPanel abajoIzq = new JPanel();
+		
+		abajoIzq.setLayout(new BoxLayout(abajoIzq, BoxLayout.Y_AXIS));
+		abajoIzq.add(vehiclesTable);
+		abajoIzq.add(roadsTable);
+		abajoIzq.add(junctionsTable);
+		
+		
+		JSplitPane abajo = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, abajoIzq, roadMap);
+		JSplitPane todo = new JSplitPane(JSplitPane.VERTICAL_SPLIT, arriba, abajo);
+		
 		setVisible(true);
-		split1.setResizeWeight(0.5);
-		split2.setResizeWeight(0.66);
-		split3.setResizeWeight(0.5);
-		split4.setResizeWeight(0.66);
-		split5.setResizeWeight(0.5);
-		split6.setResizeWeight(0.3);
+		abajo.setDividerLocation(.5);
+		todo.setDividerLocation(.33);
+		
+		
+		
+		
+		
+		
+		add(todo);
+		
+		
+		
+		
+		/*JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
+		split1.setVisible(true);
+		split1.setResizeWeight(.50);
+		
+		JSplitPane split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split1, reportsArea);
+		split2.setVisible(true);
+		split2.setResizeWeight(.66);
+		
+		
+		JSplitPane split3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, vehiclesTable, roadsTable);
+		split3.setVisible(true);
+		split3.setResizeWeight(.50);
+		
+		JSplitPane split4 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split3, junctionsTable);
+		split4.setVisible(true);
+		split4.setResizeWeight(.66);
+		
+	
+		JSplitPane split5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split4, roadMap);
+		split5.setVisible(true);
+		split5.setResizeWeight(.50);
+		
+		JSplitPane split6 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split2, split5);
+		split6.setVisible(true);
+		split6.setResizeWeight(.30);
+		
+		add(split6);
+		*/
+		
+		
+		
+		
+		
+		
+		
+	/*	JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
+		split1.setDividerLocation(0.50);
+		JSplitPane split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split1, reportsArea);
+		split2.setDividerLocation(0.66);
+		JSplitPane split3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, vehiclesTable, roadsTable);
+		split3.setDividerLocation(0.50);
+		JSplitPane split4 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split3, junctionsTable);
+		split4.setDividerLocation(0.66);
+		JSplitPane split5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split4, roadMap);
+		split5.setDividerLocation(0.50);
+		JSplitPane split6 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split2, split5);
+		split6.setDividerLocation(0.30);
+		add(split6);
+		setVisible(true);	
+		*/
+		
 	}
 	
 	private void instantiateActions(){
@@ -156,16 +260,16 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		open = new SimulatorAction(
 				"Cargar", "open.png", "Cargar cosas",
 				KeyEvent.VK_C, "control L", 
-				()-> System.err.println("cargando..."));
+				()-> eventsEditor.loadFile());
 		guardar = new SimulatorAction(
 				"Guardar", "save.png", "Guardar cosas",
 				KeyEvent.VK_G, "control S", 
-				()-> System.err.println("guardando..."));
+				()-> eventsEditor.saveFile());
 		
 		limpiar = new SimulatorAction(
 				"Borrar", "clear.png", "Limpiar la aplicacion",
 				KeyEvent.VK_B, "control shift B", 
-				()-> System.err.println("limpiando..."));
+				()-> eventsEditor.clearFile());
 		
 		events = new SimulatorAction(
 				"Eventos", "events.png", "Mostrar eventos",
@@ -312,6 +416,10 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	public void simulatorError(int time, RoadMap map,
 			MultiTreeMap<Integer, Event> events, SimulatorException e) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public String generateReports(){
 		
 	}
 }

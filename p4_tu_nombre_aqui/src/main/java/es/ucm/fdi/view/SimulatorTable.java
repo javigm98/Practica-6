@@ -48,6 +48,9 @@ public class SimulatorTable extends JPanel{
 		}
 		@Override // ineficiente: ¿puedes mejorarlo?
 		public Object getValueAt(int rowIndex, int columnIndex) {
+			if(fieldNames[columnIndex].equals("#")){
+				return rowIndex;
+			}
 			Map<String, String> out = new HashMap<String, String>();
 			elements.get(rowIndex).describe(out);
 			return out.get(fieldNames[columnIndex]);
