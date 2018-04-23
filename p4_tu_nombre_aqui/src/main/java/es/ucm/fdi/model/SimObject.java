@@ -8,7 +8,7 @@ import java.util.Map;
  * @author Javier Guzmán y Jorge Villarrubia.
  *
  */
-public abstract class  SimObject {
+public abstract class  SimObject implements Describable{
 	protected String id;
 	protected int time;
 	/**

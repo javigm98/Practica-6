@@ -139,4 +139,19 @@ public String toString(){
 	return s;
 	
 }
+
+@Override
+public void describe(Map<String, String> out) {
+	out.put("ID", id);
+	out.put("Source", cruceIni.getId());
+	out.put("Target", cruceFin.getId());
+	out.put("Length", "" + longitud);
+	out.put("Max Speed", "" + maxVel);
+	List<String> ruta = new ArrayList<>();
+	for(Vehicle v : listaVehiculos.innerValues()){
+		ruta.add(v.getId());
+	}
+	String s = "[" + String.join(",", ruta) + "]";
+	out.put("Vehicles", s);	
+}
 } 

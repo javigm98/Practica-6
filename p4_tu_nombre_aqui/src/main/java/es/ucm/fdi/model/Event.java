@@ -7,7 +7,7 @@ package es.ucm.fdi.model;
  *
  */
 
-public abstract class Event implements Comparable<Event>{
+public abstract class Event implements Comparable<Event>, Describable{
 	protected int time;
 	/**
 	 * Cada evento se ejecuta y tiene un efecto sobre la simulacion cuando le corresponde entrar en acción

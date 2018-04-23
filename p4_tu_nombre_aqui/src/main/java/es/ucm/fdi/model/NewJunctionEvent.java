@@ -1,5 +1,7 @@
 package es.ucm.fdi.model;
 
+import java.util.Map;
+
 public class NewJunctionEvent extends Event{
 	/**
 	 * Evento que representa un objeto de la clase Junction que se añadirá al simulador.
@@ -29,5 +31,12 @@ public class NewJunctionEvent extends Event{
 	@Override
 	public String infoParaTabla(){
 		return "New Junction " + id;
+	}
+	
+	@Override
+	public void describe(Map<String, String> out) {
+		out.put("Time", "" + time);
+		out.put ("Type", "New Junction " + id);
+		
 	}
 }

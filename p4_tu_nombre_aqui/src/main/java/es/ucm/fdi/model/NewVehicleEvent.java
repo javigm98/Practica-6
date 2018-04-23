@@ -2,6 +2,7 @@ package es.ucm.fdi.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Evento que representa un objeto de la clase Vehicle que se añadirá al simulador.
@@ -51,5 +52,12 @@ public class NewVehicleEvent extends Event{
 	@Override
 	public String infoParaTabla(){
 		return "New Vehicle " + id;
+	}
+
+	@Override
+	public void describe(Map<String, String> out) {
+		out.put("Time", "" + time);
+		out.put ("Type", "New Vehicle " + id);
+		
 	}
 }

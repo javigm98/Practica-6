@@ -1,5 +1,6 @@
 package es.ucm.fdi.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -183,6 +184,22 @@ public class Vehicle extends SimObject implements Comparable<Vehicle>{
 		velActual + ", km = " + km;
 		return s;
 		
+	}
+
+	@Override
+	public void describe(Map<String, String> out) {
+		out.put("ID", id);
+		out.put("Road", road.getId());
+		out.put("Location", "" + pos);
+		out.put("Speed", "" + velActual);
+		out.put("Km", "" + km);
+		out.put("Faulty Units", "" + tiempoAveria);
+		List<String> ruta = new ArrayList<>();
+		for(Junction j : itinerario){
+			ruta.add(j.getId());
+		}
+		String s = "[" + String.join(",", ruta) + "]";
+		out.put("Itinerary", s);	
 	}
 	
 

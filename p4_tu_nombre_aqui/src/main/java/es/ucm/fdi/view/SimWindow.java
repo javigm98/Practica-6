@@ -1,11 +1,12 @@
 package es.ucm.fdi.view;
 
+
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
@@ -28,11 +29,14 @@ import es.ucm.fdi.control.Controller;
 import es.ucm.fdi.extra.graphlayout.Graph;
 import es.ucm.fdi.extra.texteditor.TextEditorExample;
 import es.ucm.fdi.model.Event;
+import es.ucm.fdi.model.Junction;
 import es.ucm.fdi.model.NewJunctionEvent;
 import es.ucm.fdi.model.NewVehicleEvent;
+import es.ucm.fdi.model.Road;
 import es.ucm.fdi.model.RoadMap;
 import es.ucm.fdi.model.SimulatorException;
 import es.ucm.fdi.model.TrafficSimulator.SimulatorListener;
+import es.ucm.fdi.model.Vehicle;
 import es.ucm.fdi.util.MultiTreeMap;
 
 /**
@@ -79,7 +83,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private JTable eventsQueue;
 	private JTextArea reportsArea;
 	
-	private JTable vehiclesTable;
+	private SimulatorTable vehiclesTable;
 	private JTable roadsTable;
 	private JTable junctionsTable;
 	
@@ -109,12 +113,22 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	public void inicializaComponentes(){
 		eventsEditor = new JTextArea();
-		/*listaEventos = new MultiTreeMap(); //Para probar la tabla
-		listaEventos.putValue(3, new NewJunctionEvent(3, "j1"));*/
 	
-		eventsQueue = new JTable(new EventsTableModel(listaEventos));
+		eventsQueue = new JTable();
+		
 		reportsArea = new JTextArea();
-		vehiclesTable = new JTable();
+		List<Vehicle> listaVeh = new ArrayList<>();
+		List<Junction> listaJunc = new ArrayList<>();
+		Junction j1 = new Junction ("j1"), j2 = new Junction("j2");
+		
+		Road r1 = new Road("r1", 1000, 100, j1, j2);
+		j1.addNewOutgoingRoad(r1);
+		j2.addNewIncomingRoad(r1);
+		listaJunc.add(j1);
+		listaJunc.add(j2);
+		listaVeh.add(new Vehicle("v1", 200, listaJunc));
+		String[] nombresCols = {"ID", "Road", "Location", "Speed", "Km", "Faulty Units", "Itinerary"};
+		vehiclesTable = new SimulatorTable(nombresCols, listaVeh);
 		roadsTable = new JTable();
 		junctionsTable = new JTable();
 		roadMap = new JPanel();

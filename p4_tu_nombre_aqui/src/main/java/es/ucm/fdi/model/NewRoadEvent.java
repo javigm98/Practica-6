@@ -1,5 +1,7 @@
 package es.ucm.fdi.model;
 
+import java.util.Map;
+
 /**
  * Evento que representa un objeto de la clase Road que se añadirá al simulador.
  * @author Javier Guzmán y Jorge Villarrubia
@@ -49,6 +51,13 @@ public class NewRoadEvent extends Event{
 	@Override
 	public String infoParaTabla(){
 		return "New Road " + id;
+	}
+	
+	@Override
+	public void describe(Map<String, String> out) {
+		out.put("Time", "" + time);
+		out.put ("Type", "New Road " + id);
+		
 	}
 	
 }

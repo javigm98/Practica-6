@@ -1,5 +1,7 @@
 package es.ucm.fdi.model;
 
+import java.util.Map;
+
 /**
  * Clase que representa un evento por el cual se averían uno o más vehículos cuyos ids están alamcenados en
  * listaVehiculos con un tiempo duracion.
@@ -40,5 +42,15 @@ public class MakeVehicleFaultyEvent extends Event{
 		listaAveriados += String.join(",", listaVehiculos);
 		listaAveriados +="]";
 		return "Break Vehicles " + listaAveriados;
+	}
+	
+	@Override
+	public void describe(Map<String, String> out) {
+		out.put("Time", "" + time);
+		String listaAveriados = "[";
+		listaAveriados += String.join(",", listaVehiculos);
+		listaAveriados +="]";
+		out.put ("Type", "Break Vehicles " + listaAveriados);
+		
 	}
 }

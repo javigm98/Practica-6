@@ -165,6 +165,25 @@ public String toStringTest(){
 public String toString(){
 	return id;
 }
+@Override
+public void describe(Map<String, String> out) {
+	out.put("ID", id);
+	List<String> verdes = new ArrayList<>();
+	List<String> rojos = new ArrayList<>();
+	for(IncomingRoad ir:incoming){
+		if(ir.light == true){
+			verdes.add(ir.toString());
+		}
+		else{
+			rojos.add(ir.toString());
+		}
+	}
+	String v = "[" + String.join(",", verdes) + "]";
+	out.put("Green", v);
+	String r = "[" + String.join(",", rojos) + "]";
+	out.put("Red", r);
+	
+}
 
 
 }
