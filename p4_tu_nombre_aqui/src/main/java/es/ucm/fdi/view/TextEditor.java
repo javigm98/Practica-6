@@ -1,5 +1,6 @@
 package es.ucm.fdi.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +18,7 @@ public class TextEditor extends JPanel{
 	private JTextArea textArea;
 	
 	public TextEditor(){
-		super();
+		super(new BorderLayout());
 		initGUI();
 	}
 	
@@ -27,8 +28,7 @@ public class TextEditor extends JPanel{
 		textArea.setEditable(true);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
-		JScrollPane area = new JScrollPane(textArea);
-		add(area);
+		add(new JScrollPane(textArea));
 		fc = new JFileChooser();
 		
 	}

@@ -2,6 +2,8 @@ package es.ucm.fdi.view;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -63,7 +65,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	
 	private RoadMap map = new RoadMap();
-	private int time;
+	private int time = 0;
 	private MultiTreeMap <Integer, Event> listaEventos = new MultiTreeMap<>();
 	private ByteArrayOutputStream out = new ByteArrayOutputStream();
 	private Controller ctr = new Controller(new TrafficSimulator(out), 3);
@@ -101,6 +103,9 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	private JPanel roadMap;
 	
+	private JSplitPane splitAbajo;
+	private JSplitPane splitTodo;
+	
 	
 
 	
@@ -110,8 +115,13 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//addBars();
 		initGUI();
-		setSize(1000, 1000);		
 		setVisible(true);
+		setSize(1000, 1000);
+		splitTodo.setDividerLocation(.33);
+		splitAbajo.setDividerLocation(.5);
+		
+				
+		
 	}
 	
 	private void initGUI(){
@@ -119,88 +129,79 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		addBars();
 		inicializaComponentes();
 		dividePantalla();
-		
 	}
 	
 	private void inicializaComponentes(){
-		eventsEditor = new TextEditor();
-	
-		eventsQueue = new SimulatorTable(colsEvents, listaEventos.valuesList());
-		
-		reportsArea = new JTextArea();
-		reportsArea.append("");
-		reportsArea.setEditable(false);
-		reportsArea.setBorder(BorderFactory.createTitledBorder("Reports"));
-		/*List<Vehicle> listaVeh = new ArrayList<>();
-		List<Junction> listaJunc = new ArrayList<>();
-		Junction j1 = new Junction ("j1"), j2 = new Junction("j2");
-		
-		Road r1 = new Road("r1", 1000, 100, j1, j2);
-		j1.addNewOutgoingRoad(r1);
-		j2.addNewIncomingRoad(r1);
-		listaJunc.add(j1);
-		listaJunc.add(j2);
-		listaVeh.add(new Vehicle("v1", 200, listaJunc));
-		;*/
-		vehiclesTable = new SimulatorTable(colsVehicles, map.getListaVehiculos());
-		vehiclesTable.setBorder(BorderFactory.createTitledBorder("Vehicles"));
-		
-		roadsTable = new SimulatorTable(colsRoads, map.getListaCarreteras());
-		roadsTable.setBorder(BorderFactory.createTitledBorder("Roads"));
-		
-		junctionsTable = new SimulatorTable(colsJunctions, map.getListaCruces());
-		junctionsTable.setBorder(BorderFactory.createTitledBorder("Junctions"));
-		
-		roadMap = new JPanel();
-		
+		addEventsEditor();
+		addEventsQueue();
+		addReportsArea();
+		addVehiclesTable();
+		addRoadsTable();
+		addJunctionsTable();
+		addRoadMap();
 	}
 	
+	private void addEventsEditor(){
+		eventsEditor = new TextEditor();
+		eventsEditor.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Events"));
+	}
+	
+	private void addEventsQueue(){
+		eventsQueue = new SimulatorTable(colsEvents, listaEventos.valuesList());
+		eventsQueue.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Events Queue"));
+	}
+	
+	private void addReportsArea(){
+		reportsArea = new JTextArea("");
+		reportsArea.setEditable(false);
+		reportsArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Reports"));
+	}
+	
+	private void addVehiclesTable(){
+		vehiclesTable =  new SimulatorTable(colsVehicles, map.getListaVehiculos());
+		vehiclesTable.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Vehicles"));
+	}
+	
+	private void addRoadsTable(){
+		roadsTable = new SimulatorTable(colsRoads, map.getListaCarreteras());
+		roadsTable.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Roads"));
+	}
+	
+	private void addJunctionsTable(){
+		junctionsTable = new SimulatorTable(colsJunctions, map.getListaCruces());
+		junctionsTable.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Junctions"));
+	}
+	
+	private void addRoadMap(){
+		roadMap = new JPanel(new BorderLayout());
+	}
+	
+	
+
 	private void dividePantalla(){
-		/*JPanel mainPanel = new JPanel(new BorderLayout());
-		this.setContentPane(mainPanel);
-		JPanel panel1 = new JPanel();
-		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-		mainPanel.add(panel1, BorderLayout.CENTER);
-		
-		JPanel panel2 = new JPanel(); 
-		panel1.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
-		
-		JPanel panel3 = new JPanel();
-		panel1.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
-		
-		JPanel panel4 = new JPanel();
-		panel1.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
-		
-		JPanel panel5 = new JPanel(new BorderLayout());
-		
-        panel1.add(panel2);                                              
-		panel1.add(panel3);
-		panel3.add(panel4);
-		panel3.add(panel5);*/
-		
-		
-		JPanel arriba = new JPanel();
-		arriba.setLayout(new BoxLayout(arriba, BoxLayout.X_AXIS));
+		JPanel arriba = new JPanel(new BorderLayout());
+		arriba.setLayout(new GridLayout(1, 3));
 		arriba.add(new JScrollPane(eventsEditor));
 		arriba.add(eventsQueue);
 		arriba.add(new JScrollPane(reportsArea));
 		
-		JPanel abajoIzq = new JPanel();
+		JPanel abajoIzq = new JPanel(new BorderLayout());
 		
-		abajoIzq.setLayout(new BoxLayout(abajoIzq, BoxLayout.Y_AXIS));
+		abajoIzq.setLayout(new GridLayout(3, 1));
 		abajoIzq.add(vehiclesTable);
 		abajoIzq.add(roadsTable);
 		abajoIzq.add(junctionsTable);
 		
 		
-		JSplitPane abajo = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, abajoIzq, roadMap);
-		JSplitPane todo = new JSplitPane(JSplitPane.VERTICAL_SPLIT, arriba, abajo);
+		splitAbajo = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, abajoIzq, roadMap);
+		splitTodo = new JSplitPane(JSplitPane.VERTICAL_SPLIT, arriba, splitAbajo);
 		
-		setVisible(true);
-		abajo.setDividerLocation(.5);
-		todo.setDividerLocation(.33);
+		//setVisible(true);
+		
+		
+		
 
-		add(todo);
+		add(splitTodo);
 			
 		
 		/*JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
@@ -332,7 +333,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		bar.add(steps);
 		
 		bar.add(new JLabel(" Time: ")); 
-		currentTime = new JTextField("0", 5);
+		currentTime = new JTextField("" + time, 5);
 		currentTime.setEditable(false);
 		bar.add(currentTime);
 		
@@ -410,8 +411,10 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	@Override
 	public void advanced(int time, RoadMap map,
 			MultiTreeMap<Integer, Event> events) {
-		// TODO Auto-generated method stub
-		
+		this.map = map;
+		this.time = time;
+		currentTime.setText("" + time);
+		updateTables();
 	}
 
 	@Override
@@ -429,6 +432,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	public void cargarEventos(){
 		ByteArrayInputStream bytes = new ByteArrayInputStream(eventsEditor.getText().getBytes(StandardCharsets.UTF_8));
+		reset();
 		try {
 			ctr.loadEvents(bytes);
 			listaEventos = ctr.getSimulator().getEventsList();
@@ -441,5 +445,22 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	public void ejecutaSimulacion(){
 		ctr.setPasos((int) steps.getValue());
 		ctr.run();
+	}
+	
+	private void reset(){
+		ctr.getSimulator().reset();
+		time = 0;
+		map.clear();
+		updateTables();
+		listaEventos.clear();
+	}
+	
+	private void updateTables(){
+		vehiclesTable.setElements(map.getListaVehiculos());
+		roadsTable.setElements(map.getListaCarreteras());
+		junctionsTable.setElements(map.getListaCruces());
+		vehiclesTable.update();
+		roadsTable.update();
+		junctionsTable.update();
 	}
 }

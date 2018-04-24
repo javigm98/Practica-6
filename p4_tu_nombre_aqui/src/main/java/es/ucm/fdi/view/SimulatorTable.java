@@ -21,10 +21,11 @@ public class SimulatorTable extends JPanel{
 	private ListOfMapsTableModel modelo = new ListOfMapsTableModel();
 	
 	public SimulatorTable(String[] fieldNames, List<? extends Describable> elements) {
+		super(new BorderLayout());
 		this.fieldNames = fieldNames;
 		this.elements = elements;		
 		tabla = new JTable(modelo);
-		add(new JScrollPane(tabla), BorderLayout.CENTER);
+		add(new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 	}
 	
 	public void update(){
@@ -63,9 +64,5 @@ public class SimulatorTable extends JPanel{
 		public void update(){
 			fireTableDataChanged();
 		}
-		
-	
-		
-		
 		}
 }
