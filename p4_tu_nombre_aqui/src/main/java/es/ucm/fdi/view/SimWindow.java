@@ -8,11 +8,14 @@ import java.awt.event.KeyEvent;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -70,6 +73,8 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private ByteArrayOutputStream out = new ByteArrayOutputStream();
 	private Controller ctr = new Controller(new TrafficSimulator(out), 3);
 	
+	private JFileChooser fc = new JFileChooser();
+	
 	private JMenu fileMenu;
 	private JMenu simulatorMenu;
 	private JMenu reportsMenu;
@@ -93,7 +98,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private JSpinner steps;
 	private JTextField currentTime;
 	
-	private TextEditor eventsEditor;
+	private JTextArea eventsEditor;
 	private SimulatorTable eventsQueue;
 	private JTextArea reportsArea;
 	
@@ -142,8 +147,10 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	private void addEventsEditor(){
-		eventsEditor = new TextEditor();
-		eventsEditor.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Events"));
+		eventsEditor = new JTextArea("");
+		eventsEditor.setEditable(true);
+		eventsEditor.setLineWrap(true);
+		eventsEditor.setWrapStyleWord(true);
 	}
 	
 	private void addEventsQueue(){
@@ -154,7 +161,6 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private void addReportsArea(){
 		reportsArea = new JTextArea("");
 		reportsArea.setEditable(false);
-		reportsArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Reports"));
 	}
 	
 	private void addVehiclesTable(){
@@ -181,9 +187,18 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private void dividePantalla(){
 		JPanel arriba = new JPanel(new BorderLayout());
 		arriba.setLayout(new GridLayout(1, 3));
-		arriba.add(new JScrollPane(eventsEditor));
+		
+		JPanel panelEditor = new JPanel(new BorderLayout());
+		panelEditor.add(new JScrollPane(eventsEditor));
+		panelEditor.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Events"));
+		arriba.add(panelEditor);
+		
 		arriba.add(eventsQueue);
-		arriba.add(new JScrollPane(reportsArea));
+		
+		JPanel panelReports = new JPanel(new BorderLayout());
+		panelReports.add(new JScrollPane(reportsArea));
+		panelReports.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Reports"));
+		arriba.add(panelReports);
 		
 		JPanel abajoIzq = new JPanel(new BorderLayout());
 		
@@ -195,66 +210,8 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		
 		splitAbajo = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, abajoIzq, roadMap);
 		splitTodo = new JSplitPane(JSplitPane.VERTICAL_SPLIT, arriba, splitAbajo);
-		
-		//setVisible(true);
-		
-		
-		
-
-		add(splitTodo);
-			
-		
-		/*JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
-		split1.setVisible(true);
-		split1.setResizeWeight(.50);
-		
-		JSplitPane split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split1, reportsArea);
-		split2.setVisible(true);
-		split2.setResizeWeight(.66);
-		
-		
-		JSplitPane split3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, vehiclesTable, roadsTable);
-		split3.setVisible(true);
-		split3.setResizeWeight(.50);
-		
-		JSplitPane split4 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split3, junctionsTable);
-		split4.setVisible(true);
-		split4.setResizeWeight(.66);
-		
 	
-		JSplitPane split5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split4, roadMap);
-		split5.setVisible(true);
-		split5.setResizeWeight(.50);
-		
-		JSplitPane split6 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split2, split5);
-		split6.setVisible(true);
-		split6.setResizeWeight(.30);
-		
-		add(split6);
-		*/
-		
-		
-		
-		
-		
-		
-		
-	/*	JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
-		split1.setDividerLocation(0.50);
-		JSplitPane split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split1, reportsArea);
-		split2.setDividerLocation(0.66);
-		JSplitPane split3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, vehiclesTable, roadsTable);
-		split3.setDividerLocation(0.50);
-		JSplitPane split4 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split3, junctionsTable);
-		split4.setDividerLocation(0.66);
-		JSplitPane split5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split4, roadMap);
-		split5.setDividerLocation(0.50);
-		JSplitPane split6 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split2, split5);
-		split6.setDividerLocation(0.30);
-		add(split6);
-		setVisible(true);	
-		*/
-		
+		add(splitTodo);	
 	}
 	
 	private void instantiateActions(){
@@ -262,52 +219,57 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		open = new SimulatorAction(
 				"Cargar", "open.png", "Cargar cosas",
 				KeyEvent.VK_C, "control L", 
-				()-> eventsEditor.loadFile());
+				()-> loadFile());
 		guardar = new SimulatorAction(
 				"Guardar", "save.png", "Guardar cosas",
 				KeyEvent.VK_G, "control S", 
-				()-> eventsEditor.saveFile());
+				()-> saveFile(eventsEditor));
+		guardar.setEnabled(false);
 		
 		limpiar = new SimulatorAction(
 				"Borrar", "clear.png", "Limpiar la aplicacion",
 				KeyEvent.VK_B, "control shift B", 
-				()-> eventsEditor.clearFile());
+				()-> deleteIniText());
+		limpiar.setEnabled(false);
 		
 		events = new SimulatorAction(
 				"Eventos", "events.png", "Mostrar eventos",
 				KeyEvent.VK_E, "control E", 
 				()-> cargarEventos());
 		
+		events.setEnabled(false);
+		
 		play = new SimulatorAction(
 				"Ejecutar", "play.png", "Ejecutar eventos",
 				KeyEvent.VK_J, "control J", 
 				()-> ejecutaSimulacion());
+		play.setEnabled(false);
 		
 		reset = new SimulatorAction(
 				"Reiniciar", "reset.png", "Reiniciar el simulador",
 				KeyEvent.VK_R, "control R", 
-				()-> System.err.println("reseteando..."));
+				()-> reset());
+		reset.setEnabled(false);
 		
 		report = new SimulatorAction(
 				"Escribir informes", "report.png", "Mostrar informes",
 				KeyEvent.VK_I, "control I", 
 				()-> generateReports());
 		
-		reset = new SimulatorAction(
-				"Reiniciar", "reset.png", "Reiniciar el simulador",
-				KeyEvent.VK_R, "control R", 
-				()-> System.err.println("reseteando..."));
+		report.setEnabled(false);
 		
 		deleteReports = new SimulatorAction(
 				"Borrar informes", "delete_report.png", "Borrar los informes generados",
 				KeyEvent.VK_B, "control B", 
-				()-> System.err.println("reseteando..."));
+				()-> deleteReportsText());
+		
+		deleteReports.setEnabled(false);
 		
 		saveReports = new SimulatorAction(
 				"Guardar Informes", "save_report.png", "Guarda los informes",
 				KeyEvent.VK_G, "control G", 
-				()-> System.err.println("reseteando..."));
-		
+				()-> saveFile(reportsArea));
+		saveReports.setEnabled(false);
 		
 		salir = new SimulatorAction(
 					"Salir", "exit.png", "Salir de la aplicacion",
@@ -345,42 +307,6 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		bar.addSeparator();
 		bar.add(salir);
 		add(bar, BorderLayout.NORTH);
-		
-		
-		
-		
-		/*JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, eventsEditor, eventsQueue);
-		split1.setVisible(true);
-		split1.setResizeWeight(0.5);
-		JSplitPane split2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split1, reportsArea);
-		split2.setVisible(true);
-		split2.setResizeWeight(0.66);
-		JSplitPane split3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, vehiclesTable, roadsTable);
-		split3.setVisible(true);
-		split3.setResizeWeight(0.5);
-		JSplitPane split4 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split3, junctionTable);
-		split4.setVisible(true);
-		split4.setResizeWeight(0.66);
-		JSplitPane split5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, split4, roadMap);
-		split5.setVisible(true);
-		split5.setResizeWeight(0.5);
-		JSplitPane split6 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split2, split5);
-		split6.setVisible(true);
-		split6.setResizeWeight(0.3);
-		add(split6);
-		JTextArea prueba = new JTextArea("hola");
-		eventsEditor.add(prueba);*/
-		
-
-		// add actions to menubar, and bar to window
-		/*JMenu file = new JMenu("File");
-		file.add(load);
-		file.add(guardar);
-		file.add(salir);
-		JMenu simulator = new JMenu("Simulator");
-		JMenuBar menu = new JMenuBar();
-		menu.add(file);
-		setJMenuBar(menu);*/
 	}
 	
 	public static void main(String ... args) {
@@ -427,12 +353,14 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	public void generateReports(){
 		out = (ByteArrayOutputStream) ctr.getSimulator().getOut();
 		String s = new String(out.toByteArray());
-		reportsArea.setText(s);	
+		reportsArea.setText(s);
+		deleteReports.setEnabled(true);
+		saveReports.setEnabled(true);
 	}
 	
 	public void cargarEventos(){
 		ByteArrayInputStream bytes = new ByteArrayInputStream(eventsEditor.getText().getBytes(StandardCharsets.UTF_8));
-		reset();
+		resetCargaEventos();
 		try {
 			ctr.loadEvents(bytes);
 			listaEventos = ctr.getSimulator().getEventsList();
@@ -440,19 +368,42 @@ public class SimWindow extends JFrame implements SimulatorListener{
 			e.printStackTrace();
 		}
 		
+		play.setEnabled(true);
 	}
 	
 	public void ejecutaSimulacion(){
 		ctr.setPasos((int) steps.getValue());
 		ctr.run();
+		report.setEnabled(true);
 	}
 	
 	private void reset(){
-		ctr.getSimulator().reset();
-		time = 0;
-		map.clear();
-		updateTables();
-		listaEventos.clear();
+		resetCargaEventos();
+		eventsEditor.setText("");
+		reportsArea.setText("");
+		eventsQueue.setElements(listaEventos.valuesList());
+		eventsQueue.update();
+		
+		guardar.setEnabled(false);
+		limpiar.setEnabled(false);
+		events.setEnabled(false);
+		play.setEnabled(false);
+		reset.setEnabled(false);
+		report.setEnabled(false);
+		deleteReports.setEnabled(false);
+		saveReports.setEnabled(false);
+		
+	}
+	
+	private void deleteIniText(){
+		eventsEditor.setText("");
+		events.setEnabled(false);
+		guardar.setEnabled(false);
+	}
+	
+	private void deleteReportsText(){
+		reportsArea.setText("");
+		saveReports.setEnabled(false);
 	}
 	
 	private void updateTables(){
@@ -462,5 +413,59 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		vehiclesTable.update();
 		roadsTable.update();
 		junctionsTable.update();
+		
+		
+		
+	}
+	
+	private void saveFile(JTextArea text){
+		int returnVal = fc.showSaveDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			writeFile(file, text.getText());
+		}
+	}
+	
+	private static void writeFile(File file, String content) {
+		try {
+			PrintWriter pw = new PrintWriter(file);
+			pw.print(content);
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void loadFile() {
+		int returnVal = fc.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			String s = readFile(file);
+			eventsEditor.setText(s);
+		}
+		guardar.setEnabled(true);
+		limpiar.setEnabled(true);
+		events.setEnabled(true);
+		reset.setEnabled(true);
+	}
+	
+	private static String readFile(File file) {
+		String s = "";
+		try {
+			s = new Scanner(file).useDelimiter("\\A").next();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return s;
+	}
+	
+	private void resetCargaEventos(){
+		ctr.getSimulator().reset();
+		time = 0;
+		currentTime.setText("" + time);
+		map.clear();
+		updateTables();
+		listaEventos.clear();
 	}
 }

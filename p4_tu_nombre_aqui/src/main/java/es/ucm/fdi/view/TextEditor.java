@@ -33,13 +33,6 @@ public class TextEditor extends JPanel{
 		
 	}
 	
-	public void saveFile() {
-		int returnVal = fc.showSaveDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			writeFile(file, textArea.getText());
-		}
-	}
 
 	public void loadFile() {
 		int returnVal = fc.showOpenDialog(null);
@@ -59,16 +52,6 @@ public class TextEditor extends JPanel{
 		}
 
 		return s;
-	}
-
-	public static void writeFile(File file, String content) {
-		try {
-			PrintWriter pw = new PrintWriter(file);
-			pw.print(content);
-			pw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void clearFile(){
