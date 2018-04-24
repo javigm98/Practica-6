@@ -120,8 +120,8 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//addBars();
 		initGUI();
-		setVisible(true);
 		setSize(1000, 1000);
+		setVisible(true);
 		splitTodo.setDividerLocation(.33);
 		splitAbajo.setDividerLocation(.5);
 		
