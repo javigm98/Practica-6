@@ -198,7 +198,7 @@ public class Main {
 		parseArgs(args);
 		if(_timeLimit == null) _timeLimit = _timeLimitDefaultValue;
 		if(_outFile == null) _outFile = _defaultOutFile;
-		if(_inFile == null) throw new IOException("Missing input filename");
+		//if(_inFile == null) throw new IOException("Missing input filename");
 		if(_mode.equals("batch")){
 			startBatchMode();
 		}
@@ -224,6 +224,6 @@ public class Main {
 
 		// Call start to start the simulator from command line, etc.
 		
-		//start(args);
+		start(args);
 	}
 }
