@@ -185,5 +185,9 @@ public void describe(Map<String, String> out) {
 	
 }
 
+public boolean estaVerde(Road r){
+	return r.equals(incoming.get(semaforo).road);
+}
+
 
 }

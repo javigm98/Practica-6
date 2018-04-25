@@ -8,8 +8,10 @@ import java.awt.event.KeyEvent;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -39,6 +41,7 @@ import javax.swing.SwingUtilities;
 import es.ucm.fdi.control.Controller;
 import es.ucm.fdi.extra.graphlayout.Graph;
 import es.ucm.fdi.extra.texteditor.TextEditorExample;
+import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.Junction;
 import es.ucm.fdi.model.NewJunctionEvent;
@@ -71,7 +74,8 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private int time = 0;
 	private MultiTreeMap <Integer, Event> listaEventos = new MultiTreeMap<>();
 	private ByteArrayOutputStream out = new ByteArrayOutputStream();
-	private Controller ctr = new Controller(new TrafficSimulator(out), 3);
+	private Controller ctr;
+	private InputStream iniFile;
 	
 	private JFileChooser fc = new JFileChooser();
 	
@@ -106,7 +110,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private SimulatorTable roadsTable;
 	private SimulatorTable junctionsTable;
 	
-	private JPanel roadMap;
+	private SimulatorGraph roadMap;
 	
 	private JSplitPane splitAbajo;
 	private JSplitPane splitTodo;
@@ -114,8 +118,12 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 
 	
-	public SimWindow() {
+	public SimWindow(Controller ctr, String iniFileName) throws IOException {
 		super("Traffic Simulator");
+		this.ctr = ctr;
+		if(iniFileName!= null){
+			this.iniFile = new FileInputStream(iniFileName);
+		}
 		ctr.getSimulator().addSimulatorListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//addBars();
@@ -129,14 +137,14 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		
 	}
 	
-	private void initGUI(){
+	private void initGUI() throws IOException{
 		instantiateActions();
 		addBars();
 		inicializaComponentes();
 		dividePantalla();
 	}
 	
-	private void inicializaComponentes(){
+	private void inicializaComponentes() throws IOException{
 		addEventsEditor();
 		addEventsQueue();
 		addReportsArea();
@@ -146,8 +154,17 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		addRoadMap();
 	}
 	
-	private void addEventsEditor(){
+	private void addEventsEditor() throws IOException{
 		eventsEditor = new JTextArea("");
+		if(iniFile != null){
+			Ini ini = new Ini(iniFile);
+			String s = ini.toString();
+			eventsEditor.setText(s);
+			guardar.setEnabled(true);
+			limpiar.setEnabled(true);
+			events.setEnabled(true);
+			reset.setEnabled(true);
+		}
 		eventsEditor.setEditable(true);
 		eventsEditor.setLineWrap(true);
 		eventsEditor.setWrapStyleWord(true);
@@ -179,7 +196,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	private void addRoadMap(){
-		roadMap = new JPanel(new BorderLayout());
+		roadMap = new SimulatorGraph(map);
 	}
 	
 	
@@ -308,22 +325,17 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		bar.add(salir);
 		add(bar, BorderLayout.NORTH);
 	}
-	
-	public static void main(String ... args) {
-		SwingUtilities.invokeLater(() -> new SimWindow());
-	}
 
 	@Override
 	public void registered(int time, RoadMap map,
 			MultiTreeMap<Integer, Event> events) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void reset(int time, RoadMap map, MultiTreeMap<Integer, Event> events) {
-		// TODO Auto-generated method stub
-		
+		listaEventos = events;
+		this.map = map;
+		this.time = time;	
 	}
 
 	@Override
@@ -341,6 +353,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		this.time = time;
 		currentTime.setText("" + time);
 		updateTables();
+		roadMap.update(map);
 	}
 
 	@Override
@@ -383,6 +396,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		reportsArea.setText("");
 		eventsQueue.setElements(listaEventos.valuesList());
 		eventsQueue.update();
+		roadMap.update(map);
 		
 		guardar.setEnabled(false);
 		limpiar.setEnabled(false);
@@ -462,10 +476,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	private void resetCargaEventos(){
 		ctr.getSimulator().reset();
-		time = 0;
 		currentTime.setText("" + time);
-		map.clear();
 		updateTables();
-		listaEventos.clear();
 	}
 }

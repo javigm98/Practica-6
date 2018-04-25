@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
+import es.ucm.fdi.extra.graphlayout.Dot;
 import es.ucm.fdi.extra.graphlayout.Edge;
 import es.ucm.fdi.extra.graphlayout.Graph;
 import es.ucm.fdi.extra.graphlayout.GraphComponent;
@@ -13,6 +14,7 @@ import es.ucm.fdi.extra.graphlayout.Node;
 import es.ucm.fdi.model.Junction;
 import es.ucm.fdi.model.Road;
 import es.ucm.fdi.model.RoadMap;
+import es.ucm.fdi.model.Vehicle;
 
 public class SimulatorGraph extends JPanel{
 	private GraphComponent graphComp;
@@ -26,8 +28,9 @@ public class SimulatorGraph extends JPanel{
 	
 	private void initGUI(){
 		graphComp = new GraphComponent();
-		generateGraph();
 		add(graphComp);
+		generateGraph();
+		
 	}
 	
 	private void generateGraph(){
@@ -40,13 +43,19 @@ public class SimulatorGraph extends JPanel{
 		}
 		Map<Road, Edge> rs = new HashMap<>();
 		for (Road r : rm.getListaCarreteras()) {
-			Edge e = new Edge (r.getId(), js.get(r.getcruceIni()), js.get(r.getcruceFin()), r.getLongitud());
+			Edge e = new Edge (r.getId(), js.get(r.getcruceIni()), js.get(r.getcruceFin()), r.getLongitud(), r.getcruceFin().estaVerde(r));
 			rs.put(r, e);
 			g.addEdge(e);
 		}
-
+		for(Vehicle v: rm.getListaVehiculos()){
+			rs.get(v.getRoad()).addDot(new Dot(v.getId(), v.getPos()));
+		}
+		graphComp.setGraph(g);
 	}
 	
-	
-
+	public void update(RoadMap rm){
+		this.rm = rm;
+		generateGraph();
+		
+	}
 }

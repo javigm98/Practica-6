@@ -8,6 +8,9 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -19,6 +22,7 @@ import org.apache.commons.cli.ParseException;
 
 import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.model.TrafficSimulator;
+import es.ucm.fdi.view.SimWindow;
 import es.ucm.fdi.control.Controller;
 
 public class Main {
@@ -28,6 +32,7 @@ public class Main {
 	private static Integer _timeLimit = null;
 	private static String _inFile = null;
 	private static String _outFile = null;
+	private static String _mode = null;
 
 	private static void parseArgs(String[] args) {
 
@@ -41,9 +46,11 @@ public class Main {
 		try {
 			CommandLine line = parser.parse(cmdLineOptions, args);
 			parseHelpOption(line, cmdLineOptions);
+			parseModeOption(line);
 			parseInFileOption(line);
 			parseOutFileOption(line);
 			parseStepsOption(line);
+			
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -74,8 +81,20 @@ public class Main {
 		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg()
 				.desc("Ticks to execute the simulator's main loop (default value is " + _timeLimitDefaultValue + ").")
 				.build());
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg()
+				.desc("Select application mode: batch for conseole mode, gui for graphic view of the application").build());
 
 		return cmdLineOptions;
+	}
+	
+	private static void parseModeOption(CommandLine line) throws ParseException{
+		_mode = line.getOptionValue("m", "batch");
+		try{
+			assert(_mode.equals("batch") ||_mode.equals("gui"));
+		}
+		catch (Exception e) {
+			throw new ParseException("Invalid mode for the application: " + _mode);
+		}
 	}
 
 	private static void parseHelpOption(CommandLine line, Options cmdLineOptions) {
@@ -88,7 +107,7 @@ public class Main {
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
 		_inFile = line.getOptionValue("i");
-		if (_inFile == null) {
+		if (_inFile == null && _mode.equals("batch")) {
 			throw new ParseException("An events file is missing");
 		}
 	}
@@ -159,13 +178,33 @@ public class Main {
 		controller.run();
 
 	}
+	
+	private static void startGUIMode() throws IOException, InvocationTargetException, InterruptedException{
+		OutputStream out1 = new FileOutputStream(_outFile);
+		Controller controller = new Controller(new TrafficSimulator(out1), _timeLimit);
+		SwingUtilities.invokeAndWait(new Runnable() { 
+			public void run() {
+						try {
+							new SimWindow(controller, _inFile);
+						} catch (IOException e) {
+							
+							e.printStackTrace();
+						}
+				} 
+			});
+	}
 
-	private static void start(String[] args) throws IOException {
+	private static void start(String[] args) throws IOException, InvocationTargetException, InterruptedException {
 		parseArgs(args);
 		if(_timeLimit == null) _timeLimit = _timeLimitDefaultValue;
 		if(_outFile == null) _outFile = _defaultOutFile;
 		if(_inFile == null) throw new IOException("Missing input filename");
-		startBatchMode();
+		if(_mode.equals("batch")){
+			startBatchMode();
+		}
+		else {
+			startGUIMode();
+		}
 	}
 
 	public static void main(String[] args) throws Exception {

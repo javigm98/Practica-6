@@ -8,16 +8,22 @@ public class Edge {
 	private Node _source;
 	private Node _target;
 	private int _length;
+	private boolean green;
 	private List<Dot> _dots;
 	
-	public Edge(String id, Node source, Node target, int length) {
+	public Edge(String id, Node source, Node target, int length, boolean green) {
 		_source = source;
 		_target = target;
 		_id = id;
 		_length = length;
 		_dots = new ArrayList<>();
+		this.green = green;
 	}
 	
+	public boolean isGreen() {
+		return green;
+	}
+
 	public void addDot(Dot e) {
 		_dots.add(e);
 	}
