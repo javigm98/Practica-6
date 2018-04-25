@@ -21,6 +21,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import es.ucm.fdi.ini.Ini;
+import es.ucm.fdi.model.SimulatorException;
 import es.ucm.fdi.model.TrafficSimulator;
 import es.ucm.fdi.view.SimWindow;
 import es.ucm.fdi.control.Controller;
@@ -170,28 +171,39 @@ public class Main {
 	 * 
 	 * @throws IOException
 	 */
-	private static void startBatchMode() throws IOException {
-		InputStream in1 = new FileInputStream(_inFile); 
-		OutputStream out1 = new FileOutputStream(_outFile);
-		Controller controller = new Controller(new TrafficSimulator(out1), _timeLimit);
-		controller.loadEvents(in1);
-		controller.run();
+	private static void startBatchMode(){
+		try{
+			InputStream in1 = new FileInputStream(_inFile); 
+			OutputStream out1 = new FileOutputStream(_outFile);
+			Controller controller = new Controller(new TrafficSimulator(out1), _timeLimit);
+			controller.loadEvents(in1);
+			controller.run();
+		}
+		catch(IOException ioe){
+			System.out.println(ioe);
+		}
+		catch(IllegalArgumentException e){
+			System.out.println(e);
+		}
+		catch(SimulatorException se){
+			System.out.println("" + se + se.getCause());
+		}
 
 	}
 	
 	private static void startGUIMode() throws IOException, InvocationTargetException, InterruptedException{
-		OutputStream out1 = new FileOutputStream(_outFile);
+			OutputStream out1 = new FileOutputStream(_outFile);
 		Controller controller = new Controller(new TrafficSimulator(out1), _timeLimit);
 		SwingUtilities.invokeAndWait(new Runnable() { 
-			public void run() {
-						try {
-							new SimWindow(controller, _inFile);
-						} catch (IOException e) {
-							
-							e.printStackTrace();
-						}
-				} 
-			});
+			public void run() {try {
+				new SimWindow(controller, _inFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}} });
+
+		
+		
 	}
 
 	private static void start(String[] args) throws IOException, InvocationTargetException, InterruptedException {

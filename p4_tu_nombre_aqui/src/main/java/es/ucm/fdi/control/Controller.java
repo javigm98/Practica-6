@@ -35,19 +35,19 @@ public class Controller {
 	 * @param in1 flujo del que se leerán los datos.
 	 * @throws IOException si no se puede acceder al fichero inicial.
 	 */
-	public void loadEvents(InputStream in1) throws IOException{
+	public void loadEvents(InputStream in1) throws IOException, IllegalArgumentException, SimulatorException{
 		Ini first = new Ini(in1);
 		List<IniSection> listaSecciones = first.getSections();
 		for (IniSection sec: listaSecciones){
-			try{
+			//try{
 				simulator.addEvent(parseSection(sec));
-			}
-			catch(IllegalArgumentException e){
-				System.out.println(e);
-			}
-			catch(SimulatorException se){
-				System.out.println("" + se + se.getCause());
-			}
+			//}
+			//catch(IllegalArgumentException e){
+				//System.out.println(e);
+			//}
+			//catch(SimulatorException se){
+				//System.out.println("" + se + se.getCause());
+			//}
 		}
 	}
 	 
@@ -74,16 +74,14 @@ public class Controller {
 	  * Ejecuta la simulación durante una serie de pasos
 	  * @throws IOException
 	  */
-	 public void run(){
-		 try{
+	 public void run() throws SimulatorException, IOException{
 		 simulator.run(pasos);
-		 }
-		 catch (SimulatorException se){
+
+		/* catch (SimulatorException se){
 			 System.out.println("" + se + se.getCause());
 		 }
-		 catch (IOException ioe){
-			 System.out.println(ioe);
-		 }
+		// catch (IOException ioe){
+			 System.out.println(ioe);*/
 	 }
 	 
 	 public TrafficSimulator getSimulator(){

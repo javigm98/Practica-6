@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
@@ -26,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -79,11 +81,14 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	private JFileChooser fc = new JFileChooser();
 	
+	
+	private JMenuBar barraDeMenu;
 	private JMenu fileMenu;
 	private JMenu simulatorMenu;
 	private JMenu reportsMenu;
 	private JToolBar bar;
-	
+	private JPanel statusBar;
+	private JLabel statusBarText;
 	
 	private SimulatorAction open;
 	private SimulatorAction guardar;
@@ -121,9 +126,11 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	public SimWindow(Controller ctr, String iniFileName) throws IOException {
 		super("Traffic Simulator");
 		this.ctr = ctr;
+		ctr.getSimulator().setOut(out);
 		if(iniFileName!= null){
 			this.iniFile = new FileInputStream(iniFileName);
 		}
+		
 		ctr.getSimulator().addSimulatorListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//addBars();
@@ -139,12 +146,13 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	private void initGUI() throws IOException{
 		instantiateActions();
-		addBars();
 		inicializaComponentes();
 		dividePantalla();
 	}
 	
 	private void inicializaComponentes() throws IOException{
+		addBarraDeMenu();
+		addBars();
 		addEventsEditor();
 		addEventsQueue();
 		addReportsArea();
@@ -152,6 +160,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		addRoadsTable();
 		addJunctionsTable();
 		addRoadMap();
+		addStatusBar();
 	}
 	
 	private void addEventsEditor() throws IOException{
@@ -231,7 +240,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		add(splitTodo);	
 	}
 	
-	private void instantiateActions(){
+	private void instantiateActions() {
 		
 		open = new SimulatorAction(
 				"Cargar", "open.png", "Cargar cosas",
@@ -294,9 +303,6 @@ public class SimWindow extends JFrame implements SimulatorListener{
 					()-> System.exit(0));
 	}
 	private void addBars() {
-		//Hacer luego en initGUI
-		
-		//instantiateActions();
 		bar = new JToolBar();
 		bar.add(open);
 		bar.add(guardar);
@@ -324,6 +330,37 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		bar.addSeparator();
 		bar.add(salir);
 		add(bar, BorderLayout.NORTH);
+	}
+	
+	private void addBarraDeMenu(){
+		barraDeMenu = new JMenuBar();
+		fileMenu = new JMenu("File");
+		simulatorMenu = new JMenu("Simulator");
+		reportsMenu = new JMenu("Reports");
+		
+		fileMenu.add(open);
+		fileMenu.add(guardar);
+		fileMenu.addSeparator();
+		fileMenu.add(saveReports);
+		fileMenu.addSeparator();
+		fileMenu.add(salir);
+		
+		simulatorMenu.add(play);
+		simulatorMenu.add(reset);
+		
+		reportsMenu.add(report);
+		reportsMenu.add(deleteReports);
+		barraDeMenu.add(fileMenu);
+		barraDeMenu.add(simulatorMenu);
+		barraDeMenu.add(reportsMenu);
+		setJMenuBar(barraDeMenu);	
+		}
+	
+	private void addStatusBar(){
+		statusBar = new JPanel(new BorderLayout());
+		statusBarText = new JLabel("Welcome to the simulator!");
+		statusBar.add(statusBarText);
+		add(statusBar, BorderLayout.SOUTH);
 	}
 
 	@Override
@@ -369,25 +406,39 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		reportsArea.setText(s);
 		deleteReports.setEnabled(true);
 		saveReports.setEnabled(true);
+		statusBarText.setText("Reports generated");
 	}
 	
-	public void cargarEventos(){
+	public void cargarEventos() {
 		ByteArrayInputStream bytes = new ByteArrayInputStream(eventsEditor.getText().getBytes(StandardCharsets.UTF_8));
 		resetCargaEventos();
 		try {
 			ctr.loadEvents(bytes);
 			listaEventos = ctr.getSimulator().getEventsList();
+			play.setEnabled(true);
+			statusBarText.setText("Events loaded");
+		} catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(this, e);
+		} catch (SimulatorException e) {
+			JOptionPane.showMessageDialog(this, e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "The file isn't a correct one for the simulator");
 		}
-		
-		play.setEnabled(true);
 	}
 	
 	public void ejecutaSimulacion(){
-		ctr.setPasos((int) steps.getValue());
-		ctr.run();
-		report.setEnabled(true);
+		try{
+			ctr.setPasos((int) steps.getValue());
+			ctr.run();
+			report.setEnabled(true);
+			statusBarText.setText("Simulation advanced " + steps.getValue() + " steps");
+		}
+		catch(IOException ioe){
+			JOptionPane.showMessageDialog(null, "The file isn't a correct one for the simulator");
+		}
+		catch(SimulatorException se){
+			JOptionPane.showMessageDialog(null, "" + se + se.getCause());
+		}
 	}
 	
 	private void reset(){
@@ -397,6 +448,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		eventsQueue.setElements(listaEventos.valuesList());
 		eventsQueue.update();
 		roadMap.update(map);
+		statusBarText.setText("Simulator reseted");
 		
 		guardar.setEnabled(false);
 		limpiar.setEnabled(false);
@@ -411,12 +463,14 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	private void deleteIniText(){
 		eventsEditor.setText("");
+		statusBarText.setText("Initial text deleted");
 		events.setEnabled(false);
 		guardar.setEnabled(false);
 	}
 	
 	private void deleteReportsText(){
 		reportsArea.setText("");
+		statusBarText.setText("Reports deleted");
 		saveReports.setEnabled(false);
 	}
 	
@@ -438,6 +492,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 			File file = fc.getSelectedFile();
 			writeFile(file, text.getText());
 		}
+		statusBarText.setText("Data saved");
 	}
 	
 	private static void writeFile(File file, String content) {
@@ -451,19 +506,25 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	private void loadFile() {
-		int returnVal = fc.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			String s = readFile(file);
-			eventsEditor.setText(s);
+		try{
+			int returnVal = fc.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				String s = readFile(file);
+				eventsEditor.setText(s);
+			}
+				statusBarText.setText("Data loaded");
+				guardar.setEnabled(true);
+				limpiar.setEnabled(true);
+				events.setEnabled(true);
+				reset.setEnabled(true);
 		}
-		guardar.setEnabled(true);
-		limpiar.setEnabled(true);
-		events.setEnabled(true);
-		reset.setEnabled(true);
+		catch(NoSuchElementException se){
+			JOptionPane.showMessageDialog(null, "The file isn't a correct one for the simulator");
+		}
 	}
 	
-	private static String readFile(File file) {
+	private static String readFile(File file) throws NoSuchElementException {
 		String s = "";
 		try {
 			s = new Scanner(file).useDelimiter("\\A").next();
