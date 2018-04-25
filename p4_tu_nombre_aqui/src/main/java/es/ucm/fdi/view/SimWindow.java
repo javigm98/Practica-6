@@ -68,7 +68,7 @@ import es.ucm.fdi.util.MultiTreeMap;
 public class SimWindow extends JFrame implements SimulatorListener{
 	private final String[] colsEvents = {"#", "Time", "Type"};
 	private final String[] colsVehicles = {"ID", "Road", "Location", "Speed", "Km", "Faulty Units", "Itinerary"};
-	private final String[] colsRoads = {"ID", "Source", "Target", "Lenght", "Max Speed", "Vehicles"};
+	private final String[] colsRoads = {"ID", "Source", "Target", "Length", "Max Speed", "Vehicles"};
 	private final String[] colsJunctions = {"ID", "Green", "Red"};
 	
 	
