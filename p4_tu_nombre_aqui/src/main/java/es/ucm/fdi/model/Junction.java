@@ -58,23 +58,18 @@ protected class IncomingRoad{
 	 */
 
 	public String toString(){
-		String s = "";
-		s = s + "(" + road.getId() + ",";
-		if(incoming.get(semaforo).equals(this)){
-			s += "green";
-		}
-		else{
-			s+= "red";
-		}
-		s+=",[";
-		List<String> list = new ArrayList<String>();
+		StringBuilder sb = new StringBuilder();
+			sb.append("(" + road.getId() + ",");
+				sb.append(incoming.get(semaforo).equals(this) ?
+				"green" : "red");
+				sb.append(",[");
+				List<String> list = new ArrayList<>();
 		for(Vehicle v: cola){
 			list.add(v.getId());
 		}
-		s += String.join(",", list);
-		s += "])";
-		return s;
-		
+		sb.append(String.join(",", list));
+				sb.append("])");
+				return sb.toString();
 	}
 }
 
@@ -151,20 +146,22 @@ public void addNewIncomingRoad(Road road){
 public void addNewOutgoingRoad(Road road){
 	salidasCruce.put(road.getcruceFin(), road);
 }
-/**
- * Metodo toString de la clase Junction, usado para hacer pruebas jUnit.
- */
-public String toStringTest(){
-	String s = "";
-	for (IncomingRoad ir: incoming){
-		s+= (ir.toString() + " ");
+
+
+
+public String queuesToString(){
+	List<String> list = new ArrayList<>();
+	for(IncomingRoad ir: incoming){
+		list.add(ir.toString());
 	}
-	return s;
+		return String.join(",", list);
 }
+
 @Override
 public String toString(){
 	return id;
 }
+
 @Override
 public void describe(Map<String, String> out) {
 	out.put("ID", id);

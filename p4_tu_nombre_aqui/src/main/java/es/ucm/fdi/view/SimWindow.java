@@ -44,6 +44,7 @@ import es.ucm.fdi.control.Controller;
 import es.ucm.fdi.extra.graphlayout.Graph;
 import es.ucm.fdi.extra.texteditor.TextEditorExample;
 import es.ucm.fdi.ini.Ini;
+import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
 import es.ucm.fdi.model.Junction;
 import es.ucm.fdi.model.NewJunctionEvent;
@@ -539,5 +540,25 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		ctr.getSimulator().reset();
 		currentTime.setText("" + time);
 		updateTables();
+	}
+	
+	private String getTemplate(String tag, String type){
+		try {
+			Ini ini = new Ini(new FileInputStream("src/main/resources/extra/templates.ini"));
+			List<IniSection> listaSec = ini.getSections();
+			for(IniSection sec: listaSec){
+				if(sec.getTag().equals(tag) && ( (type == null && sec.getValue("type") == null ) 
+						|| type != null && sec.getValue("type").equals(type))){
+					return sec.toString();
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
