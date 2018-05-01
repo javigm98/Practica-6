@@ -246,7 +246,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 				menuItem.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
-						eventsEditor.setText(sec.toString() + '\n');
+						eventsEditor.append(sec.toString() + '\n');
 						guardar.setEnabled(true);
 						limpiar.setEnabled(true);
 						events.setEnabled(true);
@@ -473,7 +473,6 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	public void cargarEventos() {
-		String s = eventsEditor.getText();
 		ByteArrayInputStream bytes = new ByteArrayInputStream(eventsEditor.getText().getBytes(StandardCharsets.UTF_8));
 		resetCargaEventos();
 		try {
