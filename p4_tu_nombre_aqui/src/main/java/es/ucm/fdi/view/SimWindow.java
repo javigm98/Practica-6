@@ -306,30 +306,30 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	private void instantiateActions() {
 		
 		open = new SimulatorAction(
-				"Cargar", "open.png", "Cargar cosas",
+				"Cargar", "open.png", "Cargar eventos desde archivo",
 				KeyEvent.VK_C, "control L", 
 				()-> loadFile());
 		guardar = new SimulatorAction(
-				"Guardar", "save.png", "Guardar cosas",
+				"Guardar", "save.png", "Guardar archivo de eventos",
 				KeyEvent.VK_G, "control S", 
 				()-> saveFile(eventsEditor));
 		guardar.setEnabled(false);
 		
 		limpiar = new SimulatorAction(
-				"Borrar", "clear.png", "Limpiar la aplicacion",
+				"Borrar", "clear.png", "Limpiar editor de eventos",
 				KeyEvent.VK_B, "control shift B", 
 				()-> deleteIniText());
 		limpiar.setEnabled(false);
 		
 		events = new SimulatorAction(
-				"Eventos", "events.png", "Mostrar eventos",
+				"Eventos", "events.png", "Cargar eventos",
 				KeyEvent.VK_E, "control E", 
 				()-> cargarEventos());
 		
 		events.setEnabled(false);
 		
 		play = new SimulatorAction(
-				"Ejecutar", "play.png", "Ejecutar eventos",
+				"Ejecutar", "play.png", "Ejecutar simulación",
 				KeyEvent.VK_J, "control J", 
 				()-> ejecutaSimulacion());
 		play.setEnabled(false);
@@ -341,7 +341,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		reset.setEnabled(false);
 		
 		report = new SimulatorAction(
-				"Escribir informes", "report.png", "Mostrar informes",
+				"Escribir informes", "report.png", "Generar informes",
 				KeyEvent.VK_I, "control I", 
 				()-> generateReports());
 		
@@ -355,7 +355,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		deleteReports.setEnabled(false);
 		
 		saveReports = new SimulatorAction(
-				"Guardar Informes", "save_report.png", "Guarda los informes",
+				"Guardar Informes", "save_report.png", "Guardar los informes",
 				KeyEvent.VK_G, "control G", 
 				()-> saveFile(reportsArea));
 		saveReports.setEnabled(false);
