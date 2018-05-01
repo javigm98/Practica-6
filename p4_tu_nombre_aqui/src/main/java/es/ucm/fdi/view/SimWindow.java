@@ -246,7 +246,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 				menuItem.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
-						eventsEditor.append(sec.toString() + '\n');
+						eventsEditor.setText(sec.toString() + '\n');
 						guardar.setEnabled(true);
 						limpiar.setEnabled(true);
 						events.setEnabled(true);

@@ -180,19 +180,19 @@ public class IniSection {
 
 		// section comments
 		for (String c : _comments.get("")) {
-			s += ";" + c + System.lineSeparator();
+			s += ";" + c + '\n';//System.lineSeparator();
 		}
 
-		s += "[" + _tag + "]" + System.lineSeparator();
+		s += "[" + _tag + "]" + '\n'; //System.lineSeparator();
 		for (String key : _keys) {
 
 			// key comments
 			for (String c : _comments.get(key)) {
-				s += ";" + c + System.lineSeparator();
+				s += ";" + c +  '\n'; //System.lineSeparator();
 				;
 			}
 
-			s += key + " = " + _attr.get(key) + System.lineSeparator();
+			s += key + " = " + _attr.get(key) + '\n'; //System.lineSeparator();
 		}
 		return s;
 	}
