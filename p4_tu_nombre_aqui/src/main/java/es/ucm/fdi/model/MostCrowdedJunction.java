@@ -2,7 +2,6 @@ package es.ucm.fdi.model;
 
 import java.util.Map;
 
-import es.ucm.fdi.model.JunctionWithTimeSlice.IncomingRoadWithTimeSlice;
 
 public class MostCrowdedJunction extends JunctionWithTimeSlice{
 	

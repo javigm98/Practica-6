@@ -196,5 +196,8 @@ public class IniSection {
 		}
 		return s;
 	}
-
+	public void erase(String clave){
+		_attr.remove(clave);
+		_keys.remove(clave);
+	}
 }

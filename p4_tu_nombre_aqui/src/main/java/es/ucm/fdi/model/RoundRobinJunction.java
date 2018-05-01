@@ -2,7 +2,6 @@ package es.ucm.fdi.model;
 
 import java.util.Map;
 
-import es.ucm.fdi.model.Junction.IncomingRoad;
 
 public class RoundRobinJunction extends JunctionWithTimeSlice{
 	protected int minValorIntervalo;

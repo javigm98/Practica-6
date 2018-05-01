@@ -4,7 +4,11 @@ package es.ucm.fdi.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -12,49 +16,37 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
 
 import es.ucm.fdi.control.Controller;
-import es.ucm.fdi.extra.graphlayout.Graph;
-import es.ucm.fdi.extra.texteditor.TextEditorExample;
 import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
-import es.ucm.fdi.model.Junction;
-import es.ucm.fdi.model.NewJunctionEvent;
-import es.ucm.fdi.model.NewVehicleEvent;
-import es.ucm.fdi.model.Road;
 import es.ucm.fdi.model.RoadMap;
 import es.ucm.fdi.model.SimulatorException;
-import es.ucm.fdi.model.TrafficSimulator;
 import es.ucm.fdi.model.TrafficSimulator.SimulatorListener;
-import es.ucm.fdi.model.Vehicle;
 import es.ucm.fdi.util.MultiTreeMap;
 
 /**
@@ -162,6 +154,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		addJunctionsTable();
 		addRoadMap();
 		addStatusBar();
+		createPopUpMenu();
 	}
 	
 	private void addEventsEditor() throws IOException{
@@ -240,6 +233,75 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 		add(splitTodo);	
 	}
+	
+	private void createPopUpMenu(){
+		JPopupMenu menu = new JPopupMenu();
+		JMenu subMenu = new JMenu("Add Template");
+		try {
+			Ini ini = new Ini(new FileInputStream("src/main/resources/extra/templates.ini"));
+			List<IniSection> listaSec = ini.getSections();
+			for(IniSection sec: listaSec){
+				JMenuItem menuItem = new JMenuItem(sec.getValue("nombre"));
+				sec.erase("nombre");
+				menuItem.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						eventsEditor.append(sec.toString() + '\n');
+						guardar.setEnabled(true);
+						limpiar.setEnabled(true);
+						events.setEnabled(true);
+						reset.setEnabled(true);
+					}
+				});
+				subMenu.add(menuItem);
+			}
+			menu.add(subMenu);
+			menu.addSeparator();
+			menu.add(open);
+			menu.add(guardar);
+			menu.add(limpiar);
+			
+			eventsEditor.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					showPopup(e);
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					showPopup(e);
+				}
+
+				private void showPopup(MouseEvent e) {
+					if (e.isPopupTrigger() && menu.isEnabled()) {
+						menu.show(e.getComponent(), e.getX(), e.getY());
+					}
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+				}
+			});
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	
 	private void instantiateActions() {
 		
@@ -411,6 +473,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	public void cargarEventos() {
+		String s = eventsEditor.getText();
 		ByteArrayInputStream bytes = new ByteArrayInputStream(eventsEditor.getText().getBytes(StandardCharsets.UTF_8));
 		resetCargaEventos();
 		try {
@@ -542,23 +605,4 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		updateTables();
 	}
 	
-	private String getTemplate(String tag, String type){
-		try {
-			Ini ini = new Ini(new FileInputStream("src/main/resources/extra/templates.ini"));
-			List<IniSection> listaSec = ini.getSections();
-			for(IniSection sec: listaSec){
-				if(sec.getTag().equals(tag) && ( (type == null && sec.getValue("type") == null ) 
-						|| type != null && sec.getValue("type").equals(type))){
-					return sec.toString();
-				}
-			}
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 }
