@@ -48,7 +48,9 @@ public class SimulatorGraph extends JPanel{
 			g.addEdge(e);
 		}
 		for(Vehicle v: rm.getListaVehiculos()){
-			rs.get(v.getRoad()).addDot(new Dot(v.getId(), v.getPos()));
+			if(!v.getHaLlegado()){
+				rs.get(v.getRoad()).addDot(new Dot(v.getId(), v.getPos()));
+			}
 		}
 		graphComp.setGraph(g);
 	}

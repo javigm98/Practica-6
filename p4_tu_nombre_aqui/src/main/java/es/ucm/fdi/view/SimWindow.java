@@ -39,8 +39,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 
 import es.ucm.fdi.control.Controller;
+import es.ucm.fdi.extra.texteditor.TextEditorExample;
 import es.ucm.fdi.ini.Ini;
 import es.ucm.fdi.ini.IniSection;
 import es.ucm.fdi.model.Event;
@@ -466,6 +468,11 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	public void generateReports(){
 		out = (ByteArrayOutputStream) ctr.getSimulator().getOut();
 		String s = new String(out.toByteArray());
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new ReportsDialog(map.getListaVehiculos(), map.getListaCarreteras(), map.getListaCruces());
+			}
+		});
 		reportsArea.setText(s);
 		deleteReports.setEnabled(true);
 		saveReports.setEnabled(true);
