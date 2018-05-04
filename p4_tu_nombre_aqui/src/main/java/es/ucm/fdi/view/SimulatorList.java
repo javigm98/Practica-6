@@ -35,7 +35,7 @@ public class SimulatorList extends JPanel implements ListSelectionListener {
 		for(String id : ids){
 			seleccionados.put(id, false);
 		}
-		add(new JScrollPane(lista));
+		add(new JScrollPane(lista, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 	}
 
 	@Override

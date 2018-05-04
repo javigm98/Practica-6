@@ -42,17 +42,22 @@ public class ReportsDialog extends JDialog{
 	private void initGUI(){
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(new JLabel("Select items for which you want to generate reports."));
-		mainPanel.add(new JLabel("Use 'c' to deselect all."));
-		mainPanel.add(new JLabel("Use Ctrl + A to select all."));
-		JPanel listas = new JPanel(new GridLayout(1, 3));
+		JPanel etiquetas = new JPanel(new BorderLayout());
+		etiquetas.setLayout(new BoxLayout(etiquetas, BoxLayout.Y_AXIS));
+		etiquetas.add(new JLabel("Select items for which you want to generate reports."));
+		etiquetas.add(new JLabel("Use 'c' to deselect all."));
+		etiquetas.add(new JLabel("Use Ctrl + A to select all."));
+		etiquetas.add(new JLabel("Use Crtl + clic to multiple selection"));
+		mainPanel.add(etiquetas);
+		JPanel listas = new JPanel(new BorderLayout());
+		listas.setLayout(new GridLayout(1, 3));
 		listas.add(vehiclesList);
 		listas.add(roadsList);
 		listas.add(junctionsList);
 		mainPanel.add(listas);
 		JPanel botones = new JPanel(new BorderLayout());
 		JButton cancelar = new JButton("Cancel");
-		cancelar.setAlignmentX(CENTER_ALIGNMENT);
+		
 		cancelar.addActionListener( new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
 				 dispose();
@@ -60,7 +65,7 @@ public class ReportsDialog extends JDialog{
 		});
 		
 		JButton generar = new JButton("Generate");
-		generar.setAlignmentX(CENTER_ALIGNMENT);
+		
 		generar.addActionListener( new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
 				 //new Thread(generate).start();
@@ -69,6 +74,8 @@ public class ReportsDialog extends JDialog{
 			 }
 		});
 		botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
+		generar.setAlignmentX(CENTER_ALIGNMENT);
+		cancelar.setAlignmentX(CENTER_ALIGNMENT);
 		botones.add(cancelar);
 		botones.add(generar);
 		mainPanel.add(botones);
