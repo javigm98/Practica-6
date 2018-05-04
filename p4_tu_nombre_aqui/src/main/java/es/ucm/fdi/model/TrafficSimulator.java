@@ -42,8 +42,7 @@ public class TrafficSimulator {
 		l.registered(time, rm, listaEventos);
 	}
 
-	private void notifyReset() { // las excepciones se deben cazar aqui para que
-									// se puedan notificar
+	private void notifyReset() { 
 		for (SimulatorListener sl : listeners) {
 			sl.reset(time, rm, listaEventos);
 		}
@@ -207,19 +206,6 @@ public class TrafficSimulator {
 
 	}
 
-	public enum EventType {
-		REGISTERED, RESET, NEW_EVENT, ADVANCED, ERROR;
-	}
-
-	// clase interna en el simulador
-	/*
-	 * public UpdateEvent(EventType tipo){ this.tipo = tipo; } public EventType
-	 * getEvent() { return tipo; } public RoadMap getRoadMap() { return rm; }
-	 * public MultiTreeMap<Integer, Event> getEvenQueue() { return listaEventos;
-	 * } public int getCurrentTime() { return time; }
-	 * 
-	 * }
-	 */
 	public void reset() {
 		time = 0;
 		listaEventos.clear();

@@ -128,7 +128,6 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		
 		ctr.getSimulator().addSimulatorListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//addBars();
 		initGUI();
 		setSize(1000, 1000);
 		setVisible(true);
@@ -461,8 +460,7 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	@Override
 	public void simulatorError(int time, RoadMap map,
 			MultiTreeMap<Integer, Event> events, SimulatorException e) {
-		// TODO Auto-generated method stub
-		
+		JOptionPane.showMessageDialog(this, e);
 	}
 	
 	public void generateReports(){
@@ -470,7 +468,10 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		String s = new String(out.toByteArray());
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new ReportsDialog(map.getListaVehiculos(), map.getListaCarreteras(), map.getListaCruces());
+				new ReportsDialog(SimWindow.this, 
+						map.getListaVehiculos(), 
+						map.getListaCarreteras(), 
+						map.getListaCruces());
 			}
 		});
 		reportsArea.setText(s);
@@ -480,19 +481,18 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	}
 	
 	public void cargarEventos() {
-		ByteArrayInputStream bytes = new ByteArrayInputStream(eventsEditor.getText().getBytes(StandardCharsets.UTF_8));
+		ByteArrayInputStream bytes = new ByteArrayInputStream(
+				eventsEditor.getText().getBytes(StandardCharsets.UTF_8));
 		resetCargaEventos();
 		try {
 			ctr.loadEvents(bytes);
 			listaEventos = ctr.getSimulator().getEventsList();
 			play.setEnabled(true);
 			statusBarText.setText("Events loaded");
-		} catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(this, e);
-		} catch (SimulatorException e) {
-			JOptionPane.showMessageDialog(this, e);
+		} catch (IllegalArgumentException | SimulatorException e) {
+			JOptionPane.showMessageDialog(this, "Error loading events from file: " + e);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "The file isn't a correct one for the simulator");
+			JOptionPane.showMessageDialog(this, "Selected file is not valid: " + e);
 		}
 	}
 	
