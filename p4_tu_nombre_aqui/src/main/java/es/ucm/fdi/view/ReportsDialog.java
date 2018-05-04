@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -14,6 +15,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import es.ucm.fdi.model.Junction;
 import es.ucm.fdi.model.Road;
@@ -22,8 +24,10 @@ import es.ucm.fdi.model.Vehicle;
 
 public class ReportsDialog extends JDialog{
 	private SimulatorList vehiclesList, roadsList, junctionsList;
-	public ReportsDialog(JFrame owner, List<Vehicle> v, List<Road> r, List<Junction> j ){
+	private Runnable generate;
+	public ReportsDialog(JFrame owner, List<Vehicle> v, List<Road> r, List<Junction> j , Runnable generate){
 		super(owner, "Generate Reports");
+		this.generate = generate;
 		vehiclesList = new SimulatorList(v);
 		vehiclesList.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Vehicles"));
 		roadsList = new SimulatorList(r);
@@ -47,14 +51,50 @@ public class ReportsDialog extends JDialog{
 		listas.add(junctionsList);
 		mainPanel.add(listas);
 		JPanel botones = new JPanel(new BorderLayout());
-		JButton cancelar = new JButton("Cancelar");
+		JButton cancelar = new JButton("Cancel");
+		cancelar.setAlignmentX(CENTER_ALIGNMENT);
 		cancelar.addActionListener( new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
 				 dispose();
 			 }
 		});
+		
+		JButton generar = new JButton("Generate");
+		generar.setAlignmentX(CENTER_ALIGNMENT);
+		generar.addActionListener( new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				 //new Thread(generate).start();
+				 SwingUtilities.invokeLater(generate);
+				 dispose();
+			 }
+		});
+		botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
 		botones.add(cancelar);
+		botones.add(generar);
 		mainPanel.add(botones);
 		add(mainPanel);
+	}
+	
+	public HashMap<String, Boolean> getSelectedVehicles(){
+		return vehiclesList.getSeleccionados();	
+	}
+	public HashMap<String, Boolean> getSelectedRoads(){
+		return roadsList.getSeleccionados();	
+	}
+	public HashMap<String, Boolean> getSelectedJunctions(){
+		return junctionsList.getSeleccionados();	
+	}
+	public HashMap<String, Boolean> getSelected(){
+		HashMap<String, Boolean> seleccionados = new HashMap<>();
+		for(String s : vehiclesList.getSeleccionados().keySet()){
+			seleccionados.put(s, vehiclesList.getSeleccionados().get(s));
+		}
+		for(String s : roadsList.getSeleccionados().keySet()){
+			seleccionados.put(s, roadsList.getSeleccionados().get(s));
+		}
+		for(String s : junctionsList.getSeleccionados().keySet()){
+			seleccionados.put(s, junctionsList.getSeleccionados().get(s));
+		}
+		return seleccionados;
 	}
 }

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -114,6 +115,8 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	private JSplitPane splitAbajo;
 	private JSplitPane splitTodo;
+	
+	private ReportsDialog rd;
 	
 	
 
@@ -344,7 +347,11 @@ public class SimWindow extends JFrame implements SimulatorListener{
 		report = new SimulatorAction(
 				"Escribir informes", "report.png", "Generar informes",
 				KeyEvent.VK_I, "control I", 
-				()-> generateReports());
+				()-> rd = new ReportsDialog(this, 
+						map.getListaVehiculos(),  
+						map.getListaCarreteras(), 
+						map.getListaCruces(),
+						()->generateReports()));
 		
 		report.setEnabled(false);
 		
@@ -465,16 +472,31 @@ public class SimWindow extends JFrame implements SimulatorListener{
 	
 	public void generateReports(){
 		out = (ByteArrayOutputStream) ctr.getSimulator().getOut();
-		String s = new String(out.toByteArray());
-		SwingUtilities.invokeLater(new Runnable() {
+		//String s = new String(out.toByteArray());
+		InputStream in = new ByteArrayInputStream(out.toByteArray());
+		try {
+		Ini ini = new Ini(in);
+		List<IniSection> secs = ini.getSections();
+		//List<IniSection> toRemove = new ArrayList<>();
+		String s = "";
+		for(IniSection sec : secs){
+			if(!rd.getSelected().isEmpty() && rd.getSelected().get(sec.getValue("id"))){
+				s += sec.toString();
+				s+= '\n';
+			}
+		}
+		reportsArea.setText(s);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/*SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new ReportsDialog(SimWindow.this, 
+				rd = new ReportsDialog(SimWindow.this, 
 						map.getListaVehiculos(), 
 						map.getListaCarreteras(), 
 						map.getListaCruces());
 			}
-		});
-		reportsArea.setText(s);
+		});*/
 		deleteReports.setEnabled(true);
 		saveReports.setEnabled(true);
 		statusBarText.setText("Reports generated");

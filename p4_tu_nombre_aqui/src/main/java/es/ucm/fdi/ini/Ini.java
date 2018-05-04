@@ -195,4 +195,7 @@ public class Ini {
 		}
 		return s;
 	}
+	public void setIniSections(List<IniSection> l){
+		_iniSections = l;
+	}
 }
