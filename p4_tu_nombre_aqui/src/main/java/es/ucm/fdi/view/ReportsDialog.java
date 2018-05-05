@@ -22,9 +22,25 @@ import es.ucm.fdi.model.Road;
 import es.ucm.fdi.model.SimObject;
 import es.ucm.fdi.model.Vehicle;
 
+/**
+ * Esta clase representa el dialogo que saltará en la interfaz gráfica para elegir
+ * los objectos de simulacion de los qe see quiere un report
+ * 
+ * @authors Jorge y Javier
+ *
+ */
+
 public class ReportsDialog extends JDialog{
 	private SimulatorList vehiclesList, roadsList, junctionsList;
 	private Runnable generate;
+	
+	/**
+	 * @param owner es el JFrame sobre el que se lanzara este dialogo
+	 * @param v lista de vehiculos cuyos ids mostrara en una tabla
+	 * @param r lista de carreteras cuyos ids mostrara en una tabla
+	 * @param j lista de cruces cuyos ids mostrara en una tabla
+	 * @param generate runnable relativo a la accion del boton de generar que mostrará la ventana
+	 */
 	public ReportsDialog(JFrame owner, List<Vehicle> v, List<Road> r, List<Junction> j , Runnable generate){
 		super(owner, "Generate Reports");
 		this.generate = generate;
@@ -39,6 +55,9 @@ public class ReportsDialog extends JDialog{
 		setVisible(true);
 	}
 	
+	/**
+	 * Inicializa todos los componentes (etiquetas, tablas y botones) del dialogo y los coloca
+	 */
 	private void initGUI(){
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -82,17 +101,13 @@ public class ReportsDialog extends JDialog{
 		add(mainPanel);
 	}
 	
-	public HashMap<String, Boolean> getSelectedVehicles(){
-		return vehiclesList.getSeleccionados();	
-	}
-	public HashMap<String, Boolean> getSelectedRoads(){
-		return roadsList.getSeleccionados();	
-	}
-	public HashMap<String, Boolean> getSelectedJunctions(){
-		return junctionsList.getSeleccionados();	
-	}
+	/**
+	 * @return los objectos de la simulacion seleccionados por el usuario en un mapa no ordenado
+	 */
 	public HashMap<String, Boolean> getSelected(){
+		// Nos interesa devolver un mapa. Haremos muchas consultas que así serán O(1)
 		HashMap<String, Boolean> seleccionados = new HashMap<>();
+		
 		for(String s : vehiclesList.getSeleccionados().keySet()){
 			seleccionados.put(s, vehiclesList.getSeleccionados().get(s));
 		}

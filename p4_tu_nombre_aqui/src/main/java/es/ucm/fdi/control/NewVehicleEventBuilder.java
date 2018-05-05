@@ -6,7 +6,7 @@ import es.ucm.fdi.model.NewVehicleEvent;
 import es.ucm.fdi.model.SimulatorException;
 
 /**
- * Credaor del evento de nuevo vehículo
+ * Creador del evento de nuevo vehículo
  * @author Javier Guzmán y Jorge Villarrubia
  *
  */

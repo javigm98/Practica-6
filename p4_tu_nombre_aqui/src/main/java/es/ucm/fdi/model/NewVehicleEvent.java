@@ -31,7 +31,7 @@ public class NewVehicleEvent extends Event{
 		if(time == timeExecution){
 			for(String s: ruta){
 				try{
-					itinerario.add(checkJunctionExists(rm, s));
+					itinerario.add(rm.getJunction(s));
 				}
 				catch(SimulatorException se){
 					throw new SimulatorException("Unknown junction in the " + id + " itinerary ", se);

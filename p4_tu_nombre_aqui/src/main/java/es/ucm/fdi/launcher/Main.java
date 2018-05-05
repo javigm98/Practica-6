@@ -173,20 +173,17 @@ public class Main {
 	 */
 	private static void startBatchMode(){
 		try{
-			InputStream in1 = new FileInputStream(_inFile); 
-			OutputStream out1 = new FileOutputStream(_outFile);
-			Controller controller = new Controller(new TrafficSimulator(out1), _timeLimit);
-			controller.loadEvents(in1);
-			controller.run();
+			InputStream in = new FileInputStream(_inFile); 
+			OutputStream out = new FileOutputStream(_outFile);
+			Controller controller = new Controller(new TrafficSimulator(out), _timeLimit);
+			BatchMode batch = new BatchMode();
+			batch.runBachMode(controller, in);
 		}
 		catch(IOException ioe){
-			System.out.println(ioe);
+			System.err.println(ioe);
 		}
 		catch(IllegalArgumentException e){
-			System.out.println(e);
-		}
-		catch(SimulatorException se){
-			System.out.println("" + se + se.getCause());
+			System.err.println(e);
 		}
 
 	}
@@ -200,9 +197,7 @@ public class Main {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}} });
-
-		
+			}} });	
 		
 	}
 
@@ -210,7 +205,6 @@ public class Main {
 		parseArgs(args);
 		if(_timeLimit == null) _timeLimit = _timeLimitDefaultValue;
 		if(_outFile == null) _outFile = _defaultOutFile;
-		//if(_inFile == null) throw new IOException("Missing input filename");
 		if(_mode.equals("batch")){
 			startBatchMode();
 		}
@@ -219,22 +213,9 @@ public class Main {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {	
 		
-		// example command lines:
-		//
-		// -i resources/examples/events/basic/ex1.ini
-		// -i resources/examples/events/basic/ex1.ini -o ex1.out
-		// -i resources/examples/events/basic/ex1.ini -t 20
-		// -i resources/examples/events/basic/ex1.ini -o ex1.out -t 20
-		// --help
-		//
-
-		// Call test in order to test the simulator on all examples in a directory.
-		//
 	   //test("examples/advanced");
-
-		// Call start to start the simulator from command line, etc.
 		
 		start(args);
 	}

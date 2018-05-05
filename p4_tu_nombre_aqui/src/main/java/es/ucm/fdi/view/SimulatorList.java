@@ -43,7 +43,7 @@ public class SimulatorList extends JPanel implements ListSelectionListener {
 		if ( e.getSource() == lista && e.getValueIsAdjusting() == false ) {
 			int[] fromIndex = lista.getSelectedIndices();
 			for(int i = 0; i < fromIndex.length; ++i){
-				seleccionados.put((String) elementos[i], true);
+				seleccionados.put((String) elementos[fromIndex[i]], true);
 			}
 		}
 	}

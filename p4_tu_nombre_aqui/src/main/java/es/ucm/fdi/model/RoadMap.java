@@ -42,14 +42,16 @@ public class RoadMap {
 	 * @param id id del cruce a buscar.
 	 * @return el cruce con el id pasado como parámetro o null en caso de no haber ningún vehículo con ese id.
 	 */
-	public Junction getJunction(String id){ 
-		//Si se recorre la lista y no ha devuleto nada aun es que el cruce no esta y se devuelve null.
+	public Junction getJunction(String id)throws SimulatorException{ 
+		// Si se recorre la lista y no ha devuleto nada aun es que el cruce no esta
+		// Se lanza una excepcion de simulacion
 		for(Junction j: listaCruces){
 			if(j.getId().equals(id)) return j;
 		}
-		return null;
+		throw new SimulatorException("Could not find junction with the id: " + id + ". Expected ids: " + getListaCruces());
 		
 	}
+	
 	
 	/**
 	 * Dado un id busca y devuelve una carretera con ese mismo campo.

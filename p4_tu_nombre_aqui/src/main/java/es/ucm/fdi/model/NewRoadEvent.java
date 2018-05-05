@@ -31,7 +31,8 @@ public class NewRoadEvent extends Event{
 	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
 		if(time == timeExecution){
 			try{
-				Junction ini = checkJunctionExists(rm, iniId), fin = checkJunctionExists(rm, finId);
+				Junction ini = rm.getJunction(iniId),
+						fin = rm.getJunction(finId);
 				Road r = new Road(id, longitud, maxVel, ini, fin);
 				rm.addRoad(r);
 				ini.addNewOutgoingRoad(r);

@@ -42,7 +42,7 @@ public class TrafficSimulator {
 		l.registered(time, rm, listaEventos);
 	}
 
-	private void notifyReset() { 
+	private void notifyReset() {
 		for (SimulatorListener sl : listeners) {
 			sl.reset(time, rm, listaEventos);
 		}
@@ -66,13 +66,6 @@ public class TrafficSimulator {
 		}
 	}
 
-	// uso interno, evita tener que escribir el mismo bucle muchas veces
-	/*
-	 * private void fireUpdateEvent(EventType type, String error) { for(Listener
-	 * l: listeners){
-	 * 
-	 * } }
-	 */
 
 	public TrafficSimulator(OutputStream out) {
 		this.out = out;
@@ -86,15 +79,16 @@ public class TrafficSimulator {
 	 *            numero de pasos que se quiere avanzar en la simulación.
 	 * @throws IOException
 	 *             si no se puede abrir el flujo de salida.
-	 * @throws SimulatorException
-	 *             si se intenta ejecutar algún evento o avance que vaya en
-	 *             contra de la lógica del simulador.
 	 */
-	public void run(int numPasos) throws IOException, SimulatorException {
+	public void run(int numPasos) throws IOException {
 		int limiteTiempo = time + numPasos - 1;
-		while (time <= limiteTiempo) {
-			run();
-			notifyAdvanced();
+		try {
+			while (time <= limiteTiempo) {
+				run();
+				notifyAdvanced();
+			}
+		} catch (SimulatorException se) {
+			notifyError(se);
 		}
 	}
 
@@ -106,13 +100,11 @@ public class TrafficSimulator {
 	 * 
 	 * @throws IOException
 	 *             si no se puede abrir el flujo de salida
-	 * @throws SimulatorException
-	 *             si se intenta hacer algo contrario a la lógica del simulador.
 	 */
 	public void run() throws IOException, SimulatorException {
-		for (Event e : listaEventos.innerValues()) {
-			e.execute(rm, time);
-		}
+			for (Event e : listaEventos.innerValues()) {
+				e.execute(rm, time);
+			}
 		for (Road r : rm.getListaCarreteras()) {
 			r.avanza();
 		}
@@ -151,41 +143,38 @@ public class TrafficSimulator {
 	 */
 	public void writeReport() throws IOException {
 		Map<String, String> aux = new LinkedHashMap<>();
-		for (Junction j : rm.getListaCruces()) {
+		for (SimObject j : rm.getListaCruces()) {
 			j.report(time, aux);
-			mapAIni(aux, j.getReportHeader()).store(out);
-			out.write('\n');
-			aux.clear();
+			writeMapAsIni(aux, j.getReportHeader());
 		}
 		for (Road r : rm.getListaCarreteras()) {
 			r.report(time, aux);
-			mapAIni(aux, r.getReportHeader()).store(out);
-			out.write('\n');
-			aux.clear();
+			writeMapAsIni(aux, r.getReportHeader());
 		}
 		for (Vehicle v : rm.getListaVehiculos()) {
 			v.report(time, aux);
-			mapAIni(aux, v.getReportHeader()).store(out);
-			out.write('\n');
-			aux.clear();
+			writeMapAsIni(aux, v.getReportHeader());
 		}
 	}
 
 	/**
-	 * Crea una IniSection dados un mapa de pares clave-valor y una etiqueta.
+	 * Crea una IniSection dados un mapa de pares clave-valor y una etiqueta y la escribe en out.
 	 * 
 	 * @param mapa
 	 *            con los pares clave-valor de la sección.
 	 * @param tag
 	 *            cabecera de la sección
-	 * @return una IniSection con toda la información suministrada.
+	 * @throws IOException 
+	 * 				si no puede abrir el flujo de salida
 	 */
-	private IniSection mapAIni(Map<String, String> mapa, String tag) {
+	private void writeMapAsIni(Map<String, String> mapa, String tag) throws IOException {
 		IniSection sec = new IniSection(tag);
 		for (Map.Entry<String, String> entry : mapa.entrySet()) {
 			sec.setValue(entry.getKey(), entry.getValue());
 		}
-		return sec;
+		sec.store(out);
+		out.write('\n');
+		mapa.clear();
 	}
 
 	public interface SimulatorListener {

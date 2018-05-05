@@ -20,7 +20,8 @@ public class NewDirtRoadEvent extends NewRoadEvent{
 	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
 		if(time == timeExecution){
 			try{
-			Junction ini = checkJunctionExists(rm, iniId), fin = checkJunctionExists(rm, finId);
+			Junction ini = rm.getJunction(iniId), 
+					fin = rm.getJunction(finId);
 			DirtRoad r = new DirtRoad(id, longitud, maxVel, ini, fin);
 			rm.addRoad(r);
 			ini.addNewOutgoingRoad(r);

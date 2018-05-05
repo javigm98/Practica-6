@@ -22,7 +22,8 @@ private int numCarriles;
 	public void execute(RoadMap rm, int timeExecution) throws IllegalArgumentException{
 		if(time == timeExecution){
 			try{
-				Junction ini = checkJunctionExists(rm, iniId), fin = checkJunctionExists(rm, finId);
+				Junction ini = rm.getJunction(iniId),
+						fin = rm.getJunction(finId);
 			
 			LanesRoad r = new LanesRoad(id, longitud, maxVel, ini, fin, numCarriles);
 			rm.addRoad(r);
