@@ -157,7 +157,6 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			String s = ini.toString();
 			eventsEditor.setText(s);
 			guardar.setEnabled(true);
-			limpiar.setEnabled(true);
 			events.setEnabled(true);
 			reset.setEnabled(true);
 		}
@@ -250,7 +249,6 @@ public class SimWindow extends JFrame implements SimulatorListener {
 					public void actionPerformed(ActionEvent e) {
 						eventsEditor.append(sec.toString() + '\n');
 						guardar.setEnabled(true);
-						limpiar.setEnabled(true);
 						events.setEnabled(true);
 						reset.setEnabled(true);
 					}
@@ -316,7 +314,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		limpiar = new SimulatorAction("Borrar", "clear.png",
 				"Limpiar editor de eventos", KeyEvent.VK_B, "control shift B",
 				() -> deleteIniText());
-		limpiar.setEnabled(false);
+		limpiar.setEnabled(true); //Los limpiar y delete todo el rato disponibles. Su acción es nula si no debiesen
 
 		events = new SimulatorAction("Eventos", "events.png", "Cargar eventos",
 				KeyEvent.VK_E, "control E", () -> cargarEventos());
@@ -344,8 +342,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		deleteReports = new SimulatorAction("Borrar informes",
 				"delete_report.png", "Borrar los informes generados",
 				KeyEvent.VK_B, "control B", () -> deleteReportsText());
-
-		deleteReports.setEnabled(false);
+		deleteReports.setEnabled(true);
 
 		saveReports = new SimulatorAction("Guardar Informes",
 				"save_report.png", "Guardar los informes", KeyEvent.VK_G,
@@ -472,7 +469,6 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			JOptionPane.showMessageDialog(this, "Selected file is not valid: "
 					+ e);
 		}
-		deleteReports.setEnabled(true);
 		saveReports.setEnabled(true);
 		statusBarText.setText("Reports generated");
 	}
@@ -486,7 +482,6 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			listaEventos = ctr.getSimulator().getEventsList();
 			play.setEnabled(true);
 			report.setEnabled(false);
-			deleteReports.setEnabled(false);
 			statusBarText.setText("Events loaded");
 		} catch (IllegalArgumentException iae) {
 			JOptionPane.showMessageDialog(this,
@@ -520,12 +515,10 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		statusBarText.setText("Simulator reseted");
 
 		guardar.setEnabled(false);
-		limpiar.setEnabled(false);
 		events.setEnabled(false);
 		play.setEnabled(false);
 		reset.setEnabled(false);
 		report.setEnabled(false);
-		deleteReports.setEnabled(false);
 		saveReports.setEnabled(false);
 
 	}
@@ -582,7 +575,6 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			}
 			statusBarText.setText("Data loaded");
 			guardar.setEnabled(true);
-			limpiar.setEnabled(true);
 			events.setEnabled(true);
 			reset.setEnabled(true);
 		} catch (NoSuchElementException se) {
