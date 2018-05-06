@@ -13,7 +13,7 @@ import es.ucm.fdi.model.SimulatorException;
 public class MakeVehicleFaultyEventBuilder implements EventBuilder {
 	private final static String TAG = "make_vehicle_faulty";
 	@Override
-	public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
+	public Event parse(IniSection sec) throws IllegalArgumentException{
 		 if(sec.getTag().equals(TAG)) {
 			try{ 
 			 int time = parseInt(sec, "time", 0);
@@ -22,7 +22,7 @@ public class MakeVehicleFaultyEventBuilder implements EventBuilder {
 			 return new MakeVehicleFaultyEvent(time, duracion, lista);
 			}
 			catch(NullPointerException npe){
-				throw new SimulatorException("Missing fields in the vehice faulty event section ", npe);
+				throw new IllegalArgumentException("Missing fields in the vehice faulty event section ", npe);
 			}
 		 }
 		 else return null;

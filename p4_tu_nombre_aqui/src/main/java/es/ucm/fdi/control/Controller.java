@@ -48,9 +48,8 @@ public class Controller {
 	 * @param sec sección Ini a parsear.
 	 * @return el evento correspondiente a la sección.
 	 * @throws IllegalArgumentException si no se encuentra el evento al que corresponde la sección.
-	 * @throws SimulatorException si el evento no respeta la lógica que se requiere para implementar el simulador.
 	 */
-	 public Event parseSection(IniSection sec)throws IllegalArgumentException, SimulatorException{
+	 public Event parseSection(IniSection sec)throws IllegalArgumentException{
 		Event e = null;
 		for(EventBuilder eb: bs){
 			if(eb.parse(sec) != null) {
@@ -66,7 +65,7 @@ public class Controller {
 	  * Ejecuta la simulación durante una serie de pasos
 	  * @throws IOException
 	  */
-	 public void run() throws SimulatorException, IOException{
+	 public void run() throws IOException{
 		 simulator.run(pasos);
 	 }
 	 

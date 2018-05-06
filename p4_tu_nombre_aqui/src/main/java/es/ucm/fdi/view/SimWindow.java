@@ -485,6 +485,8 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			ctr.loadEvents(bytes);
 			listaEventos = ctr.getSimulator().getEventsList();
 			play.setEnabled(true);
+			report.setEnabled(false);
+			deleteReports.setEnabled(false);
 			statusBarText.setText("Events loaded");
 		} catch (IllegalArgumentException iae) {
 			JOptionPane.showMessageDialog(this,

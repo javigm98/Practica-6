@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +21,6 @@ import javax.swing.SwingUtilities;
 
 import es.ucm.fdi.model.Junction;
 import es.ucm.fdi.model.Road;
-import es.ucm.fdi.model.SimObject;
 import es.ucm.fdi.model.Vehicle;
 
 /**
@@ -50,6 +51,27 @@ public class ReportsDialog extends JDialog{
 		roadsList.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Roads"));
 		junctionsList = new SimulatorList(j);
 		junctionsList.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 2), "Junction"));
+		addKeyListener(new KeyListener(){
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					System.out.println(e.getKeyChar());
+				}
+			
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}});
 		initGUI();
 		setSize(500, 500);
 		setVisible(true);

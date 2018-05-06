@@ -13,7 +13,7 @@ import es.ucm.fdi.model.SimulatorException;
 public class NewBikeEventBuilder implements EventBuilder{
 	private final static String TAG = "new_vehicle";
 	@Override
-	 public Event parse(IniSection sec) throws IllegalArgumentException, SimulatorException{
+	 public Event parse(IniSection sec) throws IllegalArgumentException{
 		 if(sec.getTag().equals(TAG) && sec.getValue("type").equals("bike")){
 			try{ 
 			 int time1 = parseInt(sec, "time", 0);
@@ -23,7 +23,7 @@ public class NewBikeEventBuilder implements EventBuilder{
 			 return new NewBikeEvent(time1, id1, maxVel, ruta);
 			}
 			catch(NullPointerException npe){
-				throw new SimulatorException("Missing fields in the bike event section ", npe);
+				throw new IllegalArgumentException("Missing fields in the bike event section ", npe);
 			}
 		 }
 		 else return null;
