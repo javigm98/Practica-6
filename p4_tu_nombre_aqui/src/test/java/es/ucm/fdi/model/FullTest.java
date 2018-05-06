@@ -8,14 +8,14 @@ import org.junit.Test;
 public class FullTest {
 private static final String BASE = "src/test/resources/";
 
-@Test
+@Test(expected = SimulatorException.class)
 public void testError() throws Exception {
 	try{
 		Main.test(BASE + "examples/err");
 		fail("Expected an exception while parsing bad ini file");
 	}
 	catch(SimulatorException se){
-		// Se esperaba la excepcion
+		//Se esperaba la excepcion
 	}
 }
 

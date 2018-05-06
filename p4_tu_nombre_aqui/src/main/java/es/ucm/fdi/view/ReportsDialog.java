@@ -133,7 +133,6 @@ public class ReportsDialog extends JDialog {
 
 		generar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// new Thread(generate).start();
 				SwingUtilities.invokeLater(generate);
 				dispose();
 			}
@@ -149,8 +148,8 @@ public class ReportsDialog extends JDialog {
 	}
 
 	/**
-	 * @return los objectos de la simulacion seleccionados por el usuario en un
-	 *         mapa no ordenado
+	 * @return un mapa con todos los objetos de la simulacion indicando si han sido
+	 * seleccionados o no.
 	 */
 	public HashMap<String, Boolean> getSelected() {
 		// Nos interesa devolver un mapa. Haremos muchas consultas que así serán
