@@ -2,7 +2,6 @@ package es.ucm.fdi.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -38,6 +38,7 @@ import es.ucm.fdi.model.Vehicle;
 public class ReportsDialog extends JDialog {
 	private SimulatorList vehiclesList, roadsList, junctionsList;
 	private Runnable generate;
+	static final private char _clearSelectionKey = 'c';
 
 	/**
 	 * @param owner
@@ -64,40 +65,35 @@ public class ReportsDialog extends JDialog {
 				BorderFactory.createLineBorder(Color.black, 2), "Roads"));
 		junctionsList = new SimulatorList(j);
 		junctionsList.setBorder(BorderFactory.createTitledBorder(
-				BorderFactory.createLineBorder(Color.black, 2), "Junctions"));
+				BorderFactory.createLineBorder(Color.black, 2), "Junction"));
+		addCleanSelectionListner(vehiclesList.getLista());
+		addCleanSelectionListner(roadsList.getLista());
+		addCleanSelectionListner(junctionsList.getLista());
 		initGUI();
-		setSize(500, 400);
+		setSize(500, 500);
 		setVisible(true);
-		escuchaTeclas();
 	}
 
-	private void escuchaTeclas(){
-		setFocusable(true);
-		addKeyListener(new KeyListener(){
+	private void addCleanSelectionListner(JList<?> list) {
+		list.addKeyListener(new KeyListener() {
 
 			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_A){
-					vehiclesList.seleccionTotalInterfaz();
-					roadsList.seleccionTotalInterfaz();
-					junctionsList.seleccionTotalInterfaz();
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar() == _clearSelectionKey) {
+					list.clearSelection();
 				}
-				else if(e.getKeyCode() == KeyEvent.VK_C){
-					vehiclesList.deseleccionTotalInterfaz();
-					roadsList.deseleccionTotalInterfaz();
-					junctionsList.deseleccionTotalInterfaz();
-				}
-			
 			}
 
 			@Override
-			public void keyReleased(KeyEvent arg0) {}
+			public void keyReleased(KeyEvent e) {
+			}
 
 			@Override
-			public void keyTyped(KeyEvent arg0) {}
-			});
+			public void keyPressed(KeyEvent e) {
+			}
+		});
+
 	}
-	
 	
 	
 	/**
