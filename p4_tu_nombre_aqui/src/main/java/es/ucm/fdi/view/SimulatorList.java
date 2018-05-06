@@ -32,9 +32,7 @@ public class SimulatorList extends JPanel implements ListSelectionListener {
 		lista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		lista.addListSelectionListener(this);
 		seleccionados = new HashMap<>();
-		for(String id : ids){
-			seleccionados.put(id, false);
-		}
+		deseleccionaTodosInternamente();
 		add(new JScrollPane(lista, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 	}
 
@@ -42,14 +40,34 @@ public class SimulatorList extends JPanel implements ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		if ( e.getSource() == lista && e.getValueIsAdjusting() == false ) {
 			int[] fromIndex = lista.getSelectedIndices();
-			for(String id : ids){
-				seleccionados.put(id, false);
-			}
+			deseleccionaTodosInternamente();
 			for(int i = 0; i < fromIndex.length; ++i){
 				seleccionados.put((String) elementos[fromIndex[i]], true);
 			}
 		}
 	}
+	
+	public void seleccionTotalInterfaz(){
+		int ini = 0;
+	    int fin = lista.getModel().getSize() - 1;
+	    if (fin >= 0) {
+	      lista.setSelectionInterval(ini, fin);
+	    }
+	    for(String id : ids){
+			seleccionados.put(id, true);
+		}
+	}
+	public void deseleccionTotalInterfaz(){
+		lista.clearSelection();
+		deseleccionaTodosInternamente();
+	}
+	
+	private void deseleccionaTodosInternamente(){
+		for(String id : ids){
+			seleccionados.put(id, false);
+		}
+	}
+	
 
 	public HashMap<String, Boolean> getSeleccionados() {
 		return seleccionados;
