@@ -26,7 +26,7 @@ public class SimulatorList extends JPanel implements ListSelectionListener {
 		}
 		elementos = ids.toArray();
 		lista = new JList(elementos);
-		lista.setVisibleRowCount(11); 
+		lista.setVisibleRowCount(10); 
 		lista.setFixedCellHeight(20); 
 		lista.setFixedCellWidth(140);
 		lista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -36,6 +36,11 @@ public class SimulatorList extends JPanel implements ListSelectionListener {
 		add(new JScrollPane(lista, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 	}
 
+	public JList<String> getLista(){
+		return lista;
+	}
+	
+	
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if ( e.getSource() == lista && e.getValueIsAdjusting() == false ) {
@@ -45,21 +50,6 @@ public class SimulatorList extends JPanel implements ListSelectionListener {
 				seleccionados.put((String) elementos[fromIndex[i]], true);
 			}
 		}
-	}
-	
-	public void seleccionTotalInterfaz(){
-		int ini = 0;
-	    int fin = lista.getModel().getSize() - 1;
-	    if (fin >= 0) {
-	      lista.setSelectionInterval(ini, fin);
-	    }
-	    for(String id : ids){
-			seleccionados.put(id, true);
-		}
-	}
-	public void deseleccionTotalInterfaz(){
-		lista.clearSelection();
-		deseleccionaTodosInternamente();
 	}
 	
 	private void deseleccionaTodosInternamente(){
