@@ -2,6 +2,7 @@ package es.ucm.fdi.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,9 +64,9 @@ public class ReportsDialog extends JDialog {
 				BorderFactory.createLineBorder(Color.black, 2), "Roads"));
 		junctionsList = new SimulatorList(j);
 		junctionsList.setBorder(BorderFactory.createTitledBorder(
-				BorderFactory.createLineBorder(Color.black, 2), "Junction"));
+				BorderFactory.createLineBorder(Color.black, 2), "Junctions"));
 		initGUI();
-		setSize(500, 500);
+		setSize(500, 400);
 		setVisible(true);
 		escuchaTeclas();
 	}
@@ -104,23 +105,25 @@ public class ReportsDialog extends JDialog {
 	 * dialogo y los coloca
 	 */
 	private void initGUI() {
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		JPanel mainPanel = new JPanel(new BorderLayout());
+		
 		JPanel etiquetas = new JPanel(new BorderLayout());
+		
 		etiquetas.setLayout(new BoxLayout(etiquetas, BoxLayout.Y_AXIS));
 		etiquetas.add(new JLabel(
 				"Select items for which you want to generate reports."));
 		etiquetas.add(new JLabel("Use 'c' to deselect all."));
 		etiquetas.add(new JLabel("Click on the table and Ctrl + A to select all"));
 		etiquetas.add(new JLabel("Use Crtl + clic to multiple selection"));
-		mainPanel.add(etiquetas);
+		etiquetas.add(new JLabel(" "));
+		mainPanel.add(etiquetas, BorderLayout.PAGE_START);
 		JPanel listas = new JPanel(new BorderLayout());
 		listas.setLayout(new GridLayout(1, 3));
 		listas.add(vehiclesList);
 		listas.add(roadsList);
 		listas.add(junctionsList);
 		mainPanel.add(listas);
-		JPanel botones = new JPanel(new BorderLayout());
+		JPanel botones = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton cancelar = new JButton("Cancel");
 
 		cancelar.addActionListener(new ActionListener() {
@@ -139,12 +142,13 @@ public class ReportsDialog extends JDialog {
 			}
 		});
 		botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
-		generar.setAlignmentX(CENTER_ALIGNMENT);
-		cancelar.setAlignmentX(CENTER_ALIGNMENT);
 		botones.add(cancelar);
+		cancelar.setAlignmentX(CENTER_ALIGNMENT);
 		botones.add(generar);
-		mainPanel.add(botones);
-		add(mainPanel);
+		mainPanel.add(botones, BorderLayout.PAGE_END);
+		
+		setContentPane(mainPanel);
+		setResizable(false);
 	}
 
 	/**

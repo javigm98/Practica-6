@@ -26,7 +26,7 @@ public class SimulatorList extends JPanel implements ListSelectionListener {
 		}
 		elementos = ids.toArray();
 		lista = new JList(elementos);
-		lista.setVisibleRowCount(10); 
+		lista.setVisibleRowCount(11); 
 		lista.setFixedCellHeight(20); 
 		lista.setFixedCellWidth(140);
 		lista.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
