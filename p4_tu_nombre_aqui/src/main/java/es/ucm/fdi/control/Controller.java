@@ -34,6 +34,7 @@ public class Controller {
 	 * Carga en la lista de eventos del simulador los eventos de un flujo de entrada dado.
 	 * @param in1 flujo del que se leerán los datos.
 	 * @throws IOException si no se puede acceder al fichero inicial.
+	 * @throws IllegalArgument si los argumentos de ini no son correctos
 	 */
 	public void loadEvents(InputStream in1) throws IOException, IllegalArgumentException{
 		Ini first = new Ini(in1);

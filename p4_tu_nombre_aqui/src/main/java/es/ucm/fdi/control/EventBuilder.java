@@ -31,7 +31,7 @@ public interface EventBuilder {
 	 * @param sec sección en la que queremos buscar la clave.
 	 * @param key clave cuyo valor deseamos conocer.
 	 * @return el valor correspondiente a la clave key
-	 * @throws NullPointerException si la calve no se encuentra en la sección INI.
+	 * @throws NullPointerException si la clave no se encuentra en la sección INI.
 	 */
 	public default String parseString(IniSection sec, String key)throws NullPointerException{
 		String s = sec.getValue(key);
@@ -101,7 +101,7 @@ public interface EventBuilder {
 	/**
 	 * Dada una clave cuyo valor debe ser un entero devuelve el valor asociado a la misma o el valor porDefecto si
 	 * no encuentra la clave key en la sección sec
-	 * @param sec sección en la que se queire buscar el valor para la clave key
+	 * @param sec sección en la que se que ir a buscar el valor para la clave key
 	 * @param key clave cuyo valor se desa conocer
 	 * @param porDefecto valor por defecto para la clave key si no se encontrase en la sección sec
 	 * @return el valor asociado o key o porDefecto si no encuentra key en sec

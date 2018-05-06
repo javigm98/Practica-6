@@ -66,7 +66,6 @@ public class TrafficSimulator {
 		}
 	}
 
-
 	public TrafficSimulator(OutputStream out) {
 		this.out = out;
 	}
@@ -100,11 +99,14 @@ public class TrafficSimulator {
 	 * 
 	 * @throws IOException
 	 *             si no se puede abrir el flujo de salida
+	 * 
+	 * @throws SimulatorException
+	 *             si hubo fallos en la ejecución
 	 */
 	public void run() throws IOException, SimulatorException {
-			for (Event e : listaEventos.innerValues()) {
-				e.execute(rm, time);
-			}
+		for (Event e : listaEventos.innerValues()) {
+			e.execute(rm, time);
+		}
 		for (Road r : rm.getListaCarreteras()) {
 			r.avanza();
 		}
@@ -119,8 +121,7 @@ public class TrafficSimulator {
 	/**
 	 * Añade un evento a la lista de eventos a ejecutar.
 	 * 
-	 * @param e
-	 *            evento a añadir
+	 * @param e evento a añadir
 	 */
 	public void addEvent(Event e) {
 		if (e.getTime() >= time) {
@@ -138,8 +139,7 @@ public class TrafficSimulator {
 	 * mostrando información correspondiente a cruces, carreteras y vehículos
 	 * presentes en un determinado momento.
 	 * 
-	 * @throws IOException
-	 *             si no se puede abrir el flujo de salida.
+	 * @throws IOException si no se puede abrir el flujo de salida.
 	 */
 	public void writeReport() throws IOException {
 		Map<String, String> aux = new LinkedHashMap<>();
@@ -158,16 +158,15 @@ public class TrafficSimulator {
 	}
 
 	/**
-	 * Crea una IniSection dados un mapa de pares clave-valor y una etiqueta y la escribe en out.
+	 * Crea una IniSection dados un mapa de pares clave-valor y una etiqueta y
+	 * la escribe en out.
 	 * 
-	 * @param mapa
-	 *            con los pares clave-valor de la sección.
-	 * @param tag
-	 *            cabecera de la sección
-	 * @throws IOException 
-	 * 				si no puede abrir el flujo de salida
+	 * @param mapa con los pares clave-valor de la sección.
+	 * @param tag cabecera de la sección
+	 * @throws IOException si no puede abrir el flujo de salida
 	 */
-	private void writeMapAsIni(Map<String, String> mapa, String tag) throws IOException {
+	private void writeMapAsIni(Map<String, String> mapa, String tag)
+			throws IOException {
 		IniSection sec = new IniSection(tag);
 		for (Map.Entry<String, String> entry : mapa.entrySet()) {
 			sec.setValue(entry.getKey(), entry.getValue());
