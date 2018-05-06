@@ -40,11 +40,13 @@ public class SimulatorTable extends JPanel{
 
 
 	private class ListOfMapsTableModel extends AbstractTableModel {
-		@Override // fieldNames es un String[] con nombrs de col.
+		// fieldNames es un String[] con nombrs de col
+		@Override 
 		public String getColumnName(int columnIndex) {
 			return fieldNames[columnIndex];
 		}
-		@Override // elements contiene la lista de elementos
+		// elements contiene la lista de elementos
+		@Override 
 		public int getRowCount() {
 			return elements.size();
 		}
@@ -52,7 +54,7 @@ public class SimulatorTable extends JPanel{
 		public int getColumnCount() {
 			return fieldNames.length;
 		}
-		@Override // ineficiente: ¿puedes mejorarlo?
+		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			if(fieldNames[columnIndex].equals("#")){
 				return rowIndex;

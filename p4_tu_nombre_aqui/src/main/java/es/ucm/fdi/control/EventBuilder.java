@@ -113,7 +113,7 @@ public interface EventBuilder {
 	}
 	
 	/**
-	 * Dada una clave cuyo valor debe ser un double devuelve el valor asociado a la misma o el valor porDefecto si
+	 * Dada una clave cuyo valor debe ser un long devuelve el valor asociado a la misma o el valor porDefecto si
 	 * no encuentra la clave key en la sección sec
 	 * @param sec sección en la que se queire buscar el valor para la clave key
 	 * @param key clave cuyo valor se desa conocer
