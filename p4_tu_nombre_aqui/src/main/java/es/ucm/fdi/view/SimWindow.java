@@ -85,6 +85,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 
 	private SimulatorAction events;
 	private SimulatorAction play;
+	private SimulatorAction stop;
 	private SimulatorAction reset;
 
 	private SimulatorAction report;
@@ -92,7 +93,8 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	private SimulatorAction saveReports;
 
 	private SimulatorAction salir;
-
+	
+	private JSpinner delay;
 	private JSpinner steps;
 	private JTextField currentTime;
 
@@ -387,6 +389,11 @@ public class SimWindow extends JFrame implements SimulatorListener {
 				"Ejecutar simulación", KeyEvent.VK_J, "control J",
 				() -> ejecutaSimulacion());
 		play.setEnabled(false);
+		
+		stop = new SimulatorAction("Parar", "stop.png", "Parar la simulacion", 
+				KeyEvent.VK_P, "control P", () -> System.out.println("parando..."));
+		
+		stop.setEnabled(false);
 
 		reset = new SimulatorAction("Reiniciar", "reset.png",
 				"Reiniciar el simulador", KeyEvent.VK_R, "control R",
@@ -429,7 +436,12 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		bar.addSeparator();
 		bar.add(events);
 		bar.add(play);
+		bar.add(stop);
 		bar.add(reset);
+		
+		bar.add(new JLabel("Delay: "));
+		delay = new JSpinner(new SpinnerNumberModel(300, 0, 10000, 1));
+		bar.add(delay);
 
 		bar.add(new JLabel(" Steps: "));
 		steps = new JSpinner(new SpinnerNumberModel(5, 1, 1000, 1));
@@ -439,6 +451,8 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		currentTime = new JTextField("" + time, 5);
 		currentTime.setEditable(false);
 		bar.add(currentTime);
+		
+		bar.addSeparator();
 
 		bar.add(report);
 		bar.add(deleteReports);
@@ -589,17 +603,46 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	 */
 
 	private void ejecutaSimulacion() {
-		try {
+		/*try {
 			ctr.setPasos((int) steps.getValue());
 			ctr.run();
 			report.setEnabled(true);
+			stop.setEnabled(true);
 			statusBarText.setText("Simulation advanced " + steps.getValue()
 					+ " steps");
 		} catch (IOException ioe) {
 			JOptionPane.showMessageDialog(null,
 					"The file isn't a correct one for the simulator");
-		}
+		}*/
+		report.setEnabled(true);
+		stop.setEnabled(true);
+		Thread h = new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+				for(int i = 0; i < (int)steps.getValue(); ++i){
+					try {
+						ctr.setPasos(1);
+						ctr.run();
+						Thread.sleep((int) delay.getValue());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+			
+		});
+		h.start();
+		statusBarText.setText("Simulation advanced " + steps.getValue()
+				+ " steps");
+		
 	}
+		
 	
 	/**
 	 * Resetea el simulador devolviendolo a su estado inicial
@@ -620,6 +663,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		reset.setEnabled(false);
 		report.setEnabled(false);
 		saveReports.setEnabled(false);
+		stop.setEnabled(false);
 
 	}
 	
