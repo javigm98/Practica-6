@@ -47,6 +47,7 @@ import es.ucm.fdi.model.RoadMap;
 import es.ucm.fdi.model.SimulatorException;
 import es.ucm.fdi.model.TrafficSimulator.SimulatorListener;
 import es.ucm.fdi.util.MultiTreeMap;
+import es.ucm.fdi.control.Stepper;
 
 /**
  * Ventana principal de la interfaz grafica de la aplicación
@@ -112,6 +113,8 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	private JSplitPane splitTodo;
 
 	private ReportsDialog rd;
+	
+	private Stepper stepper;
 	
 	/**
 	 * 
@@ -391,7 +394,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		play.setEnabled(false);
 		
 		stop = new SimulatorAction("Parar", "stop.png", "Parar la simulacion", 
-				KeyEvent.VK_P, "control P", () -> System.out.println("parando..."));
+				KeyEvent.VK_P, "control P", () -> stop());
 		
 		stop.setEnabled(false);
 
@@ -614,7 +617,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			JOptionPane.showMessageDialog(null,
 					"The file isn't a correct one for the simulator");
 		}*/
-		report.setEnabled(true);
+		/*report.setEnabled(true);
 		stop.setEnabled(true);
 		Thread h = new Thread(new Runnable(){
 
@@ -641,6 +644,24 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		statusBarText.setText("Simulation advanced " + steps.getValue()
 				+ " steps");
 		
+	}*/
+		
+		stepper = new Stepper(()->{
+			stop.setEnabled(true);
+			report.setEnabled(true);
+		}, () -> {
+			try {
+				ctr.getSimulator().run(1);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}, ()-> {
+			statusBarText.setText("Simulation advanced " + ((int)steps.getValue() - stepper.getSteps())
+					+ " steps");
+		});
+		
+		stepper.start((int)steps.getValue(), (int)delay.getValue());
 	}
 		
 	
@@ -686,6 +707,10 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		reportsArea.setText("");
 		statusBarText.setText("Reports deleted");
 		saveReports.setEnabled(false);
+	}
+	
+	private void stop(){
+		stepper.stop();
 	}
 	
 	/**
