@@ -291,7 +291,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	}
 	
 	/**
-	 * Crea el menu que se despliega al hacer clic derecho en ´
+	 * Crea el menu que se despliega al hacer clic derecho en
 	 * el editor de eventos
 	 */
 
@@ -353,12 +353,9 @@ public class SimWindow extends JFrame implements SimulatorListener {
 				public void mouseClicked(MouseEvent e) {
 				}
 			});
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "The templates file can not be opened");
 		}
 
 	}
@@ -606,58 +603,34 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	 */
 
 	private void ejecutaSimulacion() {
-		/*try {
-			ctr.setPasos((int) steps.getValue());
-			ctr.run();
-			report.setEnabled(true);
-			stop.setEnabled(true);
-			statusBarText.setText("Simulation advanced " + steps.getValue()
-					+ " steps");
-		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(null,
-					"The file isn't a correct one for the simulator");
-		}*/
-		/*report.setEnabled(true);
-		stop.setEnabled(true);
-		Thread h = new Thread(new Runnable(){
-
-			@Override
-			public void run() {
-				for(int i = 0; i < (int)steps.getValue(); ++i){
-					try {
-						ctr.setPasos(1);
-						ctr.run();
-						Thread.sleep((int) delay.getValue());
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				
-			}
-			
-		});
-		h.start();
-		statusBarText.setText("Simulation advanced " + steps.getValue()
-				+ " steps");
-		
-	}*/
-		
 		stepper = new Stepper(()->{
 			stop.setEnabled(true);
-			report.setEnabled(true);
+			open.setEnabled(false);
+			guardar.setEnabled(false);
+			limpiar.setEnabled(false);
+			events.setEnabled(false);
+			play.setEnabled(false);
+			reset.setEnabled(false);
+			report.setEnabled(false);
+			deleteReports.setEnabled(false);
 		}, () -> {
 			try {
 				ctr.getSimulator().run(1);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Error when generating reports " + e);
 			}
 		}, ()-> {
-			statusBarText.setText("Simulation advanced " + ((int)steps.getValue() - stepper.getSteps())
+			stop.setEnabled(false);
+			open.setEnabled(true);
+			guardar.setEnabled(true);
+			limpiar.setEnabled(true);
+			events.setEnabled(true);
+			play.setEnabled(true);
+			reset.setEnabled(true);
+			report.setEnabled(true);
+			deleteReports.setEnabled(true);
+			statusBarText.setText("Simulation advanced " + 
+					((int)steps.getValue() - stepper.getSteps())
 					+ " steps");
 		});
 		
@@ -677,6 +650,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		eventsQueue.update();
 		roadMap.update(map);
 		statusBarText.setText("Simulator reseted");
+		stop();
 
 		guardar.setEnabled(false);
 		events.setEnabled(false);
@@ -768,15 +742,15 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
 				String s = readFile(file);
-				eventsEditor.setText(s);
+				eventsEditor.setText(s);statusBarText.setText("Data loaded");
+				guardar.setEnabled(true);
+				events.setEnabled(true);
+				reset.setEnabled(true);
 			}
-			statusBarText.setText("Data loaded");
-			guardar.setEnabled(true);
-			events.setEnabled(true);
-			reset.setEnabled(true);
+			
 		} catch (NoSuchElementException se) {
 			JOptionPane.showMessageDialog(null,
-					"The file isn't a correct one for the simulator");
+					"The file isn't a correct one for the simulator" + se);
 		}
 	}
 	

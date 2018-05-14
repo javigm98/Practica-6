@@ -10,7 +10,7 @@ import es.ucm.fdi.ini.IniSection;
 
 public class BuildersTestFails {
 
-	@Test (expected = SimulatorException.class) // Aunque en origen fuese una NumberFormatException
+	@Test (expected = IllegalArgumentException.class) // Aunque en origen fuese una NumberFormatException
 	public void RoadBuilderWithoutMaxSpeedest() {
 		EventBuilder eb = new NewRoadEventBuilder();
 		IniSection sec = new IniSection("new_road");
@@ -22,7 +22,7 @@ public class BuildersTestFails {
 		eb.parse(sec);	// No necesito la referencia, solo llamarla para que se produzca la excepcion
 	}
 	
-	@Test (expected = SimulatorException.class) // Faltan mas campos. Pero el primero que comprueba y da error es en el ID
+	@Test (expected = IllegalArgumentException.class) // Faltan mas campos. Pero el primero que comprueba y da error es en el ID
 	public void CarBuilderWithoutId() {
 		EventBuilder eb = new NewCarEventBuilder();
 		IniSection sec = new IniSection("new_vehicle");

@@ -1,22 +1,21 @@
 package es.ucm.fdi.model;
 
-import static org.junit.Assert.*;
-import es.ucm.fdi.launcher.Main;
+import java.io.IOException;
 
 import org.junit.Test;
+
+import es.ucm.fdi.launcher.Main;
 
 public class FullTest {
 private static final String BASE = "src/test/resources/";
 
-@Test(expected = SimulatorException.class)
-public void testError() throws Exception {
-	try{
-		Main.test(BASE + "examples/err");
-		fail("Expected an exception while parsing bad ini file");
-	}
-	catch(SimulatorException se){
-		//Se esperaba la excepcion
-	}
+@Test
+public void testError() throws IOException {
+		try {
+			Main.test(BASE + "examples/err");
+		} catch (SimulatorException se) {
+			// ok: expected
+		}
 }
 
 @Test
