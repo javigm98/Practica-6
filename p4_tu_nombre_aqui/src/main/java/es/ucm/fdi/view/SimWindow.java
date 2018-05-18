@@ -355,7 +355,8 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			});
 			
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "The templates file can not be opened");
+			JOptionPane.showMessageDialog(this, "The templates file can not be opened", 
+					"Reading error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -537,7 +538,8 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	@Override
 	public void simulatorError(int time, RoadMap map,
 			MultiTreeMap<Integer, Event> events, SimulatorException se) {
-		JOptionPane.showMessageDialog(this, "" + se + se.getCause());
+		JOptionPane.showMessageDialog(this, "" + se + se.getCause(), 
+				"Simulator Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
@@ -567,7 +569,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			reportsArea.setText(s);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this, "Selected file is not valid: "
-					+ e);
+					+ e, "Invalid Error", JOptionPane.ERROR_MESSAGE);
 		}
 		saveReports.setEnabled(true);
 		statusBarText.setText("Reports generated");
@@ -591,10 +593,11 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			statusBarText.setText("Events loaded");
 		} catch (IllegalArgumentException iae) {
 			JOptionPane.showMessageDialog(this,
-					"Error loading events from file: " + iae);
+					"Error loading events from file: " + iae, 
+					"Events Error", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "Selected file is not valid: "
-					+ e);
+			JOptionPane.showMessageDialog(this, "Selected file is not valid, "
+					+ e, "Invalid File", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -603,6 +606,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	 */
 
 	private void ejecutaSimulacion() {
+		try {
 		stepper = new Stepper(()->{
 			stop.setEnabled(true);
 			open.setEnabled(false);
@@ -617,7 +621,8 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			try {
 				ctr.getSimulator().run(1);
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(this, "Error when generating reports " + e);
+				JOptionPane.showMessageDialog(this, "Error when generating reports, " + e, 
+						"Reports Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}, ()-> {
 			stop.setEnabled(false);
@@ -633,6 +638,11 @@ public class SimWindow extends JFrame implements SimulatorListener {
 					((int)steps.getValue() - stepper.getSteps())
 					+ " steps");
 		});
+		}
+		catch(SimulatorException se){
+			JOptionPane.showMessageDialog(this, "Error when generating reports, " + se, 
+					"Reports Error", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		stepper.start((int)steps.getValue(), (int)delay.getValue());
 	}
@@ -708,12 +718,19 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	 */
 
 	private void saveFile(JTextArea text) {
+		try{
 		int returnVal = fc.showSaveDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			writeFile(file, text.getText());
 		}
 		statusBarText.setText("Data saved");
+		}
+		catch(FileNotFoundException fne){
+			JOptionPane.showMessageDialog(this,  "Inexisting file, " + fne, 
+					"Saving Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 	
 	/**
@@ -722,15 +739,12 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	 * @param content texto a escribir
 	 */
 
-	private static void writeFile(File file, String content) {
-		try {
+	private static void writeFile(File file, String content) throws FileNotFoundException{
 			PrintWriter pw = new PrintWriter(file);
 			pw.print(content);
 			pw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
+		
 	
 	/**
 	 * Carga un archivo seleccionado mediante fc y lo muestra en events editor
@@ -741,6 +755,11 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			int returnVal = fc.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
+				String fileName = file.getAbsolutePath();
+				if(!fileName.substring(fileName.length() - 4).equals(".ini")){
+					JOptionPane.showMessageDialog(null,
+							"The file is not valid for the simulator", "Invalid File", JOptionPane.ERROR_MESSAGE);
+				}
 				String s = readFile(file);
 				eventsEditor.setText(s);statusBarText.setText("Data loaded");
 				guardar.setEnabled(true);
@@ -750,7 +769,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			
 		} catch (NoSuchElementException se) {
 			JOptionPane.showMessageDialog(null,
-					"The file isn't a correct one for the simulator" + se);
+					"The file is not valid for the simulator, " + se, "Invalid File", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	

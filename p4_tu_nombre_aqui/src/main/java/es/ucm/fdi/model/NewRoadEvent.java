@@ -29,6 +29,9 @@ public class NewRoadEvent extends Event{
 	
 	@Override
 	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
+		if(rm.getRoad(id) != null){
+			throw new SimulatorException("Duplicated Road with the id: " + id);
+		}
 		if(time == timeExecution){
 			try{
 				Junction ini = rm.getJunction(iniId),

@@ -29,6 +29,9 @@ public class NewVehicleEvent extends Event{
 	@Override
 	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
 		if(time == timeExecution){
+			if(rm.getVehicle(id) != null){
+				throw new SimulatorException("Duplicated Vehicle with the id: " + id);
+			}
 			for(String s: ruta){
 				try{
 					itinerario.add(rm.getJunction(s));
