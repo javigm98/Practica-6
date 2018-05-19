@@ -51,6 +51,7 @@ import es.ucm.fdi.control.Stepper;
 
 /**
  * Ventana principal de la interfaz grafica de la aplicación
+ * 
  * @author Javier Guzman y Jorge Villarrubia
  *
  */
@@ -94,7 +95,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	private SimulatorAction saveReports;
 
 	private SimulatorAction salir;
-	
+
 	private JSpinner delay;
 	private JSpinner steps;
 	private JTextField currentTime;
@@ -113,18 +114,20 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	private JSplitPane splitTodo;
 
 	private ReportsDialog rd;
-	
+
 	private Stepper stepper;
-	
+
 	/**
 	 * 
-	 * @param ctr controlador de la aplicacion con los metodos
-	 * que realizaran las acciones.
+	 * @param ctr
+	 *            controlador de la aplicacion con los metodos que realizaran
+	 *            las acciones.
 	 * 
-	 * @param iniFileName archivo inicial del que se cargan los 
-	 * eventos (opcional).
+	 * @param iniFileName
+	 *            archivo inicial del que se cargan los eventos (opcional).
 	 * 
-	 * @throws IOException si no se puede abrir el archivo ini inicial.
+	 * @throws IOException
+	 *             si no se puede abrir el archivo ini inicial.
 	 */
 
 	public SimWindow(Controller ctr, String iniFileName) throws IOException {
@@ -144,9 +147,11 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		splitAbajo.setDividerLocation(.5);
 
 	}
+
 	/**
-	 * @throws IOException si hay algun problema con la lectura de archivos 
-	 * en las acciones que lo requieran
+	 * @throws IOException
+	 *             si hay algun problema con la lectura de archivos en las
+	 *             acciones que lo requieran
 	 */
 
 	private void initGUI() throws IOException {
@@ -154,11 +159,13 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		inicializaComponentes();
 		dividePantalla();
 	}
-	
+
 	/**
 	 * Inicializa los distintos componentes de la ventana
-	 * @throws IOException si hay algun problema con la lectura de archivos
-	 * en las acciones
+	 * 
+	 * @throws IOException
+	 *             si hay algun problema con la lectura de archivos en las
+	 *             acciones
 	 */
 
 	private void inicializaComponentes() throws IOException {
@@ -174,14 +181,17 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		addStatusBar();
 		createPopUpMenu();
 	}
+
 	/**
 	 * Añade el editor de eventos basado en un JTextArea
-	 * @throws IOException si no se puede abrir el archivo seleccionado
+	 * 
+	 * @throws IOException
+	 *             si no se puede abrir el archivo seleccionado
 	 */
 
 	private void addEventsEditor() throws IOException {
 		eventsEditor = new JTextArea("");
-		//Si hemos pasado un archivo inicial para cargar eventos
+		// Si hemos pasado un archivo inicial para cargar eventos
 		if (iniFile != null) {
 			Ini ini = new Ini(iniFile);
 			String s = ini.toString();
@@ -194,6 +204,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		eventsEditor.setLineWrap(true);
 		eventsEditor.setWrapStyleWord(true);
 	}
+
 	/**
 	 * Añade la cola de eventos como un SimulatorTable
 	 */
@@ -205,7 +216,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 						BorderFactory.createLineBorder(Color.black, 2),
 						"Events Queue"));
 	}
-	
+
 	/**
 	 * Añade la zona en la que se muestran los informes generados
 	 */
@@ -214,6 +225,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		reportsArea = new JTextArea("");
 		reportsArea.setEditable(false);
 	}
+
 	/**
 	 * Añade la tabla con la informacion de los vehiculos
 	 */
@@ -224,7 +236,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		vehiclesTable.setBorder(BorderFactory.createTitledBorder(
 				BorderFactory.createLineBorder(Color.black, 2), "Vehicles"));
 	}
-	
+
 	/**
 	 * Añade la tabla con la informacion de las carreteras
 	 */
@@ -234,7 +246,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		roadsTable.setBorder(BorderFactory.createTitledBorder(
 				BorderFactory.createLineBorder(Color.black, 2), "Roads"));
 	}
-	
+
 	/**
 	 * Añade la tabla con la informacion delos cruces
 	 */
@@ -244,7 +256,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		junctionsTable.setBorder(BorderFactory.createTitledBorder(
 				BorderFactory.createLineBorder(Color.black, 2), "Junctions"));
 	}
-	
+
 	/**
 	 * Añade el grafo con el mapa de carreteras
 	 */
@@ -252,7 +264,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	private void addRoadMap() {
 		roadMap = new SimulatorGraph(map);
 	}
-	
+
 	/**
 	 * Añade los distintos componentes a la pantalla con el formato establecido.
 	 */
@@ -289,16 +301,16 @@ public class SimWindow extends JFrame implements SimulatorListener {
 
 		add(splitTodo);
 	}
-	
+
 	/**
-	 * Crea el menu que se despliega al hacer clic derecho en
-	 * el editor de eventos
+	 * Crea el menu que se despliega al hacer clic derecho en el editor de
+	 * eventos
 	 */
 
 	private void createPopUpMenu() {
 		JPopupMenu menu = new JPopupMenu();
 		JMenu subMenu = new JMenu("Add Template");
-		//Carga el fichero con las plantillas de los eventos
+		// Carga el fichero con las plantillas de los eventos
 		try {
 			Ini ini = new Ini(new FileInputStream(
 					"src/main/resources/extra/templates.ini"));
@@ -353,17 +365,18 @@ public class SimWindow extends JFrame implements SimulatorListener {
 				public void mouseClicked(MouseEvent e) {
 				}
 			});
-			
+
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "The templates file can not be opened", 
-					"Reading error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this,
+					"The templates file can not be opened", "Reading error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
-	
+
 	/**
-	 * Crea las distintas acciones del simulador
-	 * y crea la configuracion inicial de botones activos
+	 * Crea las distintas acciones del simulador y crea la configuracion inicial
+	 * de botones activos
 	 */
 
 	private void instantiateActions() {
@@ -379,7 +392,9 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		limpiar = new SimulatorAction("Borrar", "clear.png",
 				"Limpiar editor de eventos", KeyEvent.VK_B, "control shift B",
 				() -> deleteIniText());
-		limpiar.setEnabled(true); //Los limpiar y delete todo el rato disponibles. Su acción es nula si no debiesen
+		limpiar.setEnabled(true); // Los limpiar y delete todo el rato
+									// disponibles. Su acción es nula si no
+									// debiesen
 
 		events = new SimulatorAction("Eventos", "events.png", "Cargar eventos",
 				KeyEvent.VK_E, "control E", () -> cargarEventos());
@@ -390,10 +405,10 @@ public class SimWindow extends JFrame implements SimulatorListener {
 				"Ejecutar simulación", KeyEvent.VK_J, "control J",
 				() -> ejecutaSimulacion());
 		play.setEnabled(false);
-		
-		stop = new SimulatorAction("Parar", "stop.png", "Parar la simulacion", 
+
+		stop = new SimulatorAction("Parar", "stop.png", "Parar la simulacion",
 				KeyEvent.VK_P, "control P", () -> stop());
-		
+
 		stop.setEnabled(false);
 
 		reset = new SimulatorAction("Reiniciar", "reset.png",
@@ -423,10 +438,10 @@ public class SimWindow extends JFrame implements SimulatorListener {
 				"Salir de la aplicacion", KeyEvent.VK_S, "control shift X",
 				() -> System.exit(0));
 	}
-	
+
 	/**
-	 * Añade la barra de herramientas superior con las acciones y 
-	 * los contadores de tiempo y pasos de la simulacion
+	 * Añade la barra de herramientas superior con las acciones y los contadores
+	 * de tiempo y pasos de la simulacion
 	 */
 
 	private void addBars() {
@@ -439,7 +454,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		bar.add(play);
 		bar.add(stop);
 		bar.add(reset);
-		
+
 		bar.add(new JLabel("Delay: "));
 		delay = new JSpinner(new SpinnerNumberModel(300, 0, 10000, 1));
 		bar.add(delay);
@@ -452,7 +467,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		currentTime = new JTextField("" + time, 5);
 		currentTime.setEditable(false);
 		bar.add(currentTime);
-		
+
 		bar.addSeparator();
 
 		bar.add(report);
@@ -463,7 +478,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		bar.add(salir);
 		add(bar, BorderLayout.NORTH);
 	}
-	
+
 	/**
 	 * Añade la barra de menus desplegables superior a la barra de herramientas
 	 */
@@ -491,9 +506,9 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		barraDeMenu.add(reportsMenu);
 		setJMenuBar(barraDeMenu);
 	}
-	
+
 	/**
-	 * Añade la barra de informacion de la parte inferior de la ventana 
+	 * Añade la barra de informacion de la parte inferior de la ventana
 	 */
 
 	private void addStatusBar() {
@@ -502,8 +517,8 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		statusBar.add(statusBarText);
 		add(statusBar, BorderLayout.SOUTH);
 	}
-	
-	//Implementacion de los metodos de la interfaz SimulatorListener
+
+	// Implementacion de los metodos de la interfaz SimulatorListener
 
 	@Override
 	public void registered(int time, RoadMap map,
@@ -537,26 +552,28 @@ public class SimWindow extends JFrame implements SimulatorListener {
 
 	@Override
 	public void simulatorError(int time, RoadMap map,
-			MultiTreeMap<Integer, Event> events, SimulatorException se) {
-		JOptionPane.showMessageDialog(this, "" + se + se.getCause(), 
-				"Simulator Error", JOptionPane.ERROR_MESSAGE);
+			MultiTreeMap<Integer, Event> events, String errorMessage) {
+		stop();
+		JOptionPane.showMessageDialog(this, errorMessage, "Simulator Error",
+				JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	/**
-	 * Abre la ventana de seleccion de informes y 
-	 * los muestra en el area de texto correspondiente
+	 * Abre la ventana de seleccion de informes y los muestra en el area de
+	 * texto correspondiente
 	 */
 
 	private void generateReports() {
-		//se crea una lista de IniSections con el flujo de salida que contiene los informes
+		// se crea una lista de IniSections con el flujo de salida que contiene
+		// los informes
 		out = (ByteArrayOutputStream) ctr.getSimulator().getOut();
 		InputStream in = new ByteArrayInputStream(out.toByteArray());
 		try {
 			Ini ini = new Ini(in);
 			List<IniSection> secs = ini.getSections();
-			
-			//Se van añadiendo a una cadena las secciones correspondientes a 
-			//objetos de la simulacion cuyo id ha sido seleccionado
+
+			// Se van añadiendo a una cadena las secciones correspondientes a
+			// objetos de la simulacion cuyo id ha sido seleccionado
 			String s = "";
 			for (IniSection sec : secs) {
 				if (!rd.getSelected().isEmpty()
@@ -565,7 +582,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 					s += '\n';
 				}
 			}
-			//Se muestra la cadena creada en el JTextArea
+			// Se muestra la cadena creada en el JTextArea
 			reportsArea.setText(s);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this, "Selected file is not valid: "
@@ -574,7 +591,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		saveReports.setEnabled(true);
 		statusBarText.setText("Reports generated");
 	}
-	
+
 	/**
 	 * Carga en la cola de eventos los eventos que aparecen en el area del
 	 * editor de eventos.
@@ -583,7 +600,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	private void cargarEventos() {
 		ByteArrayInputStream bytes = new ByteArrayInputStream(eventsEditor
 				.getText().getBytes(StandardCharsets.UTF_8));
-		//Borra posibles eventos cargados previamente
+		// Borra posibles eventos cargados previamente
 		resetCargaEventos();
 		try {
 			ctr.loadEvents(bytes);
@@ -593,61 +610,61 @@ public class SimWindow extends JFrame implements SimulatorListener {
 			statusBarText.setText("Events loaded");
 		} catch (IllegalArgumentException iae) {
 			JOptionPane.showMessageDialog(this,
-					"Error loading events from file: " + iae, 
-					"Events Error", JOptionPane.ERROR_MESSAGE);
+					"Error loading events from file: " + iae, "Events Error",
+					JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this, "Selected file is not valid, "
 					+ e, "Invalid File", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	/**
 	 * Ejecuta tantos pasos de la simulacion como indique el JSpinner steps
 	 */
 
 	private void ejecutaSimulacion() {
 		try {
-		stepper = new Stepper(()->{
-			stop.setEnabled(true);
-			open.setEnabled(false);
-			guardar.setEnabled(false);
-			limpiar.setEnabled(false);
-			events.setEnabled(false);
-			play.setEnabled(false);
-			reset.setEnabled(false);
-			report.setEnabled(false);
-			deleteReports.setEnabled(false);
-		}, () -> {
-			try {
-				ctr.getSimulator().run(1);
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(this, "Error when generating reports, " + e, 
-						"Reports Error", JOptionPane.ERROR_MESSAGE);
-			}
-		}, ()-> {
-			stop.setEnabled(false);
-			open.setEnabled(true);
-			guardar.setEnabled(true);
-			limpiar.setEnabled(true);
-			events.setEnabled(true);
-			play.setEnabled(true);
-			reset.setEnabled(true);
-			report.setEnabled(true);
-			deleteReports.setEnabled(true);
-			statusBarText.setText("Simulation advanced " + 
-					((int)steps.getValue() - stepper.getSteps())
-					+ " steps");
-		});
+			stepper = new Stepper(() -> {
+				stop.setEnabled(true);
+				open.setEnabled(false);
+				guardar.setEnabled(false);
+				limpiar.setEnabled(false);
+				events.setEnabled(false);
+				play.setEnabled(false);
+				reset.setEnabled(false);
+				report.setEnabled(false);
+				deleteReports.setEnabled(false);
+			}, () -> {
+				try {
+					ctr.getSimulator().run(1);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(this,
+							"Error when generating reports, " + e,
+							"Reports Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}, () -> {
+				stop.setEnabled(false);
+				open.setEnabled(true);
+				guardar.setEnabled(true);
+				limpiar.setEnabled(true);
+				events.setEnabled(true);
+				play.setEnabled(true);
+				reset.setEnabled(true);
+				report.setEnabled(true);
+				deleteReports.setEnabled(true);
+				statusBarText.setText("Simulation advanced "
+						+ ((int) steps.getValue() - stepper.getSteps())
+						+ " steps");
+			});
+		} catch (SimulatorException se) {
+			JOptionPane.showMessageDialog(this,
+					"Error when generating reports, " + se, "Reports Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		catch(SimulatorException se){
-			JOptionPane.showMessageDialog(this, "Error when generating reports, " + se, 
-					"Reports Error", JOptionPane.ERROR_MESSAGE);
-		}
-		
-		stepper.start((int)steps.getValue(), (int)delay.getValue());
+
+		stepper.start((int) steps.getValue(), (int) delay.getValue());
 	}
-		
-	
+
 	/**
 	 * Resetea el simulador devolviendolo a su estado inicial
 	 */
@@ -671,7 +688,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		stop.setEnabled(false);
 
 	}
-	
+
 	/**
 	 * Borra el texto del editor de eventos
 	 */
@@ -682,7 +699,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		events.setEnabled(false);
 		guardar.setEnabled(false);
 	}
-	
+
 	/**
 	 * Borra el texto de la ventana de informes generados
 	 */
@@ -692,11 +709,11 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		statusBarText.setText("Reports deleted");
 		saveReports.setEnabled(false);
 	}
-	
-	private void stop(){
+
+	private void stop() {
 		stepper.stop();
 	}
-	
+
 	/**
 	 * Actualiza las cuatro tablas que se muestran
 	 */
@@ -710,88 +727,97 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		junctionsTable.update();
 
 	}
-	
+
 	/**
 	 * Guarada el texto que aparece en text en la ubcicacion elegida con fc
-	 * @param text JTextArea de la que se leera el texto a guardar 
-	 * (eventsEditor o reportsArea)
+	 * 
+	 * @param text
+	 *            JTextArea de la que se leera el texto a guardar (eventsEditor
+	 *            o reportsArea)
 	 */
 
 	private void saveFile(JTextArea text) {
-		try{
-		int returnVal = fc.showSaveDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			writeFile(file, text.getText());
-		}
-		statusBarText.setText("Data saved");
-		}
-		catch(FileNotFoundException fne){
-			JOptionPane.showMessageDialog(this,  "Inexisting file, " + fne, 
+		try {
+			int returnVal = fc.showSaveDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				writeFile(file, text.getText());
+			}
+			statusBarText.setText("Data saved");
+		} catch (FileNotFoundException fne) {
+			JOptionPane.showMessageDialog(this, "Inexisting file, " + fne,
 					"Saving Error", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Escribe el texto contenten el archivo File
-	 * @param file archivo en el que queremos escribir el texto
-	 * @param content texto a escribir
+	 * 
+	 * @param file
+	 *            archivo en el que queremos escribir el texto
+	 * @param content
+	 *            texto a escribir
 	 */
 
-	private static void writeFile(File file, String content) throws FileNotFoundException{
-			PrintWriter pw = new PrintWriter(file);
-			pw.print(content);
-			pw.close();
+	private static void writeFile(File file, String content)
+			throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(file);
+		pw.print(content);
+		pw.close();
 	}
-		
-	
+
 	/**
 	 * Carga un archivo seleccionado mediante fc y lo muestra en events editor
 	 */
 
 	private void loadFile() {
-		try {
-			int returnVal = fc.showOpenDialog(null);
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				String fileName = file.getAbsolutePath();
-				if(!fileName.substring(fileName.length() - 4).equals(".ini")){
-					JOptionPane.showMessageDialog(null,
-							"The file is not valid for the simulator", "Invalid File", JOptionPane.ERROR_MESSAGE);
+		int returnVal = fc.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			String fileName = file.getAbsolutePath();
+			if (!fileName.substring(fileName.length() - 4).equals(".ini")) {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"The file is not valid for the simulator, use .ini files",
+								"Invalid File", JOptionPane.ERROR_MESSAGE);
+			} else {
+				try {
+					String s = readFile(file);
+
+					eventsEditor.setText(s);
+					statusBarText.setText("Data loaded");
+					guardar.setEnabled(true);
+					events.setEnabled(true);
+					reset.setEnabled(true);
+				} catch (FileNotFoundException fnfe) {
+					JOptionPane.showMessageDialog(null, "Unexisting file: "
+							+ file.getName(), "File not found",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				String s = readFile(file);
-				eventsEditor.setText(s);statusBarText.setText("Data loaded");
-				guardar.setEnabled(true);
-				events.setEnabled(true);
-				reset.setEnabled(true);
 			}
-			
-		} catch (NoSuchElementException se) {
-			JOptionPane.showMessageDialog(null,
-					"The file is not valid for the simulator, " + se, "Invalid File", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	/**
-	 * @param file archivo del que queremos leer
+	 * @param file
+	 *            archivo del que queremos leer
 	 * @return un string con los datos leidos de file
-	 * @throws NoSuchElementException si no se trata de un fichero apropiado para el simulador
+	 * @throws NoSuchElementException
+	 *             si no se trata de un fichero apropiado para el simulador
 	 */
 
-	private static String readFile(File file) throws NoSuchElementException {
+	private static String readFile(File file) throws NoSuchElementException,
+			FileNotFoundException {
 		String s = "";
-		try {
-			s = new Scanner(file).useDelimiter("\\A").next();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
+		s = new Scanner(file).useDelimiter("\\A").next();
 		return s;
 	}
-	
+
 	/**
-	 *Resetea todo lo necesario para devolver al editor de eventos a su situacion inicial
+	 * Resetea todo lo necesario para devolver al editor de eventos a su
+	 * situacion inicial
 	 */
 
 	private void resetCargaEventos() {

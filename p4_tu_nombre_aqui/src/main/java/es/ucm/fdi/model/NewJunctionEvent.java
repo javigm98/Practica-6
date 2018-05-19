@@ -19,10 +19,10 @@ public class NewJunctionEvent extends Event{
 	 * Añade un nuevo Cruce al simulador con los datos almacenados si es momento de añadirlo.
 	 */
 	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
-		if(rm.getJunction(id) != null){
-			throw new SimulatorException("Duplicated Junction with the id: " + id);
-		}
 		if(time == timeExecution){
+			if(rm.junctionExist(id)){
+				throw new SimulatorException("Duplicated Junction with the id: " + id);
+			}
 			rm.addJunction(new Junction(id));
 		}	
 	}

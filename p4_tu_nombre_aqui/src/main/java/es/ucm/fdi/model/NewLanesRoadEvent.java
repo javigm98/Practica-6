@@ -21,6 +21,9 @@ private int numCarriles;
 	@Override
 	public void execute(RoadMap rm, int timeExecution) throws IllegalArgumentException{
 		if(time == timeExecution){
+			if(rm.getRoad(id) != null){
+				throw new SimulatorException("Duplicated Road with the id: " + id);
+			}
 			try{
 				Junction ini = rm.getJunction(iniId),
 						fin = rm.getJunction(finId);

@@ -60,8 +60,8 @@ public class BatchMode implements SimulatorListener {
 	 */
 	@Override
 	public void simulatorError(int time, RoadMap map,
-			MultiTreeMap<Integer, Event> events, SimulatorException e) {
-		System.err.println("" + e + e.getCause());
+			MultiTreeMap<Integer, Event> events, String errorMessage) {
+		System.err.println(errorMessage);
 
 	}
 

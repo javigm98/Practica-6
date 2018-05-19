@@ -62,7 +62,9 @@ public class TrafficSimulator {
 
 	private void notifyError(SimulatorException e) {
 		for (SimulatorListener sl : listeners) {
-			sl.simulatorError(time, rm, listaEventos, e);
+			String message = "" + e;
+			if(e.getCause() != null) message += e.getCause();
+			sl.simulatorError(time, rm, listaEventos, message);
 		}
 	}
 
@@ -190,7 +192,7 @@ public class TrafficSimulator {
 				MultiTreeMap<Integer, Event> events);
 
 		public void simulatorError(int time, RoadMap map,
-				MultiTreeMap<Integer, Event> events, SimulatorException e);
+				MultiTreeMap<Integer, Event> events, String errorMessage);
 
 	}
 

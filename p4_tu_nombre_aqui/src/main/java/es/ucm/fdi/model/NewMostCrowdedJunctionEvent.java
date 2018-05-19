@@ -6,8 +6,11 @@ public class NewMostCrowdedJunctionEvent extends NewJunctionEvent{
 	}
 	
 	@Override
-	public void execute(RoadMap rm, int timeExecution){
+	public void execute(RoadMap rm, int timeExecution)throws SimulatorException{
 		if(time == timeExecution){
+			if(rm.junctionExist(id)){
+				throw new SimulatorException("Duplicated Junction with the id: " + id);
+			}
 			rm.addJunction(new MostCrowdedJunction(id));
 		}
 	}
