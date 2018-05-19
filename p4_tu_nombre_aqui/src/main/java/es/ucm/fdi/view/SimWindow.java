@@ -312,8 +312,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		JMenu subMenu = new JMenu("Add Template");
 		// Carga el fichero con las plantillas de los eventos
 		try {
-			Ini ini = new Ini(new FileInputStream(
-					"src/main/resources/extra/templates.ini"));
+			Ini ini = new Ini(this.getClass().getClassLoader().getResourceAsStream("extra/templates.ini"));
 			List<IniSection> listaSec = ini.getSections();
 			for (IniSection sec : listaSec) {
 				JMenuItem menuItem = new JMenuItem(sec.getValue("nombre"));
@@ -521,8 +520,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	// Implementacion de los metodos de la interfaz SimulatorListener
 
 	@Override
-	public void registered(int time, RoadMap map,
-			MultiTreeMap<Integer, Event> events) {
+	public void registered() {
 	}
 
 	@Override
@@ -533,7 +531,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	}
 
 	@Override
-	public void eventAdded(int time, RoadMap map,
+	public void eventAdded(
 			MultiTreeMap<Integer, Event> events) {
 		listaEventos = events;
 		eventsQueue.setElements(listaEventos.valuesList());
@@ -541,8 +539,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	}
 
 	@Override
-	public void advanced(int time, RoadMap map,
-			MultiTreeMap<Integer, Event> events) {
+	public void advanced(int time, RoadMap map) {
 		this.map = map;
 		this.time = time;
 		currentTime.setText("" + time);
@@ -551,8 +548,7 @@ public class SimWindow extends JFrame implements SimulatorListener {
 	}
 
 	@Override
-	public void simulatorError(int time, RoadMap map,
-			MultiTreeMap<Integer, Event> events, String errorMessage) {
+	public void simulatorError(String errorMessage) {
 		stop();
 		JOptionPane.showMessageDialog(this, errorMessage, "Simulator Error",
 				JOptionPane.ERROR_MESSAGE);
@@ -677,7 +673,6 @@ public class SimWindow extends JFrame implements SimulatorListener {
 		eventsQueue.update();
 		roadMap.update(map);
 		statusBarText.setText("Simulator reseted");
-		stop();
 
 		guardar.setEnabled(false);
 		events.setEnabled(false);

@@ -39,7 +39,7 @@ public class TrafficSimulator {
 	}
 
 	private void notifyRegistered(SimulatorListener l) {
-		l.registered(time, rm, listaEventos);
+		l.registered();
 	}
 
 	private void notifyReset() {
@@ -50,13 +50,13 @@ public class TrafficSimulator {
 
 	private void notifyEventAdded() {
 		for (SimulatorListener sl : listeners) {
-			sl.eventAdded(time, rm, listaEventos);
+			sl.eventAdded(listaEventos);
 		}
 	}
 
 	private void notifyAdvanced() {
 		for (SimulatorListener sl : listeners) {
-			sl.advanced(time, rm, listaEventos);
+			sl.advanced(time, rm);
 		}
 	}
 
@@ -64,7 +64,7 @@ public class TrafficSimulator {
 		for (SimulatorListener sl : listeners) {
 			String message = "" + e;
 			if(e.getCause() != null) message += e.getCause();
-			sl.simulatorError(time, rm, listaEventos, message);
+			sl.simulatorError(message);
 		}
 	}
 
@@ -179,20 +179,16 @@ public class TrafficSimulator {
 	}
 
 	public interface SimulatorListener {
-		public void registered(int time, RoadMap map,
-				MultiTreeMap<Integer, Event> events);
+		public void registered();
 
 		public void reset(int time, RoadMap map,
 				MultiTreeMap<Integer, Event> events);
 
-		public void eventAdded(int time, RoadMap map,
-				MultiTreeMap<Integer, Event> events);
+		public void eventAdded(MultiTreeMap<Integer, Event> events);
 
-		public void advanced(int time, RoadMap map,
-				MultiTreeMap<Integer, Event> events);
+		public void advanced(int time, RoadMap map);
 
-		public void simulatorError(int time, RoadMap map,
-				MultiTreeMap<Integer, Event> events, String errorMessage);
+		public void simulatorError(String errorMessage);
 
 	}
 

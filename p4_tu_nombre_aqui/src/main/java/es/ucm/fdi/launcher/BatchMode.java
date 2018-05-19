@@ -28,8 +28,7 @@ public class BatchMode implements SimulatorListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registered(int time, RoadMap map,
-			MultiTreeMap<Integer, Event> events) {
+	public void registered() {
 
 	}
 	/**
@@ -43,7 +42,7 @@ public class BatchMode implements SimulatorListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void eventAdded(int time, RoadMap map,
+	public void eventAdded(
 			MultiTreeMap<Integer, Event> events) {
 
 	}
@@ -51,16 +50,14 @@ public class BatchMode implements SimulatorListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void advanced(int time, RoadMap map,
-			MultiTreeMap<Integer, Event> events) {
+	public void advanced(int time, RoadMap map) {
 
 	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void simulatorError(int time, RoadMap map,
-			MultiTreeMap<Integer, Event> events, String errorMessage) {
+	public void simulatorError(String errorMessage) {
 		System.err.println(errorMessage);
 
 	}
