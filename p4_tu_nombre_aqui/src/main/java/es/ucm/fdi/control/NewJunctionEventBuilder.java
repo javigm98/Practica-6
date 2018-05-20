@@ -7,23 +7,25 @@ import es.ucm.fdi.model.SimulatorException;
 
 /**
  * Credaor del evento de nuevo cruce
+ * 
  * @author Javier Guzmán y Jorge Villarrubia
  *
  */
-public class NewJunctionEventBuilder implements EventBuilder{
+public class NewJunctionEventBuilder implements EventBuilder {
 	private final static String TAG = "new_junction";
+
 	@Override
-	 public Event parse(IniSection sec) throws IllegalArgumentException{
-		 if(sec.getTag().equals(TAG) && (sec.getValue("type") == null)) {
-			try{
-			int time1 = parseInt(sec, "time", 0);
-			 String id1 = parseValidId(sec, "id");
-			 return new NewJunctionEvent(time1, id1);
+	public Event parse(IniSection sec) throws IllegalArgumentException {
+		if (sec.getTag().equals(TAG) && (sec.getValue("type") == null)) {
+			try {
+				int time1 = parseInt(sec, "time", 0);
+				String id1 = parseValidId(sec, "id");
+				return new NewJunctionEvent(time1, id1);
+			} catch (NullPointerException npe) {
+				throw new IllegalArgumentException(
+						"Missing fields in the junction event section ", npe);
 			}
-			catch(NullPointerException npe){
-				throw new IllegalArgumentException("Missing fields in the junction event section ", npe);
-			}
-		}
-		 else return null;
-	 }
+		} else
+			return null;
+	}
 }

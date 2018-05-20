@@ -3,31 +3,32 @@ package es.ucm.fdi.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JunctionWithTimeSlice extends Junction{
-	
+public class JunctionWithTimeSlice extends Junction {
+
 	public JunctionWithTimeSlice(String id) {
 		super(id);
 	}
-	protected class IncomingRoadWithTimeSlice extends IncomingRoad{
-		private int timeSlice, usedTimeUnits = -1; //Esto lo hago para arreglar aquel error que daba
+
+	protected class IncomingRoadWithTimeSlice extends IncomingRoad {
+		private int timeSlice, usedTimeUnits = -1; // Esto lo hago para arreglar
+													// aquel error que daba
 		private boolean used = false, fullyUsed = true;
 
-		public IncomingRoadWithTimeSlice(Road road, int timeSlice ) {
+		public IncomingRoadWithTimeSlice(Road road, int timeSlice) {
 			super(road);
 			this.timeSlice = timeSlice;
 		}
-		
-		public void advanceFirstVehicle(){
-			if(usedTimeUnits < timeSlice){
-			if(!cola.isEmpty()){
-				used = true;
-				cola.removeFirst().moverASiguienteCarretera();
+
+		public void advanceFirstVehicle() {
+			if (usedTimeUnits < timeSlice) {
+				if (!cola.isEmpty()) {
+					used = true;
+					cola.removeFirst().moverASiguienteCarretera();
+				} else {
+					fullyUsed = false;
+				}
+				++usedTimeUnits;
 			}
-			else{
-				fullyUsed = false;
-			}
-			++usedTimeUnits;	
-		}
 		}
 
 		public int getTimeSlice() {
@@ -49,24 +50,23 @@ public class JunctionWithTimeSlice extends Junction{
 		public boolean isUsed() {
 			return used;
 		}
+
 		public boolean isFullyUsed() {
 			return fullyUsed;
 		}
-		
+
 		@Override
-		
-		public String toString(){
+		public String toString() {
 			String s = "";
 			s = s + "(" + road.getId() + ",";
-			if(incoming.get(semaforo).equals(this)){
+			if (incoming.get(semaforo).equals(this)) {
 				s = s + "green:" + (timeSlice - usedTimeUnits);
+			} else {
+				s += "red";
 			}
-			else{
-				s+= "red";
-			}
-			s+=",[";
+			s += ",[";
 			List<String> list = new ArrayList<String>();
-			for(Vehicle v: cola){
+			for (Vehicle v : cola) {
 				list.add(v.getId());
 			}
 			s += String.join(",", list);
@@ -74,6 +74,5 @@ public class JunctionWithTimeSlice extends Junction{
 			return s;
 		}
 
-		
 	}
 }

@@ -63,7 +63,8 @@ public class TrafficSimulator {
 	private void notifyError(SimulatorException e) {
 		for (SimulatorListener sl : listeners) {
 			String message = "" + e;
-			if(e.getCause() != null) message += e.getCause();
+			if (e.getCause() != null)
+				message += e.getCause();
 			sl.simulatorError(message);
 		}
 	}
@@ -123,7 +124,8 @@ public class TrafficSimulator {
 	/**
 	 * Añade un evento a la lista de eventos a ejecutar.
 	 * 
-	 * @param e evento a añadir
+	 * @param e
+	 *            evento a añadir
 	 */
 	public void addEvent(Event e) {
 		if (e.getTime() >= time) {
@@ -141,7 +143,8 @@ public class TrafficSimulator {
 	 * mostrando información correspondiente a cruces, carreteras y vehículos
 	 * presentes en un determinado momento.
 	 * 
-	 * @throws IOException si no se puede abrir el flujo de salida.
+	 * @throws IOException
+	 *             si no se puede abrir el flujo de salida.
 	 */
 	public void writeReport() throws IOException {
 		Map<String, String> aux = new LinkedHashMap<>();
@@ -163,9 +166,12 @@ public class TrafficSimulator {
 	 * Crea una IniSection dados un mapa de pares clave-valor y una etiqueta y
 	 * la escribe en out.
 	 * 
-	 * @param mapa con los pares clave-valor de la sección.
-	 * @param tag cabecera de la sección
-	 * @throws IOException si no puede abrir el flujo de salida
+	 * @param mapa
+	 *            con los pares clave-valor de la sección.
+	 * @param tag
+	 *            cabecera de la sección
+	 * @throws IOException
+	 *             si no puede abrir el flujo de salida
 	 */
 	private void writeMapAsIni(Map<String, String> mapa, String tag)
 			throws IOException {

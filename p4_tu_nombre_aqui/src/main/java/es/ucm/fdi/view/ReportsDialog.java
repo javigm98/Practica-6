@@ -95,22 +95,22 @@ public class ReportsDialog extends JDialog {
 		});
 
 	}
-	
-	
+
 	/**
 	 * Inicializa todos los componentes (etiquetas, tablas y botones) del
 	 * dialogo y los coloca
 	 */
 	private void initGUI() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		
+
 		JPanel etiquetas = new JPanel(new BorderLayout());
-		
+
 		etiquetas.setLayout(new BoxLayout(etiquetas, BoxLayout.Y_AXIS));
 		etiquetas.add(new JLabel(
 				"Select items for which you want to generate reports."));
 		etiquetas.add(new JLabel("Use 'c' to deselect all."));
-		etiquetas.add(new JLabel("Click on the table and Ctrl + A to select all"));
+		etiquetas.add(new JLabel(
+				"Click on the table and Ctrl + A to select all"));
 		etiquetas.add(new JLabel("Use Crtl + clic to multiple selection"));
 		etiquetas.add(new JLabel(" "));
 		mainPanel.add(etiquetas, BorderLayout.PAGE_START);
@@ -142,14 +142,14 @@ public class ReportsDialog extends JDialog {
 		cancelar.setAlignmentX(CENTER_ALIGNMENT);
 		botones.add(generar);
 		mainPanel.add(botones, BorderLayout.PAGE_END);
-		
+
 		setContentPane(mainPanel);
 		setResizable(false);
 	}
 
 	/**
-	 * @return un mapa con todos los objetos de la simulacion indicando si han sido
-	 * seleccionados o no.
+	 * @return un mapa con todos los objetos de la simulacion indicando si han
+	 *         sido seleccionados o no.
 	 */
 	public HashMap<String, Boolean> getSelected() {
 		// Nos interesa devolver un mapa. Haremos muchas consultas que así serán

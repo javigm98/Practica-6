@@ -20,8 +20,9 @@ public class NewJunctionEvent extends Event{
 	 */
 	public void execute(RoadMap rm, int timeExecution) throws SimulatorException{
 		if(time == timeExecution){
-			if(rm.junctionExist(id)){
-				throw new SimulatorException("Duplicated Junction with the id: " + id);
+			if (rm.junctionExist(id)) {
+				throw new SimulatorException(
+						"Duplicated Junction with the id: " + id);
 			}
 			rm.addJunction(new Junction(id));
 		}	
